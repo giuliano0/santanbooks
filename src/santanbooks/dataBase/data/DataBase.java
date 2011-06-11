@@ -1,4 +1,4 @@
-package Trabalho.data;
+package data;
 
 import java.beans.XMLDecoder;
 import java.beans.XMLEncoder;
@@ -8,7 +8,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 
-import Trabalho.Entity.Entity;
+import Entity.Entity;
 
 public class DataBase{
 	protected String identifier;

@@ -1,6 +1,6 @@
-package Trabalho.data;
+package data;
 
-import Trabalho.Entity.User;
+import Entity.User;
 
 public interface IUserDataBase {
 	

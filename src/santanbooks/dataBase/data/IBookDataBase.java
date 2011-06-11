@@ -1,6 +1,6 @@
-package Trabalho.data;
+package data;
 
-import Trabalho.Entity.Book;
+import Entity.Book;
 
 public interface IBookDataBase {
 

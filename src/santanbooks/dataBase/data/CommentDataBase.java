@@ -1,6 +1,6 @@
-package Trabalho.data;
+package data;
 
-import Trabalho.Entity.Comment;
+import Entity.Comment;
 
 public class CommentDataBase extends DataBase implements ICommentDataBase{
 	

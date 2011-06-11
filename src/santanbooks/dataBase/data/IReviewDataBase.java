@@ -1,6 +1,6 @@
-package Trabalho.data;
+package data;
 
-import Trabalho.Entity.Review;
+import Entity.Review;
 
 public interface IReviewDataBase {
 	
