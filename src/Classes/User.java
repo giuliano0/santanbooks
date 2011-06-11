@@ -2,9 +2,14 @@ package Classes;
 import java.util.Date;
 
 import DataBase.Entity;
+import Interfaces.ILoggable;
 
-// TODO: implements ILoggable
-public class User extends Entity {
+/**
+ * 
+ * @author Giuliano
+ *
+ */
+public class User extends Entity implements ILoggable {
 	boolean accessLevel;
 	Date birthday;
 	String college;
@@ -105,5 +110,17 @@ public class User extends Entity {
 	
 	public void setIngressYear(Date value) {
 		ingressYear = value;
+	}
+
+	@Override
+	public boolean login(String username, String password) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public void logout(int userID) {
+		// TODO Auto-generated method stub
+		
 	}
 }

@@ -2,6 +2,11 @@ package Interfaces;
 
 import Classes.Book;
 
+/**
+ * 
+ * @author Giuliano
+ *
+ */
 public interface ISearchEngine {
 	public Book[] searchByName(String name);
 	public Book[] searchByTags(String tags[]);

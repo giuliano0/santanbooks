@@ -2,9 +2,14 @@ package Classes;
 import java.util.Date;
 
 import DataBase.Entity;
+import Interfaces.IRateable;
 
-// TODO: implements IRateable
-public class Comment extends Entity {
+/**
+ * 
+ * @author Giuliano
+ *
+ */
+public class Comment extends Entity implements IRateable {
 	// Fields
 	int ID;
 	String author;
@@ -52,5 +57,17 @@ public class Comment extends Entity {
 	
 	public void setVisibility(boolean value) {
 		visible = value;
+	}
+
+	@Override
+	public int getRating() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public void updateRating(int rating) {
+		// TODO Auto-generated method stub
+		
 	}
 }

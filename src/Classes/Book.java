@@ -2,9 +2,14 @@ package Classes;
 import java.util.Date;
 
 import DataBase.Entity;
+import Interfaces.*;
 
-// TODO: implements ICommentable, IRateable, IReviewable
-public class Book extends Entity {
+/**
+ * 
+ * @author Giuliano
+ *
+ */
+public class Book extends Entity implements ICommentable, IRateable, IReviewable {
 	String authors[];
 	String description;
 	String edition;
@@ -92,5 +97,59 @@ public class Book extends Entity {
 	
 	public void setPublishingDate(Date value) {
 		publishingDate = value;
+	}
+
+	@Override
+	public void addComment(Comment comment) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void editComment() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public Comment[] getAllComments() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Comment getComment(int id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int getRating() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public void updateRating(int rating) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void addReview() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public Review[] getAllReviews() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Review getReview(int id) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
