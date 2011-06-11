@@ -2,6 +2,7 @@ package Classes;
 import java.util.Date;
 
 import DataBase.Entity;
+import Exceptions.InvalidISBNException;
 
 // TODO: implements ICommentable, IRateable, IReviewable
 public class Book extends Entity {
@@ -9,7 +10,7 @@ public class Book extends Entity {
 	String description;
 	String edition;
 	String imagePath;
-	String isbn;
+	String isbn;			// ISBN-10 format, unieuq key
 	String name;
 	String publisher;
 	Date publishingDate;
@@ -40,7 +41,7 @@ public class Book extends Entity {
 		return name;
 	}
 	
-	public String Publisher() {
+	public String getPublisher() {
 		return publisher;
 	}
 	
@@ -57,23 +58,37 @@ public class Book extends Entity {
 	}
 	
 	public void setEdition(String value) {
-		edition = value;
+		edition = value.trim();
 	}
 	
 	public void setImagePath(String value) {
+		// must CHECK the file's existance
 		imagePath = value;
 	}
 	
-	public void setISBN(String value) {
+	public void setISBN(String value) throws Exception {
+		// Trims the string to get it normalized
+		value = value.trim();
+		
+		// Checks if the ISBN number is a valid one
+		if (value.length() != 10 || value.length() != 13) {
+			throw new Exception();
+		}
+		
+		// Converts ISBN-13 to ISBN-10 format
+		if (value.length() == 13) {
+			value = value.substring(3);
+		}
+		
 		isbn = value;
 	}
 	
 	public void setName(String value) {
-		name = value;
+		name = value.trim();
 	}
 	
 	public void setPublisher(String value) {
-		publisher = value;
+		publisher = value.trim();
 	}
 	
 	public void setPublishingDate(Date value) {
