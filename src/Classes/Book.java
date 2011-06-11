@@ -1,7 +1,7 @@
 package Classes;
 import java.util.Date;
 
-import dataBase.Entity;
+import DataBase.Entity;
 
 // TODO: implements ICommentable, IRateable, IReviewable
 public class Book extends Entity {

@@ -1,7 +1,7 @@
 package Classes;
 import java.util.Date;
 
-import dataBase.Entity;
+import DataBase.Entity;
 
 // TODO: implements ILoggable
 public class User extends Entity {
