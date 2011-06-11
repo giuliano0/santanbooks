@@ -1,7 +1,10 @@
+package Classes;
 import java.util.Date;
 
+import dataBase.Entity;
+
 // TODO: implements ILoggable
-public class User {
+public class User extends Entity {
 	boolean accessLevel;
 	Date birthday;
 	String college;

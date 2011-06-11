@@ -1,7 +1,10 @@
+package Classes;
 import java.util.Date;
 
+import dataBase.Entity;
+
 // TODO: implements IRateable
-public class Comment {
+public class Comment extends Entity {
 	// Fields
 	int ID;
 	String author;

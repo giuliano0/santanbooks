@@ -1,3 +1,6 @@
+package Interfaces;
+import Classes.Comment;
+
 
 public interface ICommentable {
 	void addComment();

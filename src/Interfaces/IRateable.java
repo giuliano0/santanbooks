@@ -1,3 +1,4 @@
+package Interfaces;
 
 public interface IRateable {
 	int getRating();

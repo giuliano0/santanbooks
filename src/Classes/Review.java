@@ -1,7 +1,10 @@
+package Classes;
 import java.util.Date;
 
+import dataBase.Entity;
+
 // TODO: implements ICommentable, IRateable
-public class Review {
+public class Review extends Entity {
 	// Fields
 	int ID;
 	String author;
