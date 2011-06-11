@@ -13,7 +13,6 @@ public class DataBase{
 	protected String folder;
 	protected boolean uniqueKey;
 	protected int cont;
-	protected String search;
 	
 	DataBase(){
 		this.identifier = null;
@@ -76,8 +75,6 @@ public class DataBase{
 	public Entity get(String identifier) {
 		Entity entity = null;
 		String fileName;
-		
-		this.search = "identifier";
 		
 		if (this.uniqueKey){
 			fileName = identifier + ".xml";

@@ -11,10 +11,7 @@ public class ReviewDataBase extends DataBase implements IReviewDataBase{
 	}
 
 	public Review getByIdentifier(String identifier) {
-		if (this.search.equalsIgnoreCase("identifier"))
-			return (Review)super.getNext();
-		else
-			return null;
+		return (Review)super.getNext();
 	}
 	
 	public Review getNext(){

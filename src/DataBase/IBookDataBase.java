@@ -10,7 +10,5 @@ public interface IBookDataBase {
 		
 	public Book getByIdentifier(String identifier);
 	
-	public Book getByName(String name);
-	
 	public Book getNext();
 }

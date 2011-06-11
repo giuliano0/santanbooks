@@ -11,10 +11,7 @@ public class CommentDataBase extends DataBase implements ICommentDataBase{
 	}
 
 	public Comment getByIdentifier(String identifier) {
-		if (this.search.equalsIgnoreCase("identifier"))
-			return (Comment)super.getNext();
-		else
-			return null;
+		return (Comment)super.getNext();
 	}
 	
 	public Comment getNext(){

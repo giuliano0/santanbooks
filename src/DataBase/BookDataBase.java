@@ -15,10 +15,7 @@ public class BookDataBase extends DataBase implements IBookDataBase{
 	}
 	
 	public Book getNext(){
-		if (this.search.equalsIgnoreCase("identifier"))
-			return (Book)super.getNext();
-		else
-			return null;
+		return (Book)super.getNext();
 	}
 
 	public boolean insert(Book book) {
@@ -27,10 +24,5 @@ public class BookDataBase extends DataBase implements IBookDataBase{
 
 	public boolean update(Book book) {
 		return super.update(book);
-	}
-
-	public Book getByName(String name) {
-		this.search = "name";
-		return null;
 	}
 }
