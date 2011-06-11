@@ -1,4 +1,4 @@
-package Trabalho;
+package santanbooks.dataBase;
 
 import java.beans.XMLDecoder;
 import java.beans.XMLEncoder;
@@ -8,22 +8,32 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 
-public class BancoDeDados implements IBancoDeDados{
+import anima.annotation.Component;
+import anima.component.base.ComponentBase;
+
+
+@Component(id = "<http://purl.org/dcc/santanbooks.dataBase.DataBase>", provides = { "<http://purl.org/dcc/santanbooks.dataBase.IDataBase>" })
+public class DataBaseEntity extends ComponentBase implements IDataBaseEntity{
 	private String entidade;
 	private String caminho;
 	private boolean chaveUnica;
 	private String id;
 	private int contador;
 	
-	BancoDeDados(String entidade, boolean chaveUnica){
+	public DataBaseEntity(String entidade, boolean chaveUnica){
 		this.entidade = entidade;
 		this.chaveUnica = chaveUnica;
-		this.caminho = "src/Trabalho/" + this.entidade + "/";
+		this.caminho = "src/santanbooks/dataBase/data/" + this.entidade + "/";
 		this.id = null;
 		this.contador = 0;
 	}
 	
-	public boolean salvarEntidade(Entidade entidade) {
+	
+	public void setEntidade() {
+		
+	}
+	
+	public boolean salvarEntidade(Entity entidade) {
 		String arquivo;
 		
 		if (entidade.getArquivo() == null){	
@@ -54,7 +64,7 @@ public class BancoDeDados implements IBancoDeDados{
 			return false;
 	}
 	
-	public boolean alterarEntidade(Entidade entidade){
+	public boolean alterarEntidade(Entity entidade){
 		String arquivo;
 		
 		if (entidade.getArquivo() != null){	
@@ -76,8 +86,8 @@ public class BancoDeDados implements IBancoDeDados{
 			return false;
 	}
 
-	public Entidade obterEntidade(String id) {
-		Entidade entidade = null;
+	public Entity obterEntidade(String id) {
+		Entity entidade = null;
 		String arquivo;
 		
 		if (this.chaveUnica){
@@ -92,7 +102,7 @@ public class BancoDeDados implements IBancoDeDados{
 			try{
 				XMLDecoder decoder = new XMLDecoder(new BufferedInputStream(
 						new FileInputStream(this.caminho + arquivo)));
-				entidade = (Entidade) decoder.readObject();
+				entidade = (Entity) decoder.readObject();
 				decoder.close();
 			}
 			catch(Exception e){
@@ -105,8 +115,8 @@ public class BancoDeDados implements IBancoDeDados{
 			return null;
 	}
 
-	public Entidade obterProximo() {
-		Entidade entidade = null;
+	public Entity obterProximo() {
+		Entity entidade = null;
 		String arquivo;
 		
 		if (!this.chaveUnica){
@@ -117,7 +127,7 @@ public class BancoDeDados implements IBancoDeDados{
 					try{
 						XMLDecoder decoder = new XMLDecoder(new BufferedInputStream(
 								new FileInputStream(this.caminho + arquivo)));
-						entidade = (Entidade) decoder.readObject();
+						entidade = (Entity) decoder.readObject();
 						decoder.close();
 					}
 					catch(Exception e){
