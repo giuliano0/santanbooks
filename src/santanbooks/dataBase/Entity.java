@@ -1,10 +1,6 @@
 package santanbooks.dataBase;
 
-import anima.annotation.Component;
-import anima.component.base.ComponentBase;
-
-
-public class Entity extends ComponentBase {
+public class Entity {
 	private String identificador = null;
 	private String arquivo = null;
 	
