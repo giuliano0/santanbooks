@@ -11,7 +11,10 @@ public class UserDataBase extends DataBase implements IUserDataBase{
 	}
 
 	public User getByIdentifier(String identifier) {
-		return (User)super.get(identifier);
+		if (this.search.equalsIgnoreCase("identifier"))
+			return (User)super.getNext();
+		else
+			return null;
 	}
 	
 	public User getNext(){
