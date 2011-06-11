@@ -6,7 +6,7 @@ public class ReviewDataBase extends DataBase implements IReviewDataBase{
 	
 	ReviewDataBase(){
 		super();
-		this.folder = "src/data/review/";
+		this.folder = "src/DataBase/data/review/";
 		this.uniqueKey = true;
 	}
 

@@ -6,7 +6,7 @@ public class CommentDataBase extends DataBase implements ICommentDataBase{
 	
 	CommentDataBase(){
 		super();
-		this.folder = "src/data/comment/";
+		this.folder = "src/DataBase/data/comment/";
 		this.uniqueKey = false;
 	}
 
