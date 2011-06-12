@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<database name="santanbooks" type="MySQL - 5.5.10">
+   <tables>
+      <table name="book" numRows="2" remarks="" type="TABLE">
+         <column autoUpdated="false" digits="0" id="0" name="isbn" nullable="false" remarks="" size="100" type="VARCHAR">
+            <child column="isbn" foreignKey="Implied Constraint" implied="true" onDeleteCascade="false" table="informations"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="1" name="name" nullable="false" remarks="" size="45" type="VARCHAR"/>
+         <column autoUpdated="false" digits="0" id="2" name="authors" nullable="true" remarks="" size="100" type="VARCHAR"/>
+         <column autoUpdated="false" digits="0" id="3" name="description" nullable="true" remarks="" size="100" type="VARCHAR"/>
+         <column autoUpdated="false" digits="0" id="4" name="edition" nullable="true" remarks="" size="45" type="VARCHAR"/>
+         <column autoUpdated="false" digits="0" id="5" name="publisher" nullable="true" remarks="" size="100" type="VARCHAR"/>
+         <column autoUpdated="false" digits="0" id="6" name="publishingDate" nullable="false" remarks="" size="10" type="DATE"/>
+         <column autoUpdated="false" digits="0" id="7" name="imagePath" nullable="true" remarks="" size="100" type="VARCHAR"/>
+         <primaryKey column="isbn" sequenceNumberInPK="1"/>
+         <index name="PRIMARY" unique="true">
+            <column ascending="true" name="isbn"/>
+         </index>
+      </table>
+      <table name="informations" numRows="0" remarks="" type="TABLE">
+         <column autoUpdated="true" digits="0" id="0" name="id" nullable="false" remarks="" size="20" type="BIGINT UNSIGNED"/>
+         <column autoUpdated="false" digits="0" id="1" name="isbn" nullable="false" remarks="" size="100" type="VARCHAR">
+            <parent column="isbn" foreignKey="Implied Constraint" implied="true" onDeleteCascade="false" table="book"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="2" name="authorInfo" nullable="true" remarks="" size="45" type="VARCHAR"/>
+         <column autoUpdated="false" digits="0" id="3" name="comment" nullable="true" remarks="" size="1000" type="VARCHAR"/>
+         <column autoUpdated="false" digits="0" id="4" name="review" nullable="true" remarks="" size="10000" type="VARCHAR"/>
+         <column autoUpdated="false" digits="0" id="5" name="dateInfo" nullable="false" remarks="" size="10" type="DATE"/>
+         <column autoUpdated="false" digits="0" id="6" name="title" nullable="false" remarks="" size="45" type="VARCHAR"/>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="PRIMARY" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+      </table>
+   </tables>
+</database>
