@@ -11,19 +11,19 @@ import Interfaces.*;
  *
  */
 public class Book extends Entity implements ICommentable, IRateable, IReviewable {
-	String authors;
-	String description;
-	String edition;
-	String imagePath;
-	String isbn;			// ISBN-10 format, unieuq key
-	String name;
-	String publisher;
-	Date publishingDate;
+	String author;			// "James 'I'm awesome' Stewart"
+	String description;		// "Blah blah blah"
+	String edition;			// "7th ed."
+	String imagePath;		// "/images/books/anything.ext"
+	String isbn;			// 9780538497817 ISBN-13 format, unique key. Any ISBN-10 will be truncated to ISBN-13.
+	String name;			// "Calculus - Early Transcedentals"
+	String publisher;		// "Brooks Cole"
+	Date publishingDate;	// January 1, 2011 (doesn't matter)
 	
 	// TODO: review access scope, data types and checkings inside these methods.
 	
-	public String getAuthors() {
-		return authors;
+	public String getAuthor() {
+		return author;
 	}
 	
 	public String getDescription() {
@@ -54,10 +54,8 @@ public class Book extends Entity implements ICommentable, IRateable, IReviewable
 		return publishingDate;
 	}
 	
-	public void setAuthors(String value) throws Exception {
-		authors = value;
-		authors.trim();
-		if (authors == null) throw new Exception("Argumento autor recebido é nulo. Relate o erro.");	
+	public void setAuthor(String value) {
+		author = value.trim();
 	}
 	
 	public void setDescription(String value) {
@@ -94,7 +92,7 @@ public class Book extends Entity implements ICommentable, IRateable, IReviewable
 		
 		switch(value.length()) {
 		case 10:
-			isbn = "978-" + value.substring(0, 1) + "-" + value.substring(2, 4) + "-" + value.substring(5, 8) + "-" + value.substring(9);
+			isbn = "978-" + value.substring(0, 2) + "-" + value.substring(2, 5) + "-" + value.substring(5, 9) + "-" + value.substring(9);
 			
 			break;
 		case 13:
@@ -133,7 +131,7 @@ public class Book extends Entity implements ICommentable, IRateable, IReviewable
 		digit  = 10 - digit;
 		digit %= 10;
 		
-		if ((int)isbn.charAt(16) != digit) {
+		if ((int)(isbn.charAt(16) - '0') != digit) {
 			isbn = null;
 			throw new IllegalArgumentException("O ISBN não é válido!");
 		}
