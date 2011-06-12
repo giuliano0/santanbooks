@@ -88,7 +88,7 @@ public class Book extends Entity implements ICommentable, IRateable, IReviewable
 		value = value.trim();
 		
 		// Checa se o ISBN é válido (|"8523301432"| = 10, |"85-233-0143-2"| = |"9788523301432"| = 13, |"978-85-233-0143-2"| = 17) 
-		if (value.length() != 10 || value.length() != 13 || value.length() != 17) {
+		if (value.length() != 10 && value.length() != 13 && value.length() != 17) {
 			throw new IllegalArgumentException("O ISBN digitado não está num dos formatos permitidos de entrada.");
 		}
 		
