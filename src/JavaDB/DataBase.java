@@ -180,9 +180,10 @@ public class DataBase implements IDataBase{
 			{
 				try {
 					Book temp = new Book();
+					
 					temp.setISBN(result.getString("isbn"));
 					temp.setName(result.getString("name"));
-					temp.setAuthors(result.getString("authors"));
+					temp.setAuthor(result.getString("author"));
 					temp.setDescription(result.getString("description"));
 					temp.setEdition(result.getString("edition"));
 					temp.setImagePath(result.getString("imagePath"));
@@ -237,7 +238,7 @@ public class DataBase implements IDataBase{
 		
 		v.add(b.getISBN());
 		v.add(b.getName());
-		v.add(b.getAuthors());
+		v.add(b.getAuthor());
 		v.add(b.getDescription());
 		v.add(b.getEdition());
 		v.add(b.getImagePath());

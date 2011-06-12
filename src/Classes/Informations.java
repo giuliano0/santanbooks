@@ -2,6 +2,11 @@ package Classes;
 
 import java.sql.Date;
 
+/**
+ * 
+ * @author Fernando
+ *
+ */
 public class Informations {
 	String title;
 	String isbn;
