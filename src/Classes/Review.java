@@ -77,6 +77,12 @@ public class Review extends Entity implements ICommentable, IRateable {
 		title = value;
 	}
 
+	/*
+	 * Esses fields estão no lugar errado. São "placeholders".
+	 */
+	Comment[] comments;
+	float rating;			// Retornado direto de consulta à DB
+	
 	@Override
 	public void addComment(Comment comment) {
 		// TODO Auto-generated method stub
