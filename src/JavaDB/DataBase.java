@@ -6,7 +6,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Vector;
+
 import Classes.Book;
+import Classes.Informations;
 
 /**
  * class handling database
@@ -40,7 +42,20 @@ public class DataBase implements IDataBase{
                     "publisher VARCHAR(100), " +
                     "publishingDate DATE NOT NULL, PRIMARY KEY(isbn))"
             );
-                       
+            
+            // Creates table informations
+            command.executeUpdate(
+                    "CREATE TABLE informations " +
+                    "(id BIGINT NOT NULL PRIMARY KEY GENERATED ALWAYS AS IDENTITY " +
+                    "(START WITH 1, INCREMENT BY 1), " +
+                    "isbn VARCHAR(100) NOT NULL, " +
+                    "title VARCHAR(45) NOT NULL, " +
+                    "authorInfo VARCHAR(45), " +
+                    "comment VARCHAR(1000), " +
+                    "review VARCHAR(10000), " +
+                    "dateInfo DATE NOT NULL)"
+            );
+
             command.close();
             conexion.close();
             
@@ -55,6 +70,10 @@ public class DataBase implements IDataBase{
 	}
 
 	public void deleteData(Book data) {
+		
+	}
+
+	public void deleteData(Informations data) {
 		
 	}
 
@@ -94,14 +113,52 @@ public class DataBase implements IDataBase{
         }
 	}
 
-	public Book[] queryBook(String select, String w, String o) {	
+	@SuppressWarnings("unchecked")
+	public void insertData(Informations data) {
+		Vector v = getVectorInformations(data);
+		String values = new String();
+		
+		for(int i = 0; i < v.size(); i++){
+			if(i != v.size() - 1)
+				if(v.get(i) != null)
+					values += "'" + v.get(i) + "', ";
+				else
+					values += "'', ";
+			else
+				if(v.get(i) != null)
+					values += "'" + v.get(i) + "'";
+				else
+					values += "''";
+		}
+		
+		try {
+            Class.forName(driver);
+            Connection conexion = DriverManager.getConnection(bd);
+            Statement command = conexion.createStatement();
+
+            // insert data
+            command.executeUpdate("INSERT INTO informations (isbn, title, authorInfo, " +
+            		"comment, review, dateInfo) VALUES (" + values + ")");
+
+            command.close();
+            conexion.close();
+
+        } catch (ClassNotFoundException erro) {
+            System.out.println(erro.getMessage());
+        } catch (SQLException erro) {
+            System.out.println("Erro no Insert: " + erro.getMessage());
+        }		
+	}
+
+	public Book[] queryBook(Vector<String> select,
+			Vector<String> where, Vector<String> order) {	
 		try {
 			Class.forName(driver);
             Connection conexion = DriverManager.getConnection(bd);
             Statement command = conexion.createStatement();
 
             // makes the query
-            String where = "", order = "";
+       /*     String where = "", order = "";
             
 	        if(w != null && w != " ")
 	        {
@@ -111,7 +168,7 @@ public class DataBase implements IDataBase{
 	        {
 	        	order = "Order by " + o;
 	        }
-	        
+	        */
 	        ResultSet result = command.executeQuery("SELECT " + select + " FROM book " + where + order);
 	        //System.out.println("SELECT " + select + " FROM book " + where + order);
 	        
@@ -121,11 +178,10 @@ public class DataBase implements IDataBase{
 		
 			int cont = 0;
 			
-//			while (contentHas)
-//			{
+			while (contentHas)
+			{
 				try {
 					Book temp = new Book();
-					
 					temp.setISBN(result.getString("isbn"));
 					temp.setName(result.getString("name"));
 					temp.setAuthors(result.getString("authors"));
@@ -143,7 +199,7 @@ public class DataBase implements IDataBase{
 					e.printStackTrace();
 				}
 				
-//			}
+			}
 			
 	        command.close();
 	        conexion.close();
@@ -158,6 +214,13 @@ public class DataBase implements IDataBase{
 	      }
 	}
 
+	@Override
+	public Informations[] queryInformations(Vector<String> select,
+			Vector<String> where, Vector<String> order) {
+		Informations[] i = new Informations[1];
+		return i;
+		
+	}
 
 	@Override
 	public void updateData(Book data) {
@@ -165,7 +228,11 @@ public class DataBase implements IDataBase{
 		
 	}
 
-
+	@Override
+	public void updateData(Informations data) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 	@SuppressWarnings("unchecked")
 	public Vector getVectorBook(Book b){
@@ -181,5 +248,17 @@ public class DataBase implements IDataBase{
 		v.add(b.getPublishingDate());
 		return v;
 	}
-
+	
+	@SuppressWarnings("unchecked")
+	public Vector getVectorInformations(Informations i){
+		Vector v = new Vector();
+		
+		v.add(i.getIsbn());
+		v.add(i.getTitle());
+		v.add(i.getAuthorInfo());
+		v.add(i.getComment());
+		v.add(i.getReview());
+		v.add(i.getDateInfo());
+		return v;
+	}
 }
