@@ -182,7 +182,7 @@ public class DataBase implements IDataBase{
 					Book temp = new Book();
 					temp.setISBN(result.getString("isbn"));
 					temp.setName(result.getString("name"));
-					temp.setAuthors(new String[]{result.getString("authors")});
+					temp.setAuthors(result.getString("authors"));
 					temp.setDescription(result.getString("description"));
 					temp.setEdition(result.getString("edition"));
 					temp.setImagePath(result.getString("imagePath"));
