@@ -11,7 +11,8 @@ public class AppDataBase {
 		Date dataAtual = new Date(System.currentTimeMillis());
 		
 		Book b = new Book();
-		b.setISBN("0002112451");
+		
+		b.setISBN("978-85-772-2156-1");
 		b.setName("Cálculo 1");
 		
 		try {
@@ -21,19 +22,15 @@ public class AppDataBase {
 			e.printStackTrace();
 		}
 		
-		Informations i = new Informations();
-		i.setIsbn("0002112451");
-		i.setTitle("Comentário sobre o livro de Cálculo 1");
-		i.setAuthorInfo("Eu mesmo");
-		i.setComment("Apesar do livro ser bom, cálculo é uma merda");
-		i.setDateInfo(dataAtual);
+		
+		b.setAuthors("Eu mesmo");
+		b.setDescription("Apesar do livro ser bom, cálculo é uma merda");
 		
 		DataBase db = new DataBase();
 		db.connectDataBase();
 		db.insertData(b);
-		db.insertData(i);
-		
-		Book[] result = db.queryBook("*", "isbn = '0002112451'", " ");
+				 
+		Book[] result = db.queryBook("*", "isbn = '978-85-772-2156-1'", " ");
 		System.out.println("ISBN: " + result[0].getISBN() + ", Name: " + result[0].getName());
 	}
 }

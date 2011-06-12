@@ -7,7 +7,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Vector;
 import Classes.Book;
-import Classes.Informations;
 
 /**
  * class handling database
@@ -41,20 +40,7 @@ public class DataBase implements IDataBase{
                     "publisher VARCHAR(100), " +
                     "publishingDate DATE NOT NULL, PRIMARY KEY(isbn))"
             );
-            
-            // Creates table informations
-            command.executeUpdate(
-                    "CREATE TABLE informations " +
-                    "(id BIGINT NOT NULL PRIMARY KEY GENERATED ALWAYS AS IDENTITY " +
-                    "(START WITH 1, INCREMENT BY 1), " +
-                    "isbn VARCHAR(100) NOT NULL, " +
-                    "title VARCHAR(45) NOT NULL, " +
-                    "authorInfo VARCHAR(45), " +
-                    "comment VARCHAR(1000), " +
-                    "review VARCHAR(10000), " +
-                    "dateInfo DATE NOT NULL)"
-            );
-
+                       
             command.close();
             conexion.close();
             
@@ -69,10 +55,6 @@ public class DataBase implements IDataBase{
 	}
 
 	public void deleteData(Book data) {
-		
-	}
-
-	public void deleteData(Informations data) {
 		
 	}
 
@@ -112,43 +94,6 @@ public class DataBase implements IDataBase{
         }
 	}
 
-	@SuppressWarnings("unchecked")
-	public void insertData(Informations data) {
-		Vector v = getVectorInformations(data);
-		String values = new String();
-		
-		for(int i = 0; i < v.size(); i++){
-			if(i != v.size() - 1)
-				if(v.get(i) != null)
-					values += "'" + v.get(i) + "', ";
-				else
-					values += "'', ";
-			else
-				if(v.get(i) != null)
-					values += "'" + v.get(i) + "'";
-				else
-					values += "''";
-		}
-		
-		try {
-            Class.forName(driver);
-            Connection conexion = DriverManager.getConnection(bd);
-            Statement command = conexion.createStatement();
-
-            // insert data
-            command.executeUpdate("INSERT INTO informations (isbn, title, authorInfo, " +
-            		"comment, review, dateInfo) VALUES (" + values + ")");
-
-            command.close();
-            conexion.close();
-
-        } catch (ClassNotFoundException erro) {
-            System.out.println(erro.getMessage());
-        } catch (SQLException erro) {
-            System.out.println("Erro no Insert: " + erro.getMessage());
-        }		
-	}
-
 	public Book[] queryBook(String select, String w, String o) {	
 		try {
 			Class.forName(driver);
@@ -176,14 +121,14 @@ public class DataBase implements IDataBase{
 		
 			int cont = 0;
 			
-			while (contentHas)
-			{
+//			while (contentHas)
+//			{
 				try {
 					Book temp = new Book();
 					
 					temp.setISBN(result.getString("isbn"));
 					temp.setName(result.getString("name"));
-					temp.setAuthor(result.getString("author"));
+					temp.setAuthors(result.getString("authors"));
 					temp.setDescription(result.getString("description"));
 					temp.setEdition(result.getString("edition"));
 					temp.setImagePath(result.getString("imagePath"));
@@ -198,7 +143,7 @@ public class DataBase implements IDataBase{
 					e.printStackTrace();
 				}
 				
-			}
+//			}
 			
 	        command.close();
 	        conexion.close();
@@ -213,12 +158,6 @@ public class DataBase implements IDataBase{
 	      }
 	}
 
-	@Override
-	public Informations[] queryInformations(String select, String Where, String Order) {
-		Informations[] i = new Informations[1];
-		return i;
-		
-	}
 
 	@Override
 	public void updateData(Book data) {
@@ -226,11 +165,7 @@ public class DataBase implements IDataBase{
 		
 	}
 
-	@Override
-	public void updateData(Informations data) {
-		// TODO Auto-generated method stub
-		
-	}
+
 	
 	@SuppressWarnings("unchecked")
 	public Vector getVectorBook(Book b){
@@ -238,25 +173,12 @@ public class DataBase implements IDataBase{
 		
 		v.add(b.getISBN());
 		v.add(b.getName());
-		v.add(b.getAuthor());
+		v.add(b.getAuthors());
 		v.add(b.getDescription());
 		v.add(b.getEdition());
 		v.add(b.getImagePath());
 		v.add(b.getPublisher());
 		v.add(b.getPublishingDate());
-		return v;
-	}
-	
-	@SuppressWarnings("unchecked")
-	public Vector getVectorInformations(Informations i){
-		Vector v = new Vector();
-		
-		v.add(i.getIsbn());
-		v.add(i.getTitle());
-		v.add(i.getAuthorInfo());
-		v.add(i.getComment());
-		v.add(i.getReview());
-		v.add(i.getDateInfo());
 		return v;
 	}
 

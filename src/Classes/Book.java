@@ -11,7 +11,7 @@ import Interfaces.*;
  *
  */
 public class Book extends Entity implements ICommentable, IRateable, IReviewable {
-	String author;			// "James 'I'm awesome' Stewart"
+	String authors;			// "James 'I'm awesome' Stewart"
 	String description;		// "Blah blah blah"
 	String edition;			// "7th ed."
 	String imagePath;		// "/images/books/anything.ext"
@@ -22,8 +22,8 @@ public class Book extends Entity implements ICommentable, IRateable, IReviewable
 	
 	// TODO: review access scope, data types and checkings inside these methods.
 	
-	public String getAuthor() {
-		return author;
+	public String getAuthors() {
+		return authors;
 	}
 	
 	public String getDescription() {
@@ -54,8 +54,8 @@ public class Book extends Entity implements ICommentable, IRateable, IReviewable
 		return publishingDate;
 	}
 	
-	public void setAuthor(String value) {
-		author = value.trim();
+	public void setAuthors(String value) {
+		authors = value.trim();
 	}
 	
 	public void setDescription(String value) {
@@ -91,25 +91,30 @@ public class Book extends Entity implements ICommentable, IRateable, IReviewable
 		}
 		
 		switch(value.length()) {
-		case 10:
+		case 10: //8523301432
 			isbn = "978-" + value.substring(0, 2) + "-" + value.substring(2, 5) + "-" + value.substring(5, 9) + "-" + value.substring(9);
 			
 			break;
 		case 13:
-			if (value.charAt(2) == '-') // ISBN-10
+			if (value.charAt(2) == '-') // ISBN-10  //85-233-0143-2
 				isbn = "978-" + value;
-			else // ISBN-13
-				isbn = value.substring(0, 2) + "-" + value.substring(3, 4) + "-" + value.substring(5, 7) + "-" + value.substring(8, 11) + "-" + value.substring(12);
+			else // ISBN-13  //9788523301432
+				isbn = value.substring(0, 3) + "-" + value.substring(3, 5) + "-" + value.substring(5, 8) + "-" + value.substring(8, 12) + "-" + value.substring(12);
 			
+			break;
+		case 17:
+			isbn = value;
 			break;
 		}
 		
 		// Verifica se os campos dos separadores são mesmo números
+		//978-85-233-0143-2       
 		try {
-			Integer.parseInt(isbn.substring(0, 2));
-			Integer.parseInt(isbn.substring(4, 5));
-			Integer.parseInt(isbn.substring(7, 9));
-			Integer.parseInt(isbn.substring(11, 14));
+			Integer.parseInt(isbn.substring(0, 3));
+			Integer.parseInt(isbn.substring(4, 6));
+			Integer.parseInt(isbn.substring(7, 10));
+			Integer.parseInt(isbn.substring(11, 15));
+			Integer.parseInt(isbn.substring(15, 17));
 		}
 		catch (NumberFormatException ex) {
 			NumberFormatException new_ex = new NumberFormatException("O ISBN digitado contém caracteres inválidos.");
