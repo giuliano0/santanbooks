@@ -1,7 +1,7 @@
 package Classes;
 
+import java.sql.Date;
 import java.util.Calendar;
-import java.util.Date;
 import DataBase.Entity;
 import Interfaces.*;
 
@@ -11,18 +11,18 @@ import Interfaces.*;
  *
  */
 public class Book extends Entity implements ICommentable, IRateable, IReviewable {
-	String authors[];		// "James 'I'm awesome' Stewart"
-	String description;		// "Blah blah blah"
-	String edition;			// "7th ed."
-	String imagePath;		// "/images/books/anything.ext"
-	String isbn;			// 9780538497817 ISBN-13 format, unique key. Any ISBN-10 will be truncated to ISBN-13.
-	String name;			// "Calculus - Early Transcedentals"
-	String publisher;		// "Brooks Cole"
-	Date publishingDate;	// January 1, 2011 (doesn't matter)
+	String authors;
+	String description;
+	String edition;
+	String imagePath;
+	String isbn;			// ISBN-10 format, unieuq key
+	String name;
+	String publisher;
+	Date publishingDate;
 	
 	// TODO: review access scope, data types and checkings inside these methods.
 	
-	public String[] getAuthors() {
+	public String getAuthors() {
 		return authors;
 	}
 	
@@ -54,14 +54,10 @@ public class Book extends Entity implements ICommentable, IRateable, IReviewable
 		return publishingDate;
 	}
 	
-	public void setAuthors(String[] value) throws Exception {
+	public void setAuthors(String value) throws Exception {
 		authors = value;
-		
-		for (int i = 0; i < value.length; i++) {
-			authors[i].trim();
-			
-			if (authors[i] == null) throw new Exception("Argumento autor recebido é nulo. Relate o erro.");
-		}
+		authors.trim();
+		if (authors == null) throw new Exception("Argumento autor recebido é nulo. Relate o erro.");	
 	}
 	
 	public void setDescription(String value) {
