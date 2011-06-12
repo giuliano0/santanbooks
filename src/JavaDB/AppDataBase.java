@@ -11,9 +11,14 @@ public class AppDataBase {
 		Date dataAtual = new Date(System.currentTimeMillis());
 		
 		Book b = new Book();
-		b.setIsbn("0002112450");
+		b.setISBN("0002112450");
 		b.setName("Cálculo 1");
-		b.setPublishingDate(dataAtual);
+		try {
+			b.setPublishingDate(dataAtual);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		Informations i = new Informations();
 		i.setIsbn("0002112450");
@@ -28,6 +33,6 @@ public class AppDataBase {
 		db.insertData(i);
 		
 		Book[] result = db.queryBook("*", "isbn = '0002112450'", " ");
-		System.out.println("ISBN: " + result[0].getIsbn() + ", Name: " + result[0].getName());
+		System.out.println("ISBN: " + result[0].getISBN() + ", Name: " + result[0].getName());
 	}
 }

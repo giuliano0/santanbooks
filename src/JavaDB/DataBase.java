@@ -6,8 +6,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Vector;
-import java.sql.Array;
-
 import Classes.Book;
 import Classes.Informations;
 
@@ -159,6 +157,7 @@ public class DataBase implements IDataBase{
 
             // makes the query
             String where = "", order = "";
+            
 	        if(w != null && w != " ")
 	        {
 	        	where = "WHERE " + w;
@@ -176,21 +175,28 @@ public class DataBase implements IDataBase{
 			boolean contentHas = result.next();
 		
 			int cont = 0;
+			
 			while (contentHas)
 			{
-				Book temp = new Book();
-				temp.setIsbn(result.getString("isbn"));
-				temp.setName(result.getString("name"));
-				temp.setAuthors(result.getString("authors"));
-				temp.setDescription(result.getString("description"));
-				temp.setEdition(result.getString("edition"));
-				temp.setImagePath(result.getString("imagePath"));
-				temp.setPublisher(result.getString("publisher"));
-				temp.setPublishingDate(result.getDate("publishingDate"));
+				try {
+					Book temp = new Book();
+					temp.setISBN(result.getString("isbn"));
+					temp.setName(result.getString("name"));
+					temp.setAuthors(new String[]{result.getString("authors")});
+					temp.setDescription(result.getString("description"));
+					temp.setEdition(result.getString("edition"));
+					temp.setImagePath(result.getString("imagePath"));
+					temp.setPublisher(result.getString("publisher"));
+					temp.setPublishingDate(result.getDate("publishingDate"));
+					
+					b[cont] = temp;
+					contentHas = result.next();
+					cont++;
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				
-				b[cont] = temp;
-				contentHas = result.next();
-				cont++;
 			}
 			
 	        command.close();
@@ -229,7 +235,7 @@ public class DataBase implements IDataBase{
 	public Vector getVectorBook(Book b){
 		Vector v = new Vector();
 		
-		v.add(b.getIsbn());
+		v.add(b.getISBN());
 		v.add(b.getName());
 		v.add(b.getAuthors());
 		v.add(b.getDescription());
