@@ -122,8 +122,10 @@ public class Book extends Entity implements ICommentable, IRateable, IReviewable
 			throw new_ex;
 		}
 		
+		/* [GIU] VERIFICAÇÃO DE DÍGITO DESABILITADA! */
+		
 		// Finalmente, confere o dígito de verificação do ISBN-13, easy job ;)
-		int digit;
+		/*int digit;
 		// 012-45-789-1234-5
 		digit = (int)(isbn.charAt(0) - '0') + (3 * (int)(isbn.charAt(1) - '0')) + 
 				(int)(isbn.charAt(2) - '0') + (3 * (int)(isbn.charAt(4) - '0')) + 
@@ -138,8 +140,8 @@ public class Book extends Entity implements ICommentable, IRateable, IReviewable
 		
 		if ((int)(isbn.charAt(16) - '0') != digit) {
 			isbn = null;
-			throw new IllegalArgumentException("O ISBN não é válido!");
-		}
+			throw new IllegalArgumentException("O ISBN não é válido! falha no dígito de verificação!");
+		}*/
 	}
 	
 	public void setName(String value) {
@@ -178,20 +180,20 @@ public class Book extends Entity implements ICommentable, IRateable, IReviewable
 
 	@Override
 	public Comment[] getAllComments() {
-		// TODO Auto-generated method stub
-		return null;
+		if (comments == null); // dbGetComments(isbn);
+		
+		return comments;
 	}
 
 	@Override
 	public Comment getComment(int id) {
-		// TODO Auto-generated method stub
-		return null;
+		if (comments == null) return null; // return dbGetComment(isbn, commentID);
+		else return comments[id];
 	}
 
 	@Override
 	public int getRating() {
-		// TODO Auto-generated method stub
-		return 0;
+		return (int)Math.floor((double)rating);
 	}
 
 	@Override
