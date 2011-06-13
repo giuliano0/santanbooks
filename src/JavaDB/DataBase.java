@@ -6,13 +6,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Vector;
-
 import Classes.Book;
 import Classes.Informations;
 
 /**
  * class handling database
- * @author Fernando Costa e Jo„o Scalett
+ * @author Fernando Costa e Jo√£o Scalett
  */
 public class DataBase implements IDataBase{
 	private String driver;
@@ -35,7 +34,7 @@ public class DataBase implements IDataBase{
                     "CREATE TABLE book " +
                     "(isbn VARCHAR(100) NOT NULL, " +
                     "name VARCHAR(45) NOT NULL, " +
-                    "authors VARCHAR(45), " +
+                    "authors VARCHAR(45) DEFAULT NULL, " +
                     "description VARCHAR(100), " +
                     "edition VARCHAR(100), " +
                     "imagePath VARCHAR(100), " +
@@ -154,72 +153,210 @@ public class DataBase implements IDataBase{
 			Vector<String> where, Vector<String> order) {	
 		try {
 			Class.forName(driver);
-            Connection conexion = DriverManager.getConnection(bd);
-            Statement command = conexion.createStatement();
+			Connection conexion = DriverManager.getConnection(bd);
+			Statement command = conexion.createStatement();
 
-            // makes the query
-       /*     String where = "", order = "";
-            
-	        if(w != null && w != " ")
-	        {
-	        	where = "WHERE " + w;
-	        }
-	        if(o != null && o != " ")
-	        {
-	        	order = "Order by " + o;
-	        }
-	        */
-	        ResultSet result = command.executeQuery("SELECT " + select + " FROM book " + where + order);
-	        //System.out.println("SELECT " + select + " FROM book " + where + order);
-	        
-	        // creates an array of objects book to return
-			Book[] b = new Book[result.getFetchSize()];
-			boolean contentHas = result.next();
-		
-			int cont = 0;
-			
-			while (contentHas)
+			// mounting string select
+			String s = "SELECT ";
+			if(select != null)
 			{
-				try {
-					Book temp = new Book();
-					temp.setISBN(result.getString("isbn"));
-					temp.setName(result.getString("name"));
-					temp.setAuthors(result.getString("authors"));
-					temp.setDescription(result.getString("description"));
-					temp.setEdition(result.getString("edition"));
-					temp.setImagePath(result.getString("imagePath"));
-					temp.setPublisher(result.getString("publisher"));
-					temp.setPublishingDate(result.getDate("publishingDate"));
-					
-					b[cont] = temp;
-					contentHas = result.next();
-					cont++;
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+				for(int i = 0; i < select.size(); i++){
+					if(i != select.size() - 1)
+						s += select.get(i) + ", ";	
+					else
+						s += select.get(i) + " ";
 				}
-				
 			}
-			
-	        command.close();
-	        conexion.close();
-	    	return b;
+			else
+			{
+				// select can not be null
+				return null;
+			}
 
-	      } catch (ClassNotFoundException erro) {
-	    	  System.out.println(erro.getMessage());
-	    	  return null;
-	      } catch (SQLException erro) {
-	    	  System.out.println("Erro na consulta: " + erro.getMessage());
-	    	  return null;
-	      }
+			// mounting string where
+			String w = "";
+			if(where != null)
+			{
+				w = "WHERE ";
+				for(int i = 0; i < where.size(); i++){
+					if(i != where.size() - 1)
+						w += where.get(i) + " AND ";	
+					else
+						w += where.get(i) + " ";
+				}
+			}
+
+			// mounting string order
+			String o = "";
+			if(order != null)
+			{
+				o = "ORDER BY ";
+				for(int i = 0; i < order.size(); i++){
+					if(i != order.size() - 1)
+						o += order.get(i) + ", ";	
+					else
+						o += order.get(i) + " ";
+				}
+			}
+
+			// making the query
+			//System.out.println(s + " FROM book " + w + o);
+			ResultSet r = command.executeQuery(s + " FROM book " + w + o);
+			
+			int numbRows = 0, cont = 0;
+			while(r.next()){
+				numbRows++;
+			}
+			//System.out.println(numbRows);
+	
+			// creates an array of objects book to return
+			Book[] b = new Book[numbRows];		
+			ResultSet result = command.executeQuery(s + " FROM book " + w + o);
+
+			while (result.next())
+			{
+				Book temp = new Book();
+
+				for(int i = 0; i < select.size(); i++){
+					if(select.get(i).equalsIgnoreCase("isbn")) 
+						temp.setISBN(result.getString("isbn"));
+					if(select.get(i).equalsIgnoreCase("name"))
+						temp.setName(result.getString("name"));
+					if(select.get(i).equalsIgnoreCase("authors"))
+						temp.setAuthors(result.getString("authors"));
+					if(select.get(i).equalsIgnoreCase("description"))
+						temp.setDescription(result.getString("description"));
+					if(select.get(i).equalsIgnoreCase("edition"))
+						temp.setEdition(result.getString("edition"));
+					if(select.get(i).equalsIgnoreCase("imagePath"))
+						temp.setImagePath(result.getString("imagePath"));
+					if(select.get(i).equalsIgnoreCase("publisher"))
+						temp.setPublisher(result.getString("publisher"));
+					if(select.get(i).equalsIgnoreCase("publishingDate"))
+						try {
+							temp.setPublishingDate(result.getDate("publishingDate"));
+						} catch (Exception e) {
+							System.out.println("Erro na data: " +e.getMessage());
+						}
+				}
+				//System.out.println("isbn: " +temp.getISBN() + ", cont: " + cont);
+
+				b[cont] = temp;
+				cont++;
+			}
+			command.close();
+			conexion.close();
+			return b;
+
+		} catch (ClassNotFoundException erro) {
+			System.out.println(erro.getMessage());
+			return null;
+		} catch (SQLException erro) {
+			System.out.println("Erro na consulta: " + erro.getMessage());
+			return null;
+		}
 	}
 
-	@Override
 	public Informations[] queryInformations(Vector<String> select,
 			Vector<String> where, Vector<String> order) {
-		Informations[] i = new Informations[1];
-		return i;
-		
+		try {
+			Class.forName(driver);
+			Connection conexion = DriverManager.getConnection(bd);
+			Statement command = conexion.createStatement();
+
+			// mounting string select
+			String s = "SELECT ";
+			if(select != null)
+			{
+				for(int i = 0; i < select.size(); i++){
+					if(i != select.size() - 1)
+						s += select.get(i) + ", ";	
+					else
+						s += select.get(i) + " ";
+				}
+			}
+			else
+			{
+				// select can not be null
+				return null;
+			}
+
+			// mounting string where
+			String w = "";
+			if(where != null)
+			{
+				w = "WHERE ";
+				for(int i = 0; i < where.size(); i++){
+					if(i != where.size() - 1)
+						w += where.get(i) + " AND ";	
+					else
+						w += where.get(i) + " ";
+				}
+			}
+
+			// mounting string order
+			String o = "";
+			if(order != null)
+			{
+				o = "ORDER BY ";
+				for(int i = 0; i < order.size(); i++){
+					if(i != order.size() - 1)
+						o += order.get(i) + ", ";	
+					else
+						o += order.get(i) + " ";
+				}
+			}
+
+			// making the query
+			ResultSet r = command.executeQuery(s + " FROM informations " + w + o);
+			
+			int numbRows = 0, cont = 0;
+			while(r.next()){
+				numbRows++;
+			}
+			//System.out.println(numbRows);
+	
+			// creates an array of objects informations to return
+			Informations[] i = new Informations[numbRows];		
+			ResultSet result = command.executeQuery(s + " FROM informations " + w + o);
+
+			while (result.next())
+			{
+				Informations temp = new Informations();
+
+				for(int j = 0; j < select.size(); j++){
+					if(select.get(j).equalsIgnoreCase("isbn")) 
+						temp.setIsbn(result.getString("isbn"));
+					if(select.get(j).equalsIgnoreCase("title"))
+						temp.setTitle(result.getString("title"));
+					if(select.get(j).equalsIgnoreCase("authorInfo"))
+						temp.setAuthorInfo(result.getString("authorInfo"));
+					if(select.get(j).equalsIgnoreCase("comment"))
+						temp.setComment(result.getString("comment"));
+					if(select.get(j).equalsIgnoreCase("review"))
+						temp.setReview(result.getString("review"));
+					if(select.get(j).equalsIgnoreCase("dateInfo"))
+						try {
+							temp.setDateInfo(result.getDate("dateInfo"));
+						} catch (Exception e) {
+							System.out.println("Erro na data: " +e.getMessage());
+						}
+				}
+
+				i[cont] = temp;
+				cont++;
+			}
+			command.close();
+			conexion.close();
+			return i;
+
+		} catch (ClassNotFoundException erro) {
+			System.out.println(erro.getMessage());
+			return null;
+		} catch (SQLException erro) {
+			System.out.println("Erro na consulta: " + erro.getMessage());
+			return null;
+		}
 	}
 
 	@Override

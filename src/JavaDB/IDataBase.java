@@ -1,13 +1,12 @@
 package JavaDB;
 
 import java.util.Vector;
-
 import Classes.Book;
 import Classes.Informations;
 
 /**
  * manipulation interface database
- * @author Fernando Costa e Jo„o Scalett
+ * @author Fernando Costa e Jo√£o Scalett
  */
 public interface IDataBase {
 	public void connectDataBase();
