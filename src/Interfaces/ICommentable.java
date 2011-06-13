@@ -7,8 +7,8 @@ import Classes.Comment;
  *
  */
 public interface ICommentable {
-	void addComment(Comment comment);	// The comment ID is ignored.
-	void editComment();					// The comment ID is 
+	void addComment(Comment comment);	// O commentID é ignorado
+	void editComment();					// O commentID é conferido
 	Comment[] getAllComments();
 	Comment getComment(int id);
 }

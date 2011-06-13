@@ -2,5 +2,6 @@
 <config>
     <dccs>
         <dcc mainModule="santanbooks.dataBase.DataBaseEntity"/>
+        <dcc mainModule="santanbooks.SearchEngine.SearchEngine"/>
     </dccs>
 </config>
