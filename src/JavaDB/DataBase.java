@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Vector;
+
 import Classes.Book;
 import Classes.Informations;
 
@@ -58,22 +59,14 @@ public class DataBase implements IDataBase{
             command.close();
             conexion.close();
             
-            System.out.println("Tabela criada com sucesso!");
+            System.out.println("Tabelas criadas com sucesso!");
 
         } catch (ClassNotFoundException erro) {
             System.out.println(erro.getMessage());
         } catch (SQLException erro) {
         	if(!erro.getMessage().equalsIgnoreCase("Table/View 'BOOK' already exists in Schema 'APP'."))
-        		System.out.println("Erro na criacao da tabela: " + erro.getMessage());
+        		System.out.println("Erro na criacao das tabelas: " + erro.getMessage());
         }
-	}
-
-	public void deleteData(Book data) {
-		
-	}
-
-	public void deleteData(Informations data) {
-		
 	}
 
 	@SuppressWarnings("unchecked")
@@ -81,6 +74,7 @@ public class DataBase implements IDataBase{
 		Vector v = getVectorBook(data);
 		String values = new String();
 		
+		// mounting string values
 		for(int i = 0; i < v.size(); i++){
 			if(i != v.size() - 1)
 				if(v.get(i) != null)
@@ -93,7 +87,7 @@ public class DataBase implements IDataBase{
 				else
 					values += "''";
 		}
-		
+
 		try {
             Class.forName(driver);
             Connection conexion = DriverManager.getConnection(bd);
@@ -101,6 +95,8 @@ public class DataBase implements IDataBase{
 
             // insert data
             command.executeUpdate("INSERT INTO book VALUES (" + values + ")");
+            
+            System.out.println("Dados do book inseridos com sucesso");
 
             command.close();
             conexion.close();
@@ -108,7 +104,7 @@ public class DataBase implements IDataBase{
         } catch (ClassNotFoundException erro) {
             System.out.println(erro.getMessage());
         } catch (SQLException erro) {
-            System.out.println("Erro no Insert: " + erro.getMessage());
+            System.out.println("Erro no Insert Book: " + erro.getMessage());
         }
 	}
 
@@ -117,6 +113,7 @@ public class DataBase implements IDataBase{
 		Vector v = getVectorInformations(data);
 		String values = new String();
 		
+		// mounting string values
 		for(int i = 0; i < v.size(); i++){
 			if(i != v.size() - 1)
 				if(v.get(i) != null)
@@ -138,6 +135,8 @@ public class DataBase implements IDataBase{
             // insert data
             command.executeUpdate("INSERT INTO informations (isbn, title, authorInfo, " +
             		"comment, review, dateInfo) VALUES (" + values + ")");
+            
+            System.out.println("Dados de informations inseridos com sucesso");
 
             command.close();
             conexion.close();
@@ -145,7 +144,7 @@ public class DataBase implements IDataBase{
         } catch (ClassNotFoundException erro) {
             System.out.println(erro.getMessage());
         } catch (SQLException erro) {
-            System.out.println("Erro no Insert: " + erro.getMessage());
+            System.out.println("Erro no Insert Informations: " + erro.getMessage());
         }		
 	}
 
@@ -252,7 +251,7 @@ public class DataBase implements IDataBase{
 			System.out.println(erro.getMessage());
 			return null;
 		} catch (SQLException erro) {
-			System.out.println("Erro na consulta: " + erro.getMessage());
+			System.out.println("Erro na consulta Book: " + erro.getMessage());
 			return null;
 		}
 	}
@@ -354,21 +353,190 @@ public class DataBase implements IDataBase{
 			System.out.println(erro.getMessage());
 			return null;
 		} catch (SQLException erro) {
-			System.out.println("Erro na consulta: " + erro.getMessage());
+			System.out.println("Erro na consulta Informations: " + erro.getMessage());
 			return null;
 		}
 	}
 
-	@Override
-	public void updateData(Book data) {
-		// TODO Auto-generated method stub
+	@SuppressWarnings("unchecked")
+	public void updateData(Book data, Vector<String> where) {
+		Vector v = getVectorSetBook(data);
+		String set = new String();
 		
+		// mounting string set
+		for(int i = 0; i < v.size(); i++){
+			if(i != v.size() - 1)
+				if(v.get(i) != null)
+					set += "" + v.get(i) + ", ";
+				else
+					set += ", ";
+			else
+				if(v.get(i) != null)
+					set += "" + v.get(i) + "";
+				else
+					set += "";
+		}
+		
+		// mounting string where
+		String w = "";
+		if(where != null)
+		{
+			w = " WHERE ";
+			for(int i = 0; i < where.size(); i++){
+				if(i != where.size() - 1)
+					w += where.get(i) + " AND ";	
+				else
+					w += where.get(i) + " ";
+			}
+		}
+		
+		//System.out.println("UPDATE book SET " + set + w);
+		
+		try {
+			Class.forName(driver);
+			Connection conexion = DriverManager.getConnection(bd);
+			Statement command = conexion.createStatement();
+
+            // makes the updating of data
+			command.executeUpdate("UPDATE book SET " + set + w);
+
+			command.close();
+			conexion.close();
+
+            System.out.println("Dados de book atualizados com sucesso");
+
+        } catch (ClassNotFoundException erro) {
+            System.out.println(erro.getMessage());
+        } catch (SQLException erro) {
+            System.out.println("Erro no Update Book: " + erro.getMessage());
+        }
 	}
 
-	@Override
-	public void updateData(Informations data) {
-		// TODO Auto-generated method stub
+
+	@SuppressWarnings("unchecked")
+	public void updateData(Informations data, Vector<String> where) {
+		Vector v = getVectorSetInformations(data);
+		String set = new String();
 		
+		// mounting string set
+		for(int i = 0; i < v.size(); i++){
+			if(i != v.size() - 1)
+				if(v.get(i) != null)
+					set += "" + v.get(i) + ", ";
+				else
+					set += ", ";
+			else
+				if(v.get(i) != null)
+					set += "" + v.get(i) + "";
+				else
+					set += "";
+		}
+		
+		// mounting string where
+		String w = "";
+		if(where != null)
+		{
+			w = " WHERE ";
+			for(int i = 0; i < where.size(); i++){
+				if(i != where.size() - 1)
+					w += where.get(i) + " AND ";	
+				else
+					w += where.get(i) + " ";
+			}
+		}
+		
+		//System.out.println("UPDATE informations SET " + set + w);
+		
+		try {
+			Class.forName(driver);
+			Connection conexion = DriverManager.getConnection(bd);
+			Statement command = conexion.createStatement();
+
+            // makes the updating of data
+			command.executeUpdate("UPDATE informations SET " + set + w);
+
+			command.close();
+			conexion.close();
+
+            System.out.println("Dados de informations atualizados com sucesso");
+
+        } catch (ClassNotFoundException erro) {
+            System.out.println(erro.getMessage());
+        } catch (SQLException erro) {
+            System.out.println("Erro no Update Informations: " + erro.getMessage());
+        }
+	}
+	
+	public void deleteDataBook(Vector<String> where){
+		// mounting string where
+		String w = "";
+		if(where != null)
+		{
+			w = " WHERE ";
+			for(int i = 0; i < where.size(); i++){
+				if(i != where.size() - 1)
+					w += where.get(i) + " AND ";	
+				else
+					w += where.get(i) + " ";
+			}
+		}
+		
+		//System.out.println("DELETE FROM book " + w);
+		
+		try {
+			Class.forName(driver);
+			Connection conexion = DriverManager.getConnection(bd);
+			Statement command = conexion.createStatement();
+
+            // makes the deletion of data
+			command.executeUpdate("DELETE FROM book " + w);
+
+			command.close();
+			conexion.close();
+
+            System.out.println("Dados de book deletados com sucesso");
+
+        } catch (ClassNotFoundException erro) {
+            System.out.println(erro.getMessage());
+        } catch (SQLException erro) {
+            System.out.println("Erro no delete Book: " + erro.getMessage());
+        }
+	}
+
+	public void deleteDataInformations(Vector<String> where) {
+		// mounting string where
+		String w = "";
+		if(where != null)
+		{
+			w = " WHERE ";
+			for(int i = 0; i < where.size(); i++){
+				if(i != where.size() - 1)
+					w += where.get(i) + " AND ";	
+				else
+					w += where.get(i) + " ";
+			}
+		}
+		
+		//System.out.println("DELETE FROM informations " + w);
+		
+		try {
+			Class.forName(driver);
+			Connection conexion = DriverManager.getConnection(bd);
+			Statement command = conexion.createStatement();
+
+            // makes the deletion of data
+			command.executeUpdate("DELETE FROM informations " + w);
+
+			command.close();
+			conexion.close();
+
+            System.out.println("Dados de informations deletados com sucesso");
+
+        } catch (ClassNotFoundException erro) {
+            System.out.println(erro.getMessage());
+        } catch (SQLException erro) {
+            System.out.println("Erro no delete Informations: " + erro.getMessage());
+        }
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -387,6 +555,21 @@ public class DataBase implements IDataBase{
 	}
 	
 	@SuppressWarnings("unchecked")
+	public Vector getVectorSetBook(Book b){
+		Vector v = new Vector();
+		
+		v.add("isbn = '" + b.getISBN() + "'");
+		v.add("name = '" + b.getName() + "'");
+		v.add("authors = '" + b.getAuthors() + "'");
+		v.add("description = '" + b.getDescription() + "'");
+		v.add("edition = '" + b.getEdition() + "'");
+		v.add("imagePath = '" + b.getImagePath() + "'");
+		v.add("publisher = '" + b.getPublisher() + "'");
+		v.add("publishingDate = '" + b.getPublishingDate() + "'");
+		return v;
+	}
+	
+	@SuppressWarnings("unchecked")
 	public Vector getVectorInformations(Informations i){
 		Vector v = new Vector();
 		
@@ -396,6 +579,19 @@ public class DataBase implements IDataBase{
 		v.add(i.getComment());
 		v.add(i.getReview());
 		v.add(i.getDateInfo());
+		return v;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public Vector getVectorSetInformations(Informations i){
+		Vector v = new Vector();
+		
+		v.add("isbn = '" + i.getIsbn() + "'");
+		v.add("title = '" + i.getTitle() + "'");
+		v.add("authorInfo = '" + i.getAuthorInfo() + "'");
+		v.add("comment = '" + i.getComment() + "'");
+		v.add("review = '" + i.getReview() + "'");
+		v.add("dateInfo = '" + i.getDateInfo() + "'");
 		return v;
 	}
 }
