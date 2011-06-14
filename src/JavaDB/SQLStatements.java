@@ -1,5 +1,10 @@
 package JavaDB;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Vector;
 
 public class SQLStatements {
@@ -7,8 +12,86 @@ public class SQLStatements {
 	public String bd;
 
 	public SQLStatements() {
+		driver = "org.apache.derby.jdbc.EmbeddedDriver";
+		bd = "jdbc:derby:db;create=true";
+	}
+
+	public String getDriver() {
+		return driver;
+	}
+
+	public void setDriver(String driver) {
+		this.driver = driver;
+	}
+
+	public String getBd() {
+		return bd;
+	}
+
+	public void setBd(String bd) {
+		this.bd = bd;
+	}
+
+	public void executeStatement(String statement) throws SQLException{
+		try{
+			Class.forName(driver);
+			Connection conexion = DriverManager.getConnection(bd);
+			Statement command = conexion.createStatement();
+
+			command.executeUpdate(statement);
+			
+			command.close();
+			conexion.close();
+		} catch (ClassNotFoundException erro) {
+			System.out.println(erro.getMessage());
+		} catch (SQLException erro) {
+			throw new SQLException(erro.getMessage());
+		}
 	}
 	
+	public ResultSet querryStatement(String statement) throws SQLException{
+		ResultSet r = null;
+		try{
+			Class.forName(driver);
+			Connection conexion = DriverManager.getConnection(bd);
+			Statement command = conexion.createStatement();
+
+			r = command.executeQuery(statement);
+			
+			command.close();
+			conexion.close();
+		} catch (ClassNotFoundException erro) {
+			System.out.println(erro.getMessage());
+		} catch (SQLException erro) {
+			throw new SQLException(erro.getMessage());
+		}
+		return r;
+	}
+
+	public void insert(String table, String values) throws SQLException{
+		try {
+			executeStatement("INSERT INTO " + table + " VALUES (" + values + ")");
+		} catch (SQLException erro) {
+			throw new SQLException("Erro na insercao em " + table + ": " + erro.getMessage());
+		}
+	}
+
+	public void delete(String table, String where) throws SQLException{
+		try {
+			executeStatement("DELETE FROM " + table + " " + where);
+		} catch (SQLException erro) {
+			throw new SQLException("Erro na delecao em " + table + ": " + erro.getMessage());
+		}
+	}
+	
+	public void update(String table, String set, String where) throws SQLException{
+		try {
+			executeStatement("UPDATE " + table + " SET " + set + where);
+		} catch (SQLException erro) {
+			throw new SQLException("Erro na atualizacao em " + table + ": " + erro.getMessage());
+		}
+	}
+
 	@SuppressWarnings("unchecked")
 	public String mountValuesStatement(Vector v) {
 		String values = new String();
@@ -26,7 +109,7 @@ public class SQLStatements {
 		}
 		return values;
 	}
-	
+
 	public String mountSelectStatement(Vector<String> select) {
 		String s = "SELECT ";
 		if(select != null){
@@ -38,11 +121,11 @@ public class SQLStatements {
 			}
 		}
 		else{
-			s = null; // select can not be null
+			s = null; // select cannot be null
 		}
 		return s;
 	}
-	
+
 	public String mountWhereStatement(Vector<String> where) {
 		String w = "";
 		if(where != null){
@@ -56,7 +139,7 @@ public class SQLStatements {
 		}
 		return w;
 	}
-	
+
 	public String mountOrderStatement(Vector<String> order) {
 		String o = "";
 		if(order != null){
@@ -70,7 +153,7 @@ public class SQLStatements {
 		}
 		return o;
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	public String mountSetStatement(Vector v) {
 		String set = new String();

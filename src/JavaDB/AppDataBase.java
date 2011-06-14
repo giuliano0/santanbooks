@@ -87,7 +87,9 @@ public class AppDataBase {
 		b2.setName("Cálculo 3");
 		where.clear();
 		where.add("isbn = '978-85-233-0143-2'");
-		db.updateData(b2, where);
+		if(db.updateData(b2, where))
+			System.out.println("Dados de book atualizados com sucesso");
+
 		
 		// fazendo a consulta para ver se funcionou o update
 		where.clear();
@@ -100,7 +102,8 @@ public class AppDataBase {
 		// deletando dados
 		where.clear();
 		where.add("isbn = '978-85-233-0143-2'");
-		db.deleteDataBook(where);
+		if(db.deleteDataBook(where))
+			System.out.println("Dados de book deletados com sucesso");;
 		
 		// fazendo a consulta para ver se funcionou o delete
 		where.clear();

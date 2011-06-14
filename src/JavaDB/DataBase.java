@@ -15,59 +15,49 @@ import Classes.Informations;
  * @author Fernando Costa e João Scalett
  */
 public class DataBase implements IDataBase{
-	private String driver;
-	private String bd;
 	private SQLStatements stt; 
-	
-	public DataBase()
-	{
-		driver = "org.apache.derby.jdbc.EmbeddedDriver";
+	private String bd, driver;
+
+	public DataBase(){
 		bd = "jdbc:derby:db;create=true";
-		stt = new SQLStatements();
+		driver = "org.apache.derby.jdbc.EmbeddedDriver";
+		stt = new SQLStatements(); //nao devera ser instanciado aqui, e sim recebido no metodo connect (componente)
+		stt.setBd("jdbc:derby:db;create=true");
+		stt.setDriver("org.apache.derby.jdbc.EmbeddedDriver");
 	}
-	
+
 	public void connectDataBase() throws SQLException {
 		try {
-            Class.forName(driver);
-            Connection conexion = DriverManager.getConnection(bd);
-            Statement command = conexion.createStatement();
-            
-            // Creates table book
-            command.executeUpdate(
-                    "CREATE TABLE book " +
-                    "(isbn VARCHAR(100) NOT NULL, " +
-                    "name VARCHAR(45) NOT NULL, " +
-                    "authors VARCHAR(45) DEFAULT NULL, " +
-                    "description VARCHAR(100), " +
-                    "edition VARCHAR(100), " +
-                    "imagePath VARCHAR(100), " +
-                    "publisher VARCHAR(100), " +
-                    "publishingDate DATE NOT NULL, PRIMARY KEY(isbn))"
-            );
-            
-            // Creates table informations
-            command.executeUpdate(
-                    "CREATE TABLE informations " +
-                    "(id BIGINT NOT NULL PRIMARY KEY GENERATED ALWAYS AS IDENTITY " +
-                    "(START WITH 1, INCREMENT BY 1), " +
-                    "isbn VARCHAR(100) NOT NULL, " +
-                    "title VARCHAR(45) NOT NULL, " +
-                    "authorInfo VARCHAR(45), " +
-                    "comment VARCHAR(1000), " +
-                    "review VARCHAR(10000), " +
-                    "dateInfo DATE NOT NULL)"
-            );
+			// Creates table book
+			stt.executeStatement(
+					"CREATE TABLE book " +
+					"(isbn VARCHAR(100) NOT NULL, " +
+					"name VARCHAR(45) NOT NULL, " +
+					"authors VARCHAR(45) DEFAULT NULL, " +
+					"description VARCHAR(100), " +
+					"edition VARCHAR(100), " +
+					"imagePath VARCHAR(100), " +
+					"publisher VARCHAR(100), " +
+					"publishingDate DATE NOT NULL, PRIMARY KEY(isbn))"
+			);
 
-            command.close();
-            conexion.close();
-            
-            System.out.println("Tabelas criadas com sucesso!");
+			// Creates table informations
+			stt.executeStatement(
+					"CREATE TABLE informations " +
+					"(id BIGINT NOT NULL PRIMARY KEY GENERATED ALWAYS AS IDENTITY " +
+					"(START WITH 1, INCREMENT BY 1), " +
+					"isbn VARCHAR(100) NOT NULL, " +
+					"title VARCHAR(45) NOT NULL, " +
+					"authorInfo VARCHAR(45), " +
+					"comment VARCHAR(1000), " +
+					"review VARCHAR(10000), " +
+					"dateInfo DATE NOT NULL)"
+			);
 
-        } catch (ClassNotFoundException erro) {
-            System.out.println(erro.getMessage());
-        } catch (SQLException erro) {
-        	throw new SQLException("Erro na criacao das tabelas: " + erro.getMessage());
-        }
+			System.out.println("Tabelas criadas com sucesso!");
+		} catch (SQLException erro) {
+			throw new SQLException("Erro na criacao das tabelas: " + erro.getMessage());
+		}
 	}
 
 	@SuppressWarnings("unchecked")
@@ -75,27 +65,11 @@ public class DataBase implements IDataBase{
 		boolean sucesso = true;
 		Vector v = getVectorBook(data);
 		String values = stt.mountValuesStatement(v);
-
 		try {
-            Class.forName(driver);
-            Connection conexion = DriverManager.getConnection(bd);
-            Statement command = conexion.createStatement();
-
-            // insert data
-            command.executeUpdate("INSERT INTO book VALUES (" + values + ")");
-            
-            System.out.println("Dados do book inseridos com sucesso");
-
-            command.close();
-            conexion.close();
-
-        } catch (ClassNotFoundException erro) {
-            System.out.println(erro.getMessage());
-            sucesso = false;
-        } catch (SQLException erro) {
-            System.out.println("Erro no Insert Book: " + erro.getMessage());
-            sucesso = false;
-        }
+			stt.insert("book", values);
+		} catch (SQLException erro) {
+			sucesso = false;
+		}
 		return sucesso;
 	}
 
@@ -105,29 +79,17 @@ public class DataBase implements IDataBase{
 		boolean sucesso = true;
 		Vector v = getVectorInformations(data);
 		String values = stt.mountValuesStatement(v);
-		
+
 		try {
-            Class.forName(driver);
-            Connection conexion = DriverManager.getConnection(bd);
-            Statement command = conexion.createStatement();
+			// insert data
+			stt.executeStatement("INSERT INTO informations (isbn, title, authorInfo, " +
+					"comment, review, dateInfo) VALUES (" + values + ")");
 
-            // insert data
-            command.executeUpdate("INSERT INTO informations (isbn, title, authorInfo, " +
-            		"comment, review, dateInfo) VALUES (" + values + ")");
-            
-            System.out.println("Dados de informations inseridos com sucesso");
-
-            command.close();
-            conexion.close();
-
-        } catch (ClassNotFoundException erro) {
-            System.out.println(erro.getMessage());
-            sucesso = false;
-        } catch (SQLException erro) {
-            System.out.println("Erro no Insert Informations: " + erro.getMessage());
-            sucesso = false;
-        }
-        return sucesso;	
+			System.out.println("Dados de informations inseridos com sucesso");
+		} catch (SQLException erro) {
+			sucesso = false;
+		}
+		return sucesso;	
 	}
 
 	public Book[] queryBook(Vector<String> select,
@@ -147,13 +109,13 @@ public class DataBase implements IDataBase{
 			// making the query
 			//System.out.println(s + " FROM book " + w + o);
 			ResultSet r = command.executeQuery(s + " FROM book " + w + o);
-			
+
 			int numbRows = 0, cont = 0;
 			while(r.next()){
 				numbRows++;
 			}
 			//System.out.println(numbRows);
-	
+
 			// creates an array of objects book to return
 			Book[] b = new Book[numbRows];		
 			ResultSet result = command.executeQuery(s + " FROM book " + w + o);
@@ -218,13 +180,13 @@ public class DataBase implements IDataBase{
 
 			// making the query
 			ResultSet r = command.executeQuery(s + " FROM informations " + w + o);
-			
+
 			int numbRows = 0, cont = 0;
 			while(r.next()){
 				numbRows++;
 			}
 			//System.out.println(numbRows);
-	
+
 			// creates an array of objects informations to return
 			Informations[] i = new Informations[numbRows];		
 			ResultSet result = command.executeQuery(s + " FROM informations " + w + o);
@@ -268,36 +230,19 @@ public class DataBase implements IDataBase{
 		}
 	}
 
+
+
 	@SuppressWarnings("unchecked")
 	public boolean updateData(Book data, Vector<String> where) {
 		boolean sucesso = true;
 		Vector v = getVectorSetBook(data);
 		String set = stt.mountSetStatement(v);
-		
-		String w = stt.mountWhereStatement(where);
-		
-		//System.out.println("UPDATE book SET " + set + w);
-		
+		String w = stt.mountWhereStatement(where);		
 		try {
-			Class.forName(driver);
-			Connection conexion = DriverManager.getConnection(bd);
-			Statement command = conexion.createStatement();
-
-            // makes the updating of data
-			command.executeUpdate("UPDATE book SET " + set + w);
-
-			command.close();
-			conexion.close();
-
-            System.out.println("Dados de book atualizados com sucesso");
-
-        } catch (ClassNotFoundException erro) {
-            System.out.println(erro.getMessage());
-            sucesso = false;
-        } catch (SQLException erro) {
-            System.out.println("Erro no Update Book: " + erro.getMessage());
-            sucesso = false;
-        }
+			stt.update("book", set, w);
+		} catch (SQLException erro) {
+			sucesso = false;
+		}
 		return sucesso;
 	}
 
@@ -306,96 +251,47 @@ public class DataBase implements IDataBase{
 		boolean sucesso = true;
 		Vector v = getVectorSetInformations(data);
 		String set = stt.mountSetStatement(v);
-		
-		String w = stt.mountWhereStatement(where);
-		
-		//System.out.println("UPDATE informations SET " + set + w);
-		
+
+		String w = stt.mountWhereStatement(where);		
 		try {
-			Class.forName(driver);
-			Connection conexion = DriverManager.getConnection(bd);
-			Statement command = conexion.createStatement();
-
-            // makes the updating of data
-			command.executeUpdate("UPDATE informations SET " + set + w);
-
-			command.close();
-			conexion.close();
-
-            System.out.println("Dados de informations atualizados com sucesso");
-
-        } catch (ClassNotFoundException erro) {
-            System.out.println(erro.getMessage());
-            sucesso = false;
-        } catch (SQLException erro) {
-            System.out.println("Erro no Update Informations: " + erro.getMessage());
-            sucesso = false;
-        }
+			stt.executeStatement("UPDATE informations SET " + set + w);
+		} catch (SQLException erro) {
+			System.out.println("Erro no Update Informations: " + erro.getMessage());
+			sucesso = false;
+		}
 		return sucesso;
 	}
-	
+
 	public boolean deleteDataBook(Vector<String> where){
 		boolean sucesso = true;
 		String w = stt.mountWhereStatement(where);
-		
-		//System.out.println("DELETE FROM book " + w);
-		
 		try {
-			Class.forName(driver);
-			Connection conexion = DriverManager.getConnection(bd);
-			Statement command = conexion.createStatement();
-
-            // makes the deletion of data
-			command.executeUpdate("DELETE FROM book " + w);
-
-			command.close();
-			conexion.close();
-
-            System.out.println("Dados de book deletados com sucesso");
-
-        } catch (ClassNotFoundException erro) {
-            System.out.println(erro.getMessage());
-            sucesso = false;
-        } catch (SQLException erro) {
-            System.out.println("Erro no delete Book: " + erro.getMessage());
-            sucesso = false;
-        }
+			stt.delete("book", w);
+		} catch (SQLException erro) {
+			sucesso = false;
+		}
 		return sucesso;
 	}
 
 	public boolean deleteDataInformations(Vector<String> where) {
 		boolean sucesso = true;
 		String w = stt.mountWhereStatement(where);
-		
+
 		//System.out.println("DELETE FROM informations " + w);
-		
+
 		try {
-			Class.forName(driver);
-			Connection conexion = DriverManager.getConnection(bd);
-			Statement command = conexion.createStatement();
-
-            // makes the deletion of data
-			command.executeUpdate("DELETE FROM informations " + w);
-
-			command.close();
-			conexion.close();
-
-            System.out.println("Dados de informations deletados com sucesso");
-
-        } catch (ClassNotFoundException erro) {
-            System.out.println(erro.getMessage());
-            sucesso = false;
-        } catch (SQLException erro) {
-            System.out.println("Erro no delete Informations: " + erro.getMessage());
-            sucesso = false;
-        }
+			stt.executeStatement("DELETE FROM informations " + w);
+		} catch (SQLException erro) {
+			System.out.println("Erro no delete Informations: " + erro.getMessage());
+			sucesso = false;
+		}
 		return sucesso;
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	public Vector getVectorBook(Book b){
 		Vector v = new Vector();
-		
+
 		v.add(b.getISBN());
 		v.add(b.getName());
 		v.add(b.getAuthors());
@@ -406,11 +302,11 @@ public class DataBase implements IDataBase{
 		v.add(b.getPublishingDate());
 		return v;
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	public Vector getVectorSetBook(Book b){
 		Vector v = new Vector();
-		
+
 		v.add("isbn = '" + b.getISBN() + "'");
 		v.add("name = '" + b.getName() + "'");
 		v.add("authors = '" + b.getAuthors() + "'");
@@ -421,11 +317,11 @@ public class DataBase implements IDataBase{
 		v.add("publishingDate = '" + b.getPublishingDate() + "'");
 		return v;
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	public Vector getVectorInformations(Informations i){
 		Vector v = new Vector();
-		
+
 		v.add(i.getIsbn());
 		v.add(i.getTitle());
 		v.add(i.getAuthorInfo());
@@ -434,11 +330,11 @@ public class DataBase implements IDataBase{
 		v.add(i.getDateInfo());
 		return v;
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	public Vector getVectorSetInformations(Informations i){
 		Vector v = new Vector();
-		
+
 		v.add("isbn = '" + i.getIsbn() + "'");
 		v.add("title = '" + i.getTitle() + "'");
 		v.add("authorInfo = '" + i.getAuthorInfo() + "'");
