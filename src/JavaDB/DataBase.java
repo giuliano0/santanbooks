@@ -28,12 +28,28 @@ public class DataBase implements IDataBase{
 
 	public void connectDataBase() throws SQLException {
 		try {
-			// Creates table book
+			/* Creates table user */
+			stt.executeStatement(
+					"CREATE TABLE users " +
+					"(username VARCHAR(100) NOT NULL, " +
+					"accesLevel INT NOT NULL, " +
+					"birthday DATE NOT NULL, " +
+					"college VARCHAR(100), " +
+					"course VARCHAR(100), " +
+					"email VARCHAR(100) NOT NULL, " +
+					"gender INT NOT NULL, " +
+					"name VARCHAR(100) NOT NULL, " +
+					"password VARCHAR(100) NOT NULL, " +
+					"selfDescription VARCHAR(100) NOT NULL, " +
+					"ingressYear DATE NOT NULL, PRIMARY KEY(username))"
+			);
+
+			/* Creates table book */
 			stt.executeStatement(
 					"CREATE TABLE book " +
 					"(isbn VARCHAR(100) NOT NULL, " +
-					"name VARCHAR(45) NOT NULL, " +
-					"authors VARCHAR(45) DEFAULT NULL, " +
+					"name VARCHAR(100) NOT NULL, " +
+					"authors VARCHAR(100) DEFAULT NULL, " +
 					"description VARCHAR(100), " +
 					"edition VARCHAR(100), " +
 					"imagePath VARCHAR(100), " +
@@ -41,18 +57,58 @@ public class DataBase implements IDataBase{
 					"publishingDate DATE NOT NULL, PRIMARY KEY(isbn))"
 			);
 
-			// Creates table informations
+			// Creates table informations (TEMPORARY)
 			stt.executeStatement(
 					"CREATE TABLE informations " +
 					"(id BIGINT NOT NULL PRIMARY KEY GENERATED ALWAYS AS IDENTITY " +
 					"(START WITH 1, INCREMENT BY 1), " +
 					"isbn VARCHAR(100) NOT NULL, " +
-					"title VARCHAR(45) NOT NULL, " +
-					"authorInfo VARCHAR(45), " +
+					"title VARCHAR(100) NOT NULL, " +
+					"authorInfo VARCHAR(100), " +
 					"comment VARCHAR(1000), " +
 					"review VARCHAR(10000), " +
 					"dateInfo DATE NOT NULL)"
 			);
+
+			/* Creates table comment */
+			stt.executeStatement("CREATE TABLE comment "+
+					"(id BIGINT NOT NULL PRIMARY KEY GENERATED ALWAYS AS IDENTITY " +
+					"(START WITH 1, INCREMENT BY 1), " +
+					"username VARCHAR(100) NOT NULL, " +
+					"isbn VARCHAR(100) NOT NULL, " +
+					"content VARCHAR NOT NULL, " +
+					"publishingDate DATE NOT NULL, " +
+					"PRIMARY KEY(username)," +
+					"FOREIGN KEY(username, isbn))"
+			);
+
+			/* Creates table review */
+			stt.executeStatement("CREATE TABLE review " +
+					"(id BIGINT NOT NULL PRIMARY KEY GENERATED ALWAYS AS IDENTITY " +
+					"(START WITH 1, INCREMENT BY 1), " +
+					"username VARCHAR(100) NOT NULL, " +
+					"isbn VARCHAR(100) NOT NULL, " +
+					"bookName VARCHAR(100) NOT NULL, " +
+					"content VARCHAR NOT NULL, " +
+					"publishingDate DATE NOT NULL, " +
+					"title VARCHAR(100) NOT NULL), " +
+					"PRIMARY KEY(id), " +
+					"FOREIGN KEY(username, isbn))"
+			);
+
+
+			/* Creates table rating */
+			stt.executeStatement("CREATE TABLE rating " +
+					"(id BIGINT NOT NULL PRIMARY KEY GENERATED ALWAYS AS IDENTITY " +
+					"(START WITH 1, INCREMENT BY 1), " +
+					"username VARCHAR(100) NOT NULL, " +
+					"isbn VARCHAR(100) NOT NULL, " +
+					"review INT NOT NULL, " +
+					"value INT NOT NULL, " +
+					"PRIMARY KEY(id), " +
+					"FOREIGN KEY(username, isbn, review)"
+			);
+
 
 			System.out.println("Tabelas criadas com sucesso!");
 		} catch (SQLException erro) {
