@@ -3,49 +3,46 @@ package JavaDB;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.util.Vector;
+
 import Classes.Book;
-import Classes.Informations;
 
 public class AppDataBase {
+
+	public final static int MILI_SECONDS_PER_MONTH = 24*60*60*100;
+	public final static int MILI_SECONDS_PER_YEAR = 365*MILI_SECONDS_PER_MONTH;
 	public static void main(String[] args) {
 		
-		Date dataAtual = new Date(System.currentTimeMillis());
-		
-		// montando dados de book para inserir
+		/* montando dados de book para inserir */
 		Book b1 = new Book();
 		b1.setISBN("978-85-772-2156-1");
-		b1.setName("Cálculo 1");
-		b1.setAuthors("Eu mesmo");
-		b1.setDescription("Apesar do livro ser bom, cálculo é uma merda");
+		b1.setName("Calculo 1");
+		b1.setAuthors("Stewart");
+		b1.setDescription("Limite, derivada, integral");
+		b1.setEdition("3");
+		b1.setPublisher("Thompson");
+		Date dataEdicao = new Date((1997-1970)* MILI_SECONDS_PER_YEAR + 5 * MILI_SECONDS_PER_MONTH);
 		try {
-			b1.setPublishingDate(dataAtual);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			b1.setPublishingDate(dataEdicao);
+		} catch (Exception e2) {
+			e2.printStackTrace();
 		}
 		
-		// montando outros dados de book para inserir
+		/* montando dados de book para inserir */
 		Book b2 = new Book();
-		b2.setISBN("978-85-233-0143-2");
-		b2.setName("Cálculo 2");
-		b2.setAuthors("Eu mesmo");
-		b2.setDescription("Apesar deste outro livro ser bom, cálculo é uma merda");	
+		b2.setISBN("978-85-333-0398-4");
+		b2.setName("Calculo 2");
+		b2.setAuthors("Stewart");
+		b2.setDescription("");
+		b2.setEdition("7");
+		b2.setPublisher("Thompson");
+		dataEdicao = new Date((2004-1970)* MILI_SECONDS_PER_YEAR + 7 * MILI_SECONDS_PER_MONTH);
 		try {
-			b2.setPublishingDate(dataAtual);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			b2.setPublishingDate(dataEdicao);
+		} catch (Exception e1) {
+			e1.printStackTrace();
 		}
 		
-		// montando dados de informations para inserir
-		Informations i = new Informations();
-		i.setIsbn("978-85-333-0398-X");
-		i.setTitle("Comentário sobre o livro de Cálculo 1");
-		i.setAuthorInfo("Eu mesmo");
-		i.setComment("Apesar do livro ser bom, cálculo é uma merda");
-		i.setDateInfo(dataAtual);
-		
-		// conectando o banco e inserindo os dados
+		/* conectando o banco e inserindo os dados */
 		DataBase db = new DataBase();
 		try {
 			db.connectDataBase(); //deve sempre ser feito com try/catch
@@ -57,10 +54,10 @@ public class AppDataBase {
 			System.out.println("Problema na insercao: Livro com ISBN " + b1.getISBN() + " j� existe!" );
 		if(!db.insertData(b2))
 			System.out.println("Problema na insercao: Livro com ISBN " + b2.getISBN() + " j� existe!" );
+		if(!db.insertData(b1))
+			System.out.println("Problema na insercao: Livro com ISBN " + b2.getISBN() + " j� existe!" );
 		
-		db.insertData(i);
-		
-		// criando select
+//		// criando select
 		Vector<String> select = new Vector<String>();
 		select.add("isbn");
 		select.add("name");
@@ -68,15 +65,13 @@ public class AppDataBase {
 		
 		// criando where
 		Vector<String> where = new Vector<String>();
-		//where.add("isbn = '978-85-772-2156-1'");
-		//where.add("name = 'Cálculo 1'");
-		where.add("authors = 'Eu mesmo'");
+		where.add("authors = 'Stewart'");
 
 		// criando order
 		Vector<String> order = new Vector<String>();
-		order.add("isbn");
 		order.add("name");
-		
+		order.add("isbn");
+				
 		// realizando a consulta
 		Book result[] = db.queryBook(select, where, order);
 		for(int j = 0; j < result.length; j++){
