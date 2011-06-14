@@ -1,5 +1,6 @@
 package TestApps;
 
+import Exceptions.BookNotFoundException;
 import SearchEngine.SearchEngine;
 
 public class SearchEngineTest {
@@ -17,6 +18,16 @@ public class SearchEngineTest {
 		testKey = se.keyNormalize(testKey);
 		
 		System.out.println(testKey);
+		
+		// Simula um not found da página de livro, como por exemplo, qdo eh acessada com um ISBN inexistente.
+		try {
+			throw new BookNotFoundException();
+		} catch (BookNotFoundException e) {
+			// TODO Auto-generated catch block
+			System.out.println();
+			System.out.println("Peguei uma exception, chefe, saca só:");
+			System.out.println(e.getMessage());
+		}
 	}
 
 }
