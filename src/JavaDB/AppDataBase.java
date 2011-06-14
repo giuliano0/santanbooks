@@ -1,6 +1,7 @@
 package JavaDB;
 
 import java.sql.Date;
+import java.sql.SQLException;
 import java.util.Vector;
 import Classes.Book;
 import Classes.Informations;
@@ -46,9 +47,17 @@ public class AppDataBase {
 		
 		// conectando o banco e inserindo os dados
 		DataBase db = new DataBase();
-		db.connectDataBase();
-		db.insertData(b1);
-		db.insertData(b2);
+		try {
+			db.connectDataBase(); //deve sempre ser feito com try/catch
+		} catch (SQLException e) {
+			//na verdade nao deve fazer nada, pois essa excecao acontecera se o banco ja existir
+			System.out.println(e.getMessage());
+		}
+		if(!db.insertData(b1))
+			System.out.println("Problema na insercao: Livro com ISBN " + b1.getISBN() + " já existe!" );
+		if(!db.insertData(b2))
+			System.out.println("Problema na insercao: Livro com ISBN " + b2.getISBN() + " já existe!" );
+		
 		db.insertData(i);
 		
 		// criando select

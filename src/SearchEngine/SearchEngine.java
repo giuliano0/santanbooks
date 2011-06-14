@@ -108,7 +108,7 @@ public class SearchEngine implements ISearchEngine {
 		
 		for (int word = 0; word < words.length; word++) {
 			for (int notag = 0; notag < notTags.length; notag++) {
-				if (words[word].equals(notTags[notag]))
+				if (words[word].equals(notTags[notag]));
 					// remover do array, nem sei como, mas remover anyway.
 			}
 		}

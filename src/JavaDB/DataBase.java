@@ -17,14 +17,16 @@ import Classes.Informations;
 public class DataBase implements IDataBase{
 	private String driver;
 	private String bd;
+	private SQLStatements stt; 
 	
 	public DataBase()
 	{
 		driver = "org.apache.derby.jdbc.EmbeddedDriver";
 		bd = "jdbc:derby:db;create=true";
+		stt = new SQLStatements();
 	}
 	
-	public void connectDataBase() {
+	public void connectDataBase() throws SQLException {
 		try {
             Class.forName(driver);
             Connection conexion = DriverManager.getConnection(bd);
@@ -64,29 +66,15 @@ public class DataBase implements IDataBase{
         } catch (ClassNotFoundException erro) {
             System.out.println(erro.getMessage());
         } catch (SQLException erro) {
-        	if(!erro.getMessage().equalsIgnoreCase("Table/View 'BOOK' already exists in Schema 'APP'."))
-        		System.out.println("Erro na criacao das tabelas: " + erro.getMessage());
+        	throw new SQLException("Erro na criacao das tabelas: " + erro.getMessage());
         }
 	}
 
 	@SuppressWarnings("unchecked")
-	public void insertData(Book data) {
+	public boolean insertData(Book data) {
+		boolean sucesso = true;
 		Vector v = getVectorBook(data);
-		String values = new String();
-		
-		// mounting string values
-		for(int i = 0; i < v.size(); i++){
-			if(i != v.size() - 1)
-				if(v.get(i) != null)
-					values += "'" + v.get(i) + "', ";
-				else
-					values += "'', ";
-			else
-				if(v.get(i) != null)
-					values += "'" + v.get(i) + "'";
-				else
-					values += "''";
-		}
+		String values = stt.mountValuesStatement(v);
 
 		try {
             Class.forName(driver);
@@ -103,29 +91,20 @@ public class DataBase implements IDataBase{
 
         } catch (ClassNotFoundException erro) {
             System.out.println(erro.getMessage());
+            sucesso = false;
         } catch (SQLException erro) {
             System.out.println("Erro no Insert Book: " + erro.getMessage());
+            sucesso = false;
         }
+		return sucesso;
 	}
 
+
 	@SuppressWarnings("unchecked")
-	public void insertData(Informations data) {
+	public boolean insertData(Informations data) {
+		boolean sucesso = true;
 		Vector v = getVectorInformations(data);
-		String values = new String();
-		
-		// mounting string values
-		for(int i = 0; i < v.size(); i++){
-			if(i != v.size() - 1)
-				if(v.get(i) != null)
-					values += "'" + v.get(i) + "', ";
-				else
-					values += "'', ";
-			else
-				if(v.get(i) != null)
-					values += "'" + v.get(i) + "'";
-				else
-					values += "''";
-		}
+		String values = stt.mountValuesStatement(v);
 		
 		try {
             Class.forName(driver);
@@ -143,9 +122,12 @@ public class DataBase implements IDataBase{
 
         } catch (ClassNotFoundException erro) {
             System.out.println(erro.getMessage());
+            sucesso = false;
         } catch (SQLException erro) {
             System.out.println("Erro no Insert Informations: " + erro.getMessage());
-        }		
+            sucesso = false;
+        }
+        return sucesso;	
 	}
 
 	public Book[] queryBook(Vector<String> select,
@@ -155,48 +137,12 @@ public class DataBase implements IDataBase{
 			Connection conexion = DriverManager.getConnection(bd);
 			Statement command = conexion.createStatement();
 
-			// mounting string select
-			String s = "SELECT ";
-			if(select != null)
-			{
-				for(int i = 0; i < select.size(); i++){
-					if(i != select.size() - 1)
-						s += select.get(i) + ", ";	
-					else
-						s += select.get(i) + " ";
-				}
-			}
-			else
-			{
-				// select can not be null
-				return null;
-			}
+			String s = stt.mountSelectStatement(select);
+			if(s == null) return null; //select cannot be null!
 
-			// mounting string where
-			String w = "";
-			if(where != null)
-			{
-				w = "WHERE ";
-				for(int i = 0; i < where.size(); i++){
-					if(i != where.size() - 1)
-						w += where.get(i) + " AND ";	
-					else
-						w += where.get(i) + " ";
-				}
-			}
+			String w = stt.mountWhereStatement(where);
 
-			// mounting string order
-			String o = "";
-			if(order != null)
-			{
-				o = "ORDER BY ";
-				for(int i = 0; i < order.size(); i++){
-					if(i != order.size() - 1)
-						o += order.get(i) + ", ";	
-					else
-						o += order.get(i) + " ";
-				}
-			}
+			String o = stt.mountOrderStatement(order);
 
 			// making the query
 			//System.out.println(s + " FROM book " + w + o);
@@ -263,48 +209,12 @@ public class DataBase implements IDataBase{
 			Connection conexion = DriverManager.getConnection(bd);
 			Statement command = conexion.createStatement();
 
-			// mounting string select
-			String s = "SELECT ";
-			if(select != null)
-			{
-				for(int i = 0; i < select.size(); i++){
-					if(i != select.size() - 1)
-						s += select.get(i) + ", ";	
-					else
-						s += select.get(i) + " ";
-				}
-			}
-			else
-			{
-				// select can not be null
-				return null;
-			}
+			String s = stt.mountSelectStatement(select);
+			if(s == null) return null; //select cannot be null!
 
-			// mounting string where
-			String w = "";
-			if(where != null)
-			{
-				w = "WHERE ";
-				for(int i = 0; i < where.size(); i++){
-					if(i != where.size() - 1)
-						w += where.get(i) + " AND ";	
-					else
-						w += where.get(i) + " ";
-				}
-			}
+			String w = stt.mountWhereStatement(where);
 
-			// mounting string order
-			String o = "";
-			if(order != null)
-			{
-				o = "ORDER BY ";
-				for(int i = 0; i < order.size(); i++){
-					if(i != order.size() - 1)
-						o += order.get(i) + ", ";	
-					else
-						o += order.get(i) + " ";
-				}
-			}
+			String o = stt.mountOrderStatement(order);
 
 			// making the query
 			ResultSet r = command.executeQuery(s + " FROM informations " + w + o);
@@ -359,36 +269,12 @@ public class DataBase implements IDataBase{
 	}
 
 	@SuppressWarnings("unchecked")
-	public void updateData(Book data, Vector<String> where) {
+	public boolean updateData(Book data, Vector<String> where) {
+		boolean sucesso = true;
 		Vector v = getVectorSetBook(data);
-		String set = new String();
+		String set = stt.mountSetStatement(v);
 		
-		// mounting string set
-		for(int i = 0; i < v.size(); i++){
-			if(i != v.size() - 1)
-				if(v.get(i) != null)
-					set += "" + v.get(i) + ", ";
-				else
-					set += ", ";
-			else
-				if(v.get(i) != null)
-					set += "" + v.get(i) + "";
-				else
-					set += "";
-		}
-		
-		// mounting string where
-		String w = "";
-		if(where != null)
-		{
-			w = " WHERE ";
-			for(int i = 0; i < where.size(); i++){
-				if(i != where.size() - 1)
-					w += where.get(i) + " AND ";	
-				else
-					w += where.get(i) + " ";
-			}
-		}
+		String w = stt.mountWhereStatement(where);
 		
 		//System.out.println("UPDATE book SET " + set + w);
 		
@@ -407,43 +293,21 @@ public class DataBase implements IDataBase{
 
         } catch (ClassNotFoundException erro) {
             System.out.println(erro.getMessage());
+            sucesso = false;
         } catch (SQLException erro) {
             System.out.println("Erro no Update Book: " + erro.getMessage());
+            sucesso = false;
         }
+		return sucesso;
 	}
 
-
 	@SuppressWarnings("unchecked")
-	public void updateData(Informations data, Vector<String> where) {
+	public boolean updateData(Informations data, Vector<String> where) {
+		boolean sucesso = true;
 		Vector v = getVectorSetInformations(data);
-		String set = new String();
+		String set = stt.mountSetStatement(v);
 		
-		// mounting string set
-		for(int i = 0; i < v.size(); i++){
-			if(i != v.size() - 1)
-				if(v.get(i) != null)
-					set += "" + v.get(i) + ", ";
-				else
-					set += ", ";
-			else
-				if(v.get(i) != null)
-					set += "" + v.get(i) + "";
-				else
-					set += "";
-		}
-		
-		// mounting string where
-		String w = "";
-		if(where != null)
-		{
-			w = " WHERE ";
-			for(int i = 0; i < where.size(); i++){
-				if(i != where.size() - 1)
-					w += where.get(i) + " AND ";	
-				else
-					w += where.get(i) + " ";
-			}
-		}
+		String w = stt.mountWhereStatement(where);
 		
 		//System.out.println("UPDATE informations SET " + set + w);
 		
@@ -462,24 +326,17 @@ public class DataBase implements IDataBase{
 
         } catch (ClassNotFoundException erro) {
             System.out.println(erro.getMessage());
+            sucesso = false;
         } catch (SQLException erro) {
             System.out.println("Erro no Update Informations: " + erro.getMessage());
+            sucesso = false;
         }
+		return sucesso;
 	}
 	
-	public void deleteDataBook(Vector<String> where){
-		// mounting string where
-		String w = "";
-		if(where != null)
-		{
-			w = " WHERE ";
-			for(int i = 0; i < where.size(); i++){
-				if(i != where.size() - 1)
-					w += where.get(i) + " AND ";	
-				else
-					w += where.get(i) + " ";
-			}
-		}
+	public boolean deleteDataBook(Vector<String> where){
+		boolean sucesso = true;
+		String w = stt.mountWhereStatement(where);
 		
 		//System.out.println("DELETE FROM book " + w);
 		
@@ -498,24 +355,17 @@ public class DataBase implements IDataBase{
 
         } catch (ClassNotFoundException erro) {
             System.out.println(erro.getMessage());
+            sucesso = false;
         } catch (SQLException erro) {
             System.out.println("Erro no delete Book: " + erro.getMessage());
+            sucesso = false;
         }
+		return sucesso;
 	}
 
-	public void deleteDataInformations(Vector<String> where) {
-		// mounting string where
-		String w = "";
-		if(where != null)
-		{
-			w = " WHERE ";
-			for(int i = 0; i < where.size(); i++){
-				if(i != where.size() - 1)
-					w += where.get(i) + " AND ";	
-				else
-					w += where.get(i) + " ";
-			}
-		}
+	public boolean deleteDataInformations(Vector<String> where) {
+		boolean sucesso = true;
+		String w = stt.mountWhereStatement(where);
 		
 		//System.out.println("DELETE FROM informations " + w);
 		
@@ -534,9 +384,12 @@ public class DataBase implements IDataBase{
 
         } catch (ClassNotFoundException erro) {
             System.out.println(erro.getMessage());
+            sucesso = false;
         } catch (SQLException erro) {
             System.out.println("Erro no delete Informations: " + erro.getMessage());
+            sucesso = false;
         }
+		return sucesso;
 	}
 	
 	@SuppressWarnings("unchecked")
