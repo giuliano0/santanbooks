@@ -15,4 +15,5 @@ public class BookNotFoundException extends Exception {
 		super(message);
 	}
 	
+	/* Não é necessário sobrescrever getMessage() */ 
 }

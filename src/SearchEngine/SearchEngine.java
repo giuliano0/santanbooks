@@ -1,7 +1,5 @@
 package SearchEngine;
 
-import java.util.ArrayList;
-
 import anima.annotation.Component;
 import Classes.Book;
 import Interfaces.ISearchEngine;
@@ -15,32 +13,49 @@ import Interfaces.ISearchEngine;
  */
 @Component(id="<http://purl.org/dcc/santanbooks.SearchEngine.SearchEngine>",
         provides={"<http://purl.org/dcc/santanbooks.Interfaces.ISearchEngine>"})
-public class SearchEngine implements ISearchEngine {
+public class SearchEngine implements ISearchEngine { // TODO: colocar o IRequires<IDataBase>, ajuda aqui please =)
 
+	// Preposições, artigos, conjunções, e tudo mais (pontuação, sinais gráficos). 42!
+	// Bithces, ajudem a popular o array abaixo, kkthxbye ;)
+	private static String[] notTags = {"a", "as", "o", "os", "e", "de", "do", "dos", "da", "das", 
+						"para", "como", "com", "em", "no", "nos", "na", "nas", "uns", "umas", 
+						"um", "algum", "alguém", "nenhum", "ninguém", "todo", "todos", "toda", "todas", "tudo"};
+
+	// Verificar documentação do java para expressões regulares a respeito dos caracteres comentados abaixo.
+	// Eles são usados no Regex, e na verdade esse array inteiro pode ser substituído por um Regex Pattern...
+	private static final String[] punctuation = {",", ".", ":", "-", ";", /*"?",*/ "!", /*"(", ")"*/};
+	
+	// TODO: Declarar a database e a factory, e instanciá-la no construtor.
+	
+	public SearchEngine() {
+		//Arrays.sort(notTags);
+	}
+	
 	@Override
 	public Book[] searchByAuthor(String key) {
-		keyNormalize(key);
+		//String nKey = keyNormalize(key);
 
 		return null;
 	}
 
 	@Override
 	public Book[] searchByISBN(String key) {
-		keyNormalize(key);
+		//String nKey = keyNormalize(key);
 		
 		return null;
 	}
 
 	@Override
 	public Book[] searchByName(String key) {
-		keyNormalize(key);
+		//String nKey = keyNormalize(key);
 		
 		return null;
 	}
 
 	@Override
 	public Book[] searchByTags(String[] tags) {
-		for (int i = 0; i < tags.length; i++) keyNormalize(tags[i]);
+		//String[] nKeys; // Declaração errada!
+		//for (int i = 0; i < tags.length; i++) nKeys[i] = keyNormalize(tags[i]);
 		
 		return null;
 	}
@@ -55,18 +70,12 @@ public class SearchEngine implements ISearchEngine {
 	 * <p>Mantém, porém, caracteres de pontuação, símbolos e caraceres especiais.</p> 
 	 * @author Giuliano
 	 */
-	public String keyNormalize(String value) {
+	public String keyNormalize(String value, boolean removePunctuation /*OPTIONAL*/) {
 		String ret = "";
 		
 		value.trim();
 		value = value.toLowerCase();
-		
-		// á à ã â ä
-		// é è ê ë
-		// í ì î ï
-		// ó ò õ ô ö
-		// ú ù û ü
-		// ç ñ
+
 		for (int i = 0; i < value.length(); i++) {
 			char c = value.charAt(i);
 			
@@ -81,41 +90,39 @@ public class SearchEngine implements ISearchEngine {
 			ret += c;
 		}
 		
-		return ret;
-	}
-	
-	public String[] extractTags(String value) {
-		// normaliza a frase
-		// quebra a frase em palavras
-		// loopa pelas palavras procurando não-tags
-		// remove os matches
-		// retira pontuação do resto
-		
-		ArrayList<String> tagArray = new ArrayList<String>();
-		
-		// Preposições, artigos, conjunções, e tudo mais (pontuação, sinais gráficos). 42!
-		// Bithces, ajudem a popular o array abaixo, kkthxbye ;)
-		String[] notTags = {"a", "as", "o", "os", "e", "de", "do", "dos", "da", 
-							"das", "para", "como", "com", "em", "no", "nos", 
-							"na", "nas", "uns", "umas", "um", "algum", "alguém", 
-							"nenhum", "ninguém", "todo", "todos", "toda", "todas", 
-							"tudo", 
-							",", ".", ":", "-", ";", "?", "!", "(", ")"};
-		
-		keyNormalize(value);
-		
-		String words[] = value.split(" ");
-		
-		for (int word = 0; word < words.length; word++) {
-			for (int notag = 0; notag < notTags.length; notag++) {
-				if (words[word].equals(notTags[notag]));
-					// remover do array, nem sei como, mas remover anyway.
+		if (removePunctuation) {
+			// O(n²), sucks
+			for (int i = 0; i < punctuation.length; i++) {
+				System.out.println("retirando pontuação[: " + i + "]" + punctuation[i]);
+				ret.replaceAll(punctuation[i], ""); 
 			}
 		}
 		
+		return ret;
+	}
+	
+	/**
+	 * Extrai potenciais tags relevantes de uma string, que pode ser o título do livro.
+	 * @author Giuliano
+	 * @param value é a string a sofrer extração
+	 * @return Retorna um array de strings com as tags encontradas.
+	 */
+	public String[] extractTags(String value) {
+		String tags[];
 		
+		// remove, além de acentos, pontuação
+		value = keyNormalize(value, true);
 		
-		return null;
+		// Remove cada match de não-tag da string
+		for (int i = 0; i < notTags.length; i++) {
+			System.out.println("Retirando ocorrência de não-tag[" + i + "]: " + notTags[i]);
+			value = value.replaceAll(" " + notTags[i] + " ", " ");
+		}
+		
+		tags = value.split(" ");
+		//Arrays.sort(words);
+		
+		return tags;
 	}
 	
 }
