@@ -50,7 +50,7 @@ public class AppDataBase {
 		try {
 			db.connectDataBase(); //deve sempre ser feito com try/catch
 		} catch (SQLException e) {
-			//na verdade nao deve fazer nada, pois essa excecao acontecera se o banco ja existir
+			//acontece se houver problema na criação de alguma tabela ou se já existir
 			System.out.println(e.getMessage());
 		}
 		if(!db.insertData(b1))
@@ -112,6 +112,7 @@ public class AppDataBase {
 		for(int j = 0; j < result3.length; j++){
 			System.out.println("ISBN: " + result3[j].getISBN() + ", Name: " + result3[j].getName());
 		}
-		
+		/* REMOVE TODAS AS TABELAS. SÓ PARA O EXEMPLO! */
+		db.dropAllTables();
 	}
 }

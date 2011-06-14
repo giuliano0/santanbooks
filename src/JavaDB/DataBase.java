@@ -76,10 +76,9 @@ public class DataBase implements IDataBase{
 					"(START WITH 1, INCREMENT BY 1), " +
 					"username VARCHAR(100) NOT NULL, " +
 					"isbn VARCHAR(100) NOT NULL, " +
-					"content VARCHAR NOT NULL, " +
-					"publishingDate DATE NOT NULL, " +
-					"PRIMARY KEY(username)," +
-					"FOREIGN KEY(username, isbn))"
+					"content VARCHAR(255) NOT NULL, " +
+					"publishingDate DATE NOT NULL)"
+					/*"FOREIGN KEY(username, isbn))"*/
 			);
 
 			/* Creates table review */
@@ -89,13 +88,11 @@ public class DataBase implements IDataBase{
 					"username VARCHAR(100) NOT NULL, " +
 					"isbn VARCHAR(100) NOT NULL, " +
 					"bookName VARCHAR(100) NOT NULL, " +
-					"content VARCHAR NOT NULL, " +
+					"content VARCHAR(10000) NOT NULL, " +
 					"publishingDate DATE NOT NULL, " +
-					"title VARCHAR(100) NOT NULL), " +
-					"PRIMARY KEY(id), " +
-					"FOREIGN KEY(username, isbn))"
+					"title VARCHAR(100) NOT NULL)"
+					/*"FOREIGN KEY(username, isbn))"*/
 			);
-
 
 			/* Creates table rating */
 			stt.executeStatement("CREATE TABLE rating " +
@@ -104,15 +101,37 @@ public class DataBase implements IDataBase{
 					"username VARCHAR(100) NOT NULL, " +
 					"isbn VARCHAR(100) NOT NULL, " +
 					"review INT NOT NULL, " +
-					"value INT NOT NULL, " +
-					"PRIMARY KEY(id), " +
-					"FOREIGN KEY(username, isbn, review)"
+					"value INT NOT NULL)"
+					/*"FOREIGN KEY(username, isbn, review))"*/
 			);
-
-
-			System.out.println("Tabelas criadas com sucesso!");
+			
+			/* Creates table session */
+			stt.executeStatement(
+					"CREATE TABLE session " +
+					"(username VARCHAR(100) NOT NULL, " +
+					"status INT NOT NULL, " +
+					"lastDate DATE NOT NULL, PRIMARY KEY(username))"
+					/*"FOREIGN KEY(username, isbn, review))"*/
+			);
+			
 		} catch (SQLException erro) {
 			throw new SQLException("Erro na criacao das tabelas: " + erro.getMessage());
+		}
+	}
+	
+	/* Método temporário. Até pq não é vantagem poder sair excluindo tudo */
+	public void dropAllTables(){
+		try{
+			stt.executeStatement("DROP TABLE users");
+			stt.executeStatement("DROP TABLE book");
+			stt.executeStatement("DROP TABLE informations");
+			stt.executeStatement("DROP TABLE comment");
+			stt.executeStatement("DROP TABLE review");
+			stt.executeStatement("DROP TABLE rating");
+			stt.executeStatement("DROP TABLE session");
+		}
+		catch(SQLException erro){
+			System.out.println(erro.getMessage());
 		}
 	}
 
