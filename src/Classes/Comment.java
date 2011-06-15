@@ -27,7 +27,7 @@ public class Comment extends Entity implements IRateable {
 		return ID;
 	}
 	
-	public String getAuthor() {
+	public String getUsername() {
 		return username;
 	}
 	
@@ -49,7 +49,7 @@ public class Comment extends Entity implements IRateable {
 		ID = value;
 	}
 	
-	public void setAuthor(String value) {
+	public void setUsername(String value) {
 		username = value.trim();
 	}
 	

@@ -17,7 +17,7 @@ public class Review extends Entity implements ICommentable, IRateable {
 	String bookName;		// Essa propriedade deve ser setada pelo banco, consultando tblBooks via ISBN
 	String content;
 	Date publishingDate;
-	String name;
+	String title;
 	
 	Comment[] comments;
 	float rating;
@@ -49,7 +49,7 @@ public class Review extends Entity implements ICommentable, IRateable {
 	}
 	
 	public String getTitle() {
-		return name;
+		return title;
 	}
 	
 	public void setID(int value) {
@@ -77,7 +77,7 @@ public class Review extends Entity implements ICommentable, IRateable {
 	}
 	
 	public void setTitle(String value) {
-		name = value;
+		title = value;
 	}
 	
 	@Override
