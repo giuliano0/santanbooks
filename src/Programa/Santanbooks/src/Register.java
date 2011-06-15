@@ -1,3 +1,5 @@
+package Programa.Santanbooks.src;
+
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
@@ -15,6 +17,7 @@
  *
  * @author ra073668
  */
+@SuppressWarnings("serial")
 public class Register extends javax.swing.JPanel {
     private Santanbooks parent;
     /** Creates new form Register */

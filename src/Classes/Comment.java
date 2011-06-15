@@ -13,13 +13,13 @@ import Interfaces.IRateable;
 public class Comment extends Entity implements IRateable {
 	// Fields
 	int ID;
-	String author;
+	String username;
+	String bookISBN;
 	String content;
 	Date publishingDate;
 	boolean visible;
+	
 	float rating;
-	String isbn;
-	int reviewID;
 	
 	// TODO: review access scope, data types and checkings inside these methods.
 	
@@ -28,7 +28,7 @@ public class Comment extends Entity implements IRateable {
 	}
 	
 	public String getAuthor() {
-		return author;
+		return username;
 	}
 	
 	public String getContent() {
@@ -50,7 +50,7 @@ public class Comment extends Entity implements IRateable {
 	}
 	
 	public void setAuthor(String value) {
-		author = value.trim();
+		username = value.trim();
 	}
 	
 	public void setContent(String value) {
@@ -79,20 +79,12 @@ public class Comment extends Entity implements IRateable {
 		
 	}
 
-	public String getISBN() {
-		return isbn;
+	public String getBookISBN() {
+		return bookISBN;
 	}
 	
-	public int getReviewID() {
-		return reviewID;
-	}
-	
-	public void setISBN(String value) {
-		isbn = value;
-	}
-	
-	public void setReviewID(int value) {
-		reviewID = value;
+	public void setBookISBN(String value) {
+		bookISBN = value;
 	}
 	
 }

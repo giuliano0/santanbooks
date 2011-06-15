@@ -33,7 +33,7 @@ public class SearchEngineTest {
 		// Fim do teste de Exception throwing
 		
 		// Teste da extração de tags
-		String phrase = "Equações Diferenciais Elementares e Problemas de Valores de Contorno";
+		String phrase = "Equações Diferenciais Elementares e, Problemas. de Valores de Contorno!? ?";
 		String tags[] = se.extractTags(phrase);
 		
 		System.out.print("{");

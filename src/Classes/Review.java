@@ -12,23 +12,24 @@ import Interfaces.*;
 public class Review extends Entity implements ICommentable, IRateable {
 	// Fields
 	int ID;
-	String author;
+	String username;
 	String bookISBN;
-	String bookName;
+	String bookName;		// Essa propriedade deve ser setada pelo banco, consultando tblBooks via ISBN
 	String content;
 	Date publishingDate;
-	String title;
+	String name;
+	
 	Comment[] comments;
 	float rating;
 	
 	// TODO: review access scope, data types and checkings inside these methods.
 	
 	public int getID() {
-		return 0;
+		return ID;
 	}
 	
 	public String getAuthor() {
-		return author;
+		return username;
 	}
 	
 	public String getBookISBN() {
@@ -48,7 +49,7 @@ public class Review extends Entity implements ICommentable, IRateable {
 	}
 	
 	public String getTitle() {
-		return title;
+		return name;
 	}
 	
 	public void setID(int value) {
@@ -56,7 +57,7 @@ public class Review extends Entity implements ICommentable, IRateable {
 	}
 	
 	public void setAuthor(String value) {
-		author = value;
+		username = value;
 	}
 	
 	public void setBookISBN(String value) {
@@ -76,7 +77,7 @@ public class Review extends Entity implements ICommentable, IRateable {
 	}
 	
 	public void setTitle(String value) {
-		title = value;
+		name = value;
 	}
 	
 	@Override
@@ -114,4 +115,3 @@ public class Review extends Entity implements ICommentable, IRateable {
 		
 	}
 }
-

@@ -1,5 +1,7 @@
 package SearchEngine;
 
+import java.util.Arrays;
+
 import anima.annotation.Component;
 import Classes.Book;
 import Interfaces.ISearchEngine;
@@ -23,12 +25,13 @@ public class SearchEngine implements ISearchEngine { // TODO: colocar o IRequire
 
 	// Verificar documentação do java para expressões regulares a respeito dos caracteres comentados abaixo.
 	// Eles são usados no Regex, e na verdade esse array inteiro pode ser substituído por um Regex Pattern...
-	private static final String[] punctuation = {",", ".", ":", "-", ";", /*"?",*/ "!", /*"(", ")"*/};
+	// Metacaracteres do Regex: ([{\^-$|]})?*+.
+	private static final String[] punctuation = {",", "\\.", ":", "\\-", ";", "\\?", "!", "\\(", "\\)", "\\n"};
 	
 	// TODO: Declarar a database e a factory, e instanciá-la no construtor.
 	
 	public SearchEngine() {
-		//Arrays.sort(notTags);
+		Arrays.sort(notTags);
 	}
 	
 	@Override
@@ -71,6 +74,7 @@ public class SearchEngine implements ISearchEngine { // TODO: colocar o IRequire
 	 * @author Giuliano
 	 */
 	public String keyNormalize(String value, boolean removePunctuation /*OPTIONAL*/) {
+		long start = System.currentTimeMillis();
 		String ret = "";
 		
 		value.trim();
@@ -91,13 +95,11 @@ public class SearchEngine implements ISearchEngine { // TODO: colocar o IRequire
 		}
 		
 		if (removePunctuation) {
-			// O(n²), sucks
-			for (int i = 0; i < punctuation.length; i++) {
-				System.out.println("retirando pontuação[: " + i + "]" + punctuation[i]);
-				ret.replaceAll(punctuation[i], ""); 
-			}
+			for (int i = 0; i < punctuation.length; i++)
+				ret = ret.replaceAll(punctuation[i], ""); 
 		}
 		
+		System.out.println("Running time (keyNormalize): " + (System.currentTimeMillis() - start) + "ms.");
 		return ret;
 	}
 	
@@ -108,19 +110,20 @@ public class SearchEngine implements ISearchEngine { // TODO: colocar o IRequire
 	 * @return Retorna um array de strings com as tags encontradas.
 	 */
 	public String[] extractTags(String value) {
+		long start = System.currentTimeMillis();
 		String tags[];
 		
 		// remove, além de acentos, pontuação
 		value = keyNormalize(value, true);
 		
 		// Remove cada match de não-tag da string
-		for (int i = 0; i < notTags.length; i++) {
-			System.out.println("Retirando ocorrência de não-tag[" + i + "]: " + notTags[i]);
+		for (int i = 0; i < notTags.length; i++)
 			value = value.replaceAll(" " + notTags[i] + " ", " ");
-		}
 		
 		tags = value.split(" ");
-		//Arrays.sort(words);
+		Arrays.sort(tags);
+		
+		System.out.println("Running time (extractTags): " + (System.currentTimeMillis() - start) + "ms.");
 		
 		return tags;
 	}
