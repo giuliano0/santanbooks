@@ -517,7 +517,7 @@ public class DataBase implements IDataBase{
 					if(select.get(i).equalsIgnoreCase("id")) 
 						temp.setID(result.getInt("id"));
 					if(select.get(i).equalsIgnoreCase("bookISBN")) 
-						//temp.setBookISBN(result.getString("bookISBN"));
+						temp.setBookISBN(result.getString("bookISBN"));
 					if(select.get(i).equalsIgnoreCase("author"))
 						temp.setAuthor(result.getString("author"));
 					if(select.get(i).equalsIgnoreCase("content"))
@@ -585,7 +585,7 @@ public class DataBase implements IDataBase{
 		Vector v = new Vector();
 		v.add(c.getID());
 		v.add(c.getAuthor());
-		//v.add(c.getBookISBN());  
+		v.add(c.getBookISBN());  
 		v.add(c.getContent());
 		v.add(c.getPublishingDate());
 		return v;
@@ -599,7 +599,7 @@ public class DataBase implements IDataBase{
 		Vector v = new Vector();
 		v.add("id = '" + c.getID() + "'");
 		v.add("username = '" + c.getAuthor() + "'");
-		v.add("bookISBN = '" + c.getISBN() + "'"); 
+		v.add("bookISBN = '" + c.getBookISBN() + "'"); 
 		v.add("content = '" + c.getContent() + "'");
 		v.add("publishingDate = '" + c.getPublishingDate() + "'");
 		return v;
@@ -665,7 +665,7 @@ public class DataBase implements IDataBase{
 					if(select.get(i).equalsIgnoreCase("id")) 
 						temp.setID(result.getInt("id"));
 					if(select.get(i).equalsIgnoreCase("username"))
-						//temp.setUsername(result.getString("username"));
+						temp.setUsername(result.getString("username"));
 					if(select.get(i).equalsIgnoreCase("bookIsbn"))
 						temp.setBookISBN(result.getString("bookIsbn"));
 					if(select.get(i).equalsIgnoreCase("bookName"))
@@ -736,7 +736,7 @@ public class DataBase implements IDataBase{
 	public Vector getVectorReview(Review r){
 		Vector v = new Vector();
 		v.add(r.getID());
-		v.add(r.getAuthor());
+		v.add(r.getUsername());
 		v.add(r.getBookISBN());
 		v.add(r.getBookName());
 		v.add(r.getContent());
@@ -752,7 +752,7 @@ public class DataBase implements IDataBase{
 	public Vector getVectorSetReview(Review r){
 		Vector v = new Vector();
 		v.add("id = '" + r.getID() + "'");
-		v.add("username = '" + r.getAuthor() + "'");
+		v.add("username = '" + r.getUsername() + "'");
 		v.add("isbn = '" + r.getBookISBN() + "'");
 		v.add("bookName = '" + r.getBookName() + "'");
 		v.add("content = '" + r.getContent() + "'");

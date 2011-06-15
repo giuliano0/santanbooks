@@ -28,7 +28,7 @@ public class Review extends Entity implements ICommentable, IRateable {
 		return ID;
 	}
 	
-	public String getAuthor() {
+	public String getUsername() {
 		return username;
 	}
 	
@@ -56,7 +56,7 @@ public class Review extends Entity implements ICommentable, IRateable {
 		ID = value;
 	}
 	
-	public void setAuthor(String value) {
+	public void setUsername(String value) {
 		username = value;
 	}
 	
