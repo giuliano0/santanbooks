@@ -157,12 +157,6 @@ public class DataBase implements IDataBase{
 		return sucesso;
 	}
 
-	/* (non-Javadoc)
-	 * @see JavaDB.SDdasdasdasd#queryUser(java.util.Vector, java.util.Vector, java.util.Vector)
-	 */
-	/* (non-Javadoc)
-	 * @see JavaDB.Agfgdfgf#queryUser(java.util.Vector, java.util.Vector, java.util.Vector)
-	 */
 	public User[] queryUser(Vector<String> select,
 			Vector<String> where, Vector<String> order) {	
 		try {
@@ -230,12 +224,6 @@ public class DataBase implements IDataBase{
 		}
 	}
 
-	/* (non-Javadoc)
-	 * @see JavaDB.SDdasdasdasd#updateData(Classes.User, java.util.Vector)
-	 */
-	/* (non-Javadoc)
-	 * @see JavaDB.Agfgdfgf#updateData(Classes.User, java.util.Vector)
-	 */
 	@SuppressWarnings("unchecked")
 	public boolean updateData(User data, Vector<String> where) {
 		boolean sucesso = true;
@@ -250,12 +238,6 @@ public class DataBase implements IDataBase{
 		return sucesso;
 	}
 
-	/* (non-Javadoc)
-	 * @see JavaDB.SDdasdasdasd#deleteDataUser(java.util.Vector)
-	 */
-	/* (non-Javadoc)
-	 * @see JavaDB.Agfgdfgf#deleteDataUser(java.util.Vector)
-	 */
 	public boolean deleteDataUser(Vector<String> where){
 		boolean sucesso = true;
 		String w = stt.mountWhereStatement(where);
@@ -267,12 +249,6 @@ public class DataBase implements IDataBase{
 		return sucesso;
 	}
 
-	/* (non-Javadoc)
-	 * @see JavaDB.SDdasdasdasd#getVectorUser(Classes.User)
-	 */
-	/* (non-Javadoc)
-	 * @see JavaDB.Agfgdfgf#getVectorUser(Classes.User)
-	 */
 	@SuppressWarnings("unchecked")
 	public Vector getVectorUser(User u){
 		Vector v = new Vector();
@@ -290,12 +266,6 @@ public class DataBase implements IDataBase{
 		return v;
 	}
 
-	/* (non-Javadoc)
-	 * @see JavaDB.SDdasdasdasd#getVectorSetUser(Classes.User)
-	 */
-	/* (non-Javadoc)
-	 * @see JavaDB.Agfgdfgf#getVectorSetUser(Classes.User)
-	 */
 	@SuppressWarnings("unchecked")
 	public Vector getVectorSetUser(User u){
 		Vector v = new Vector();
@@ -319,13 +289,6 @@ public class DataBase implements IDataBase{
 	 */
 	////////////////////////////////////////////////////////////////////
 	
-	
-	/* (non-Javadoc)
-	 * @see JavaDB.SDdasdasdasd#insertData(Classes.Book)
-	 */
-	/* (non-Javadoc)
-	 * @see JavaDB.Agfgdfgf#insertData(Classes.Book)
-	 */
 	@SuppressWarnings("unchecked")
 	public boolean insertData(Book data) {
 		boolean sucesso = true;
@@ -339,12 +302,6 @@ public class DataBase implements IDataBase{
 		return sucesso;
 	}
 
-	/* (non-Javadoc)
-	 * @see JavaDB.SDdasdasdasd#queryBook(java.util.Vector, java.util.Vector, java.util.Vector)
-	 */
-	/* (non-Javadoc)
-	 * @see JavaDB.Agfgdfgf#queryBook(java.util.Vector, java.util.Vector, java.util.Vector)
-	 */
 	public Book[] queryBook(Vector<String> select,
 			Vector<String> where, Vector<String> order) {	
 		try {
@@ -410,12 +367,6 @@ public class DataBase implements IDataBase{
 		}
 	}
 
-	/* (non-Javadoc)
-	 * @see JavaDB.SDdasdasdasd#updateData(Classes.Book, java.util.Vector)
-	 */
-	/* (non-Javadoc)
-	 * @see JavaDB.Agfgdfgf#updateData(Classes.Book, java.util.Vector)
-	 */
 	@SuppressWarnings("unchecked")
 	public boolean updateData(Book data, Vector<String> where) {
 		boolean sucesso = true;
@@ -430,12 +381,6 @@ public class DataBase implements IDataBase{
 		return sucesso;
 	}
 
-	/* (non-Javadoc)
-	 * @see JavaDB.SDdasdasdasd#deleteDataBook(java.util.Vector)
-	 */
-	/* (non-Javadoc)
-	 * @see JavaDB.Agfgdfgf#deleteDataBook(java.util.Vector)
-	 */
 	public boolean deleteDataBook(Vector<String> where){
 		boolean sucesso = true;
 		String w = stt.mountWhereStatement(where);
@@ -447,12 +392,6 @@ public class DataBase implements IDataBase{
 		return sucesso;
 	}
 	
-	/* (non-Javadoc)
-	 * @see JavaDB.SDdasdasdasd#getVectorBook(Classes.Book)
-	 */
-	/* (non-Javadoc)
-	 * @see JavaDB.Agfgdfgf#getVectorBook(Classes.Book)
-	 */
 	@SuppressWarnings("unchecked")
 	public Vector getVectorBook(Book b){
 		Vector v = new Vector();
@@ -467,12 +406,6 @@ public class DataBase implements IDataBase{
 		return v;
 	}
 
-	/* (non-Javadoc)
-	 * @see JavaDB.SDdasdasdasd#getVectorSetBook(Classes.Book)
-	 */
-	/* (non-Javadoc)
-	 * @see JavaDB.Agfgdfgf#getVectorSetBook(Classes.Book)
-	 */
 	@SuppressWarnings("unchecked")
 	public Vector getVectorSetBook(Book b){
 		Vector v = new Vector();
@@ -493,12 +426,6 @@ public class DataBase implements IDataBase{
 	 */
 	////////////////////////////////////////////////////////////////////
 	
-	/* (non-Javadoc)
-	 * @see JavaDB.SDdasdasdasd#insertData(Classes.Comment)
-	 */
-	/* (non-Javadoc)
-	 * @see JavaDB.Agfgdfgf#insertData(Classes.Comment)
-	 */
 	@SuppressWarnings("unchecked")
 	public boolean insertData(Comment data) {
 		boolean sucesso = true;
@@ -512,12 +439,6 @@ public class DataBase implements IDataBase{
 		return sucesso;
 	}
 
-	/* (non-Javadoc)
-	 * @see JavaDB.SDdasdasdasd#queryComment(java.util.Vector, java.util.Vector, java.util.Vector)
-	 */
-	/* (non-Javadoc)
-	 * @see JavaDB.Agfgdfgf#queryComment(java.util.Vector, java.util.Vector, java.util.Vector)
-	 */
 	public Comment[] queryComment(Vector<String> select,
 			Vector<String> where, Vector<String> order) {	
 		try {
@@ -577,12 +498,6 @@ public class DataBase implements IDataBase{
 		}
 	}
 
-	/* (non-Javadoc)
-	 * @see JavaDB.SDdasdasdasd#updateData(Classes.Comment, java.util.Vector)
-	 */
-	/* (non-Javadoc)
-	 * @see JavaDB.Agfgdfgf#updateData(Classes.Comment, java.util.Vector)
-	 */
 	@SuppressWarnings("unchecked")
 	public boolean updateData(Comment data, Vector<String> where) {
 		boolean sucesso = true;
@@ -597,12 +512,6 @@ public class DataBase implements IDataBase{
 		return sucesso;
 	}
 
-	/* (non-Javadoc)
-	 * @see JavaDB.SDdasdasdasd#deleteDataComment(java.util.Vector)
-	 */
-	/* (non-Javadoc)
-	 * @see JavaDB.Agfgdfgf#deleteDataComment(java.util.Vector)
-	 */
 	public boolean deleteDataComment(Vector<String> where){
 		boolean sucesso = true;
 		String w = stt.mountWhereStatement(where);
@@ -614,12 +523,6 @@ public class DataBase implements IDataBase{
 		return sucesso;
 	}
 	
-	/* (non-Javadoc)
-	 * @see JavaDB.SDdasdasdasd#getVectorComment(Classes.Comment)
-	 */
-	/* (non-Javadoc)
-	 * @see JavaDB.Agfgdfgf#getVectorComment(Classes.Comment)
-	 */
 	@SuppressWarnings("unchecked")
 	public Vector getVectorComment(Comment c){
 		Vector v = new Vector();
@@ -631,12 +534,6 @@ public class DataBase implements IDataBase{
 		return v;
 	}
 
-	/* (non-Javadoc)
-	 * @see JavaDB.SDdasdasdasd#getVectorSetComment(Classes.Comment)
-	 */
-	/* (non-Javadoc)
-	 * @see JavaDB.Agfgdfgf#getVectorSetComment(Classes.Comment)
-	 */
 	@SuppressWarnings("unchecked")
 	public Vector getVectorSetComment(Comment c){
 		Vector v = new Vector();
@@ -654,12 +551,6 @@ public class DataBase implements IDataBase{
 	 */
 	////////////////////////////////////////////////////////////////////
 	
-	/* (non-Javadoc)
-	 * @see JavaDB.SDdasdasdasd#insertData(Classes.Review)
-	 */
-	/* (non-Javadoc)
-	 * @see JavaDB.Agfgdfgf#insertData(Classes.Review)
-	 */
 	@SuppressWarnings("unchecked")
 	public boolean insertData(Review data) {
 		boolean sucesso = true;
@@ -673,12 +564,6 @@ public class DataBase implements IDataBase{
 		return sucesso;
 	}
 
-	/* (non-Javadoc)
-	 * @see JavaDB.SDdasdasdasd#queryReview(java.util.Vector, java.util.Vector, java.util.Vector)
-	 */
-	/* (non-Javadoc)
-	 * @see JavaDB.Agfgdfgf#queryReview(java.util.Vector, java.util.Vector, java.util.Vector)
-	 */
 	public Review[] queryReview(Vector<String> select,
 			Vector<String> where, Vector<String> order) {	
 		try {
@@ -743,12 +628,6 @@ public class DataBase implements IDataBase{
 		}
 	}
 
-	/* (non-Javadoc)
-	 * @see JavaDB.SDdasdasdasd#updateData(Classes.Review, java.util.Vector)
-	 */
-	/* (non-Javadoc)
-	 * @see JavaDB.Agfgdfgf#updateData(Classes.Review, java.util.Vector)
-	 */
 	@SuppressWarnings("unchecked")
 	public boolean updateData(Review data, Vector<String> where) {
 		boolean sucesso = true;
@@ -763,12 +642,6 @@ public class DataBase implements IDataBase{
 		return sucesso;
 	}
 
-	/* (non-Javadoc)
-	 * @see JavaDB.SDdasdasdasd#deleteDataReview(java.util.Vector)
-	 */
-	/* (non-Javadoc)
-	 * @see JavaDB.Agfgdfgf#deleteDataReview(java.util.Vector)
-	 */
 	public boolean deleteDataReview(Vector<String> where){
 		boolean sucesso = true;
 		String w = stt.mountWhereStatement(where);
@@ -780,12 +653,6 @@ public class DataBase implements IDataBase{
 		return sucesso;
 	}
 	
-	/* (non-Javadoc)
-	 * @see JavaDB.SDdasdasdasd#getVectorReview(Classes.Review)
-	 */
-	/* (non-Javadoc)
-	 * @see JavaDB.Agfgdfgf#getVectorReview(Classes.Review)
-	 */
 	@SuppressWarnings("unchecked")
 	public Vector getVectorReview(Review r){
 		Vector v = new Vector();
@@ -799,12 +666,6 @@ public class DataBase implements IDataBase{
 		return v;
 	}
 
-	/* (non-Javadoc)
-	 * @see JavaDB.SDdasdasdasd#getVectorSetReview(Classes.Review)
-	 */
-	/* (non-Javadoc)
-	 * @see JavaDB.Agfgdfgf#getVectorSetReview(Classes.Review)
-	 */
 	@SuppressWarnings("unchecked")
 	public Vector getVectorSetReview(Review r){
 		Vector v = new Vector();
@@ -823,10 +684,7 @@ public class DataBase implements IDataBase{
 	 * Operações com Rating
 	 */
 	////////////////////////////////////////////////////////////////////
-	
-	/* (non-Javadoc)
-	 * @see JavaDB.Agfgdfgf#insertData(Classes.Rating)
-	 */
+
 	@SuppressWarnings("unchecked")
 	public boolean insertData(Rating data) {
 		boolean sucesso = true;
@@ -840,9 +698,6 @@ public class DataBase implements IDataBase{
 		return sucesso;
 	}
 
-	/* (non-Javadoc)
-	 * @see JavaDB.Agfgdfgf#queryRating(java.util.Vector, java.util.Vector, java.util.Vector)
-	 */
 	public Rating[] queryRating(Vector<String> select,
 			Vector<String> where, Vector<String> order) {	
 		try {
@@ -899,9 +754,6 @@ public class DataBase implements IDataBase{
 		}
 	}
 
-	/* (non-Javadoc)
-	 * @see JavaDB.Agfgdfgf#updateData(Classes.Rating, java.util.Vector)
-	 */
 	@SuppressWarnings("unchecked")
 	public boolean updateData(Rating data, Vector<String> where) {
 		boolean sucesso = true;
@@ -916,9 +768,6 @@ public class DataBase implements IDataBase{
 		return sucesso;
 	}
 
-	/* (non-Javadoc)
-	 * @see JavaDB.Agfgdfgf#deleteDataRating(java.util.Vector)
-	 */
 	public boolean deleteDataRating(Vector<String> where){
 		boolean sucesso = true;
 		String w = stt.mountWhereStatement(where);
@@ -930,9 +779,6 @@ public class DataBase implements IDataBase{
 		return sucesso;
 	}
 	
-	/* (non-Javadoc)
-	 * @see JavaDB.Agfgdfgf#getVectorRating(Classes.Rating)
-	 */
 	@SuppressWarnings("unchecked")
 	public Vector getVectorRating(Rating r){
 		Vector v = new Vector();
@@ -945,9 +791,6 @@ public class DataBase implements IDataBase{
 		return v;
 	}
 
-	/* (non-Javadoc)
-	 * @see JavaDB.Agfgdfgf#getVectorSetRating(Classes.Rating)
-	 */
 	@SuppressWarnings("unchecked")
 	public Vector getVectorSetRating(Rating r){
 		Vector v = new Vector();
@@ -966,9 +809,6 @@ public class DataBase implements IDataBase{
 	 */
 	////////////////////////////////////////////////////////////////////
 	
-	/* (non-Javadoc)
-	 * @see JavaDB.Agfgdfgf#insertData(Classes.Session)
-	 */
 	@SuppressWarnings("unchecked")
 	public boolean insertData(Session data) {
 		boolean sucesso = true;
@@ -982,9 +822,6 @@ public class DataBase implements IDataBase{
 		return sucesso;
 	}
 
-	/* (non-Javadoc)
-	 * @see JavaDB.Agfgdfgf#querySession(java.util.Vector, java.util.Vector, java.util.Vector)
-	 */
 	public Session[] querySession(Vector<String> select,
 			Vector<String> where, Vector<String> order) {	
 		try {
@@ -1036,9 +873,6 @@ public class DataBase implements IDataBase{
 		}
 	}
 
-	/* (non-Javadoc)
-	 * @see JavaDB.Agfgdfgf#updateData(Classes.Session, java.util.Vector)
-	 */
 	@SuppressWarnings("unchecked")
 	public boolean updateData(Session data, Vector<String> where) {
 		boolean sucesso = true;
@@ -1053,9 +887,6 @@ public class DataBase implements IDataBase{
 		return sucesso;
 	}
 
-	/* (non-Javadoc)
-	 * @see JavaDB.Agfgdfgf#deleteDataSession(java.util.Vector)
-	 */
 	public boolean deleteDataSession(Vector<String> where){
 		boolean sucesso = true;
 		String w = stt.mountWhereStatement(where);
@@ -1067,9 +898,6 @@ public class DataBase implements IDataBase{
 		return sucesso;
 	}
 	
-	/* (non-Javadoc)
-	 * @see JavaDB.Agfgdfgf#getVectorSession(Classes.Session)
-	 */
 	@SuppressWarnings("unchecked")
 	public Vector getVectorSession(Session s){
 		Vector v = new Vector();
@@ -1079,9 +907,6 @@ public class DataBase implements IDataBase{
 		return v;
 	}
 
-	/* (non-Javadoc)
-	 * @see JavaDB.Agfgdfgf#getVectorSetSession(Classes.Session)
-	 */
 	@SuppressWarnings("unchecked")
 	public Vector getVectorSetSession(Session s){
 		Vector v = new Vector();
