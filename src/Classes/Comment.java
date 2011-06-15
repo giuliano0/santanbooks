@@ -17,11 +17,14 @@ public class Comment extends Entity implements IRateable {
 	String content;
 	Date publishingDate;
 	boolean visible;
+	float rating;
+	String isbn;
+	int reviewID;
 	
 	// TODO: review access scope, data types and checkings inside these methods.
 	
 	public int getID() {
-		return 0;
+		return ID;
 	}
 	
 	public String getAuthor() {
@@ -39,7 +42,7 @@ public class Comment extends Entity implements IRateable {
 	public boolean getVisibility() {
 		return visible;
 	}
-	
+
 	public void setID(int value) throws IllegalArgumentException {
 		if (value == 0) throw new IllegalArgumentException("Identificadores de comentário não podem ser nulos.");
 		
@@ -65,15 +68,9 @@ public class Comment extends Entity implements IRateable {
 		visible = value;
 	}
 
-	/*
-	 * Esse field está no lugar errado. É um "placeholder".
-	 */
-	float rating;			// Retornado direto de consulta à DB
-	
 	@Override
 	public int getRating() {
-		// TODO Auto-generated method stub
-		return 0;
+		return (int)Math.floor((double)rating);
 	}
 
 	@Override
@@ -81,4 +78,21 @@ public class Comment extends Entity implements IRateable {
 		// TODO Auto-generated method stub
 		
 	}
+
+	public String getISBN() {
+		return isbn;
+	}
+	
+	public int getReviewID() {
+		return reviewID;
+	}
+	
+	public void setISBN(String value) {
+		isbn = value;
+	}
+	
+	public void setReviewID(int value) {
+		reviewID = value;
+	}
+	
 }

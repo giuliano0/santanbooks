@@ -18,6 +18,8 @@ public class Review extends Entity implements ICommentable, IRateable {
 	String content;
 	Date publishingDate;
 	String title;
+	Comment[] comments;
+	float rating;
 	
 	// TODO: review access scope, data types and checkings inside these methods.
 	
@@ -76,12 +78,6 @@ public class Review extends Entity implements ICommentable, IRateable {
 	public void setTitle(String value) {
 		title = value;
 	}
-
-	/*
-	 * Esses fields estão no lugar errado. São "placeholders".
-	 */
-	Comment[] comments;
-	float rating;			// Retornado direto de consulta à DB
 	
 	@Override
 	public void addComment(Comment comment) {
@@ -109,8 +105,7 @@ public class Review extends Entity implements ICommentable, IRateable {
 
 	@Override
 	public int getRating() {
-		// TODO Auto-generated method stub
-		return 0;
+		return (int)Math.floor((double)rating);
 	}
 
 	@Override
@@ -119,3 +114,4 @@ public class Review extends Entity implements ICommentable, IRateable {
 		
 	}
 }
+
