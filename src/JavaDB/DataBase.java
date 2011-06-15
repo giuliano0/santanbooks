@@ -9,13 +9,14 @@ import java.util.Vector;
 
 import Classes.Book;
 import Classes.Comment;
+import Classes.Rating;
 import Classes.Review;
 import Classes.Session;
 import Classes.User;
 
 /**
  * class handling database
- * @author Fernando Costa e JoÃ£o Scalett
+ * @author Fernando Costa e João Scalett
  */
 public class DataBase implements IDataBase{
 	private SQLStatements stt; 
@@ -30,7 +31,7 @@ public class DataBase implements IDataBase{
 	}
 
 	/* (non-Javadoc)
-	 * @see JavaDB.SDdasdasdasd#connectDataBase()
+	 * @see JavaDB.Agfgdfgf#connectDataBase()
 	 */
 	public void connectDataBase() throws SQLException {
 		try {
@@ -92,8 +93,8 @@ public class DataBase implements IDataBase{
 					"(id BIGINT NOT NULL PRIMARY KEY GENERATED ALWAYS AS IDENTITY " +
 					"(START WITH 1, INCREMENT BY 1), " +
 					"username VARCHAR(100) NOT NULL, " +
-					"isbn VARCHAR(100), " +
-					"review INT, " +
+					"bookISBN VARCHAR(100), " +
+					"bookReview INT, " +
 					"value INT NOT NULL," +
 					"type INT NOT NULL)"
 					/*"FOREIGN KEY(username, isbn, review))"*/
@@ -114,6 +115,9 @@ public class DataBase implements IDataBase{
 	}
 	
 	/* Método temporário. Até pq não é vantagem poder sair excluindo tudo */
+	/* (non-Javadoc)
+	 * @see JavaDB.Agfgdfgf#dropAllTables()
+	 */
 	public void dropAllTables(){
 		try{
 			stt.executeStatement("DROP TABLE users");
@@ -137,6 +141,9 @@ public class DataBase implements IDataBase{
 	/* (non-Javadoc)
 	 * @see JavaDB.SDdasdasdasd#insertData(Classes.User)
 	 */
+	/* (non-Javadoc)
+	 * @see JavaDB.Agfgdfgf#insertData(Classes.User)
+	 */
 	@SuppressWarnings("unchecked")
 	public boolean insertData(User data) {
 		boolean sucesso = true;
@@ -153,6 +160,9 @@ public class DataBase implements IDataBase{
 	/* (non-Javadoc)
 	 * @see JavaDB.SDdasdasdasd#queryUser(java.util.Vector, java.util.Vector, java.util.Vector)
 	 */
+	/* (non-Javadoc)
+	 * @see JavaDB.Agfgdfgf#queryUser(java.util.Vector, java.util.Vector, java.util.Vector)
+	 */
 	public User[] queryUser(Vector<String> select,
 			Vector<String> where, Vector<String> order) {	
 		try {
@@ -166,17 +176,13 @@ public class DataBase implements IDataBase{
 			String w = stt.mountWhereStatement(where);
 			String o = stt.mountOrderStatement(order);
 
-			// making the query
-			//System.out.println(s + " FROM users " + w + o);
 			ResultSet r = command.executeQuery(s + " FROM users " + w + o);
 
 			int numbRows = 0, cont = 0;
 			while(r.next()){
 				numbRows++;
 			}
-			//System.out.println(numbRows);
-
-			// creates an array of objects book to return
+			
 			User[] u = new User[numbRows];		
 			ResultSet result = command.executeQuery(s + " FROM users " + w + o);
 
@@ -208,7 +214,6 @@ public class DataBase implements IDataBase{
 					if(select.get(i).equalsIgnoreCase("ingressYear"))
 						temp.setIngressYear(result.getDate("ingressYear"));
 				}
-				
 				u[cont] = temp;
 				cont++;
 			}
@@ -228,6 +233,9 @@ public class DataBase implements IDataBase{
 	/* (non-Javadoc)
 	 * @see JavaDB.SDdasdasdasd#updateData(Classes.User, java.util.Vector)
 	 */
+	/* (non-Javadoc)
+	 * @see JavaDB.Agfgdfgf#updateData(Classes.User, java.util.Vector)
+	 */
 	@SuppressWarnings("unchecked")
 	public boolean updateData(User data, Vector<String> where) {
 		boolean sucesso = true;
@@ -245,6 +253,9 @@ public class DataBase implements IDataBase{
 	/* (non-Javadoc)
 	 * @see JavaDB.SDdasdasdasd#deleteDataUser(java.util.Vector)
 	 */
+	/* (non-Javadoc)
+	 * @see JavaDB.Agfgdfgf#deleteDataUser(java.util.Vector)
+	 */
 	public boolean deleteDataUser(Vector<String> where){
 		boolean sucesso = true;
 		String w = stt.mountWhereStatement(where);
@@ -258,6 +269,9 @@ public class DataBase implements IDataBase{
 
 	/* (non-Javadoc)
 	 * @see JavaDB.SDdasdasdasd#getVectorUser(Classes.User)
+	 */
+	/* (non-Javadoc)
+	 * @see JavaDB.Agfgdfgf#getVectorUser(Classes.User)
 	 */
 	@SuppressWarnings("unchecked")
 	public Vector getVectorUser(User u){
@@ -278,6 +292,9 @@ public class DataBase implements IDataBase{
 
 	/* (non-Javadoc)
 	 * @see JavaDB.SDdasdasdasd#getVectorSetUser(Classes.User)
+	 */
+	/* (non-Javadoc)
+	 * @see JavaDB.Agfgdfgf#getVectorSetUser(Classes.User)
 	 */
 	@SuppressWarnings("unchecked")
 	public Vector getVectorSetUser(User u){
@@ -306,6 +323,9 @@ public class DataBase implements IDataBase{
 	/* (non-Javadoc)
 	 * @see JavaDB.SDdasdasdasd#insertData(Classes.Book)
 	 */
+	/* (non-Javadoc)
+	 * @see JavaDB.Agfgdfgf#insertData(Classes.Book)
+	 */
 	@SuppressWarnings("unchecked")
 	public boolean insertData(Book data) {
 		boolean sucesso = true;
@@ -322,6 +342,9 @@ public class DataBase implements IDataBase{
 	/* (non-Javadoc)
 	 * @see JavaDB.SDdasdasdasd#queryBook(java.util.Vector, java.util.Vector, java.util.Vector)
 	 */
+	/* (non-Javadoc)
+	 * @see JavaDB.Agfgdfgf#queryBook(java.util.Vector, java.util.Vector, java.util.Vector)
+	 */
 	public Book[] queryBook(Vector<String> select,
 			Vector<String> where, Vector<String> order) {	
 		try {
@@ -335,17 +358,13 @@ public class DataBase implements IDataBase{
 			String w = stt.mountWhereStatement(where);
 			String o = stt.mountOrderStatement(order);
 
-			// making the query
-			//System.out.println(s + " FROM book " + w + o);
 			ResultSet r = command.executeQuery(s + " FROM book " + w + o);
 
 			int numbRows = 0, cont = 0;
 			while(r.next()){
 				numbRows++;
 			}
-			//System.out.println(numbRows);
-
-			// creates an array of objects book to return
+			
 			Book[] b = new Book[numbRows];		
 			ResultSet result = command.executeQuery(s + " FROM book " + w + o);
 
@@ -375,8 +394,6 @@ public class DataBase implements IDataBase{
 							System.out.println("Erro na data: " +e.getMessage());
 						}
 				}
-				//System.out.println("isbn: " +temp.getISBN() + ", cont: " + cont);
-
 				b[cont] = temp;
 				cont++;
 			}
@@ -396,6 +413,9 @@ public class DataBase implements IDataBase{
 	/* (non-Javadoc)
 	 * @see JavaDB.SDdasdasdasd#updateData(Classes.Book, java.util.Vector)
 	 */
+	/* (non-Javadoc)
+	 * @see JavaDB.Agfgdfgf#updateData(Classes.Book, java.util.Vector)
+	 */
 	@SuppressWarnings("unchecked")
 	public boolean updateData(Book data, Vector<String> where) {
 		boolean sucesso = true;
@@ -413,6 +433,9 @@ public class DataBase implements IDataBase{
 	/* (non-Javadoc)
 	 * @see JavaDB.SDdasdasdasd#deleteDataBook(java.util.Vector)
 	 */
+	/* (non-Javadoc)
+	 * @see JavaDB.Agfgdfgf#deleteDataBook(java.util.Vector)
+	 */
 	public boolean deleteDataBook(Vector<String> where){
 		boolean sucesso = true;
 		String w = stt.mountWhereStatement(where);
@@ -426,6 +449,9 @@ public class DataBase implements IDataBase{
 	
 	/* (non-Javadoc)
 	 * @see JavaDB.SDdasdasdasd#getVectorBook(Classes.Book)
+	 */
+	/* (non-Javadoc)
+	 * @see JavaDB.Agfgdfgf#getVectorBook(Classes.Book)
 	 */
 	@SuppressWarnings("unchecked")
 	public Vector getVectorBook(Book b){
@@ -443,6 +469,9 @@ public class DataBase implements IDataBase{
 
 	/* (non-Javadoc)
 	 * @see JavaDB.SDdasdasdasd#getVectorSetBook(Classes.Book)
+	 */
+	/* (non-Javadoc)
+	 * @see JavaDB.Agfgdfgf#getVectorSetBook(Classes.Book)
 	 */
 	@SuppressWarnings("unchecked")
 	public Vector getVectorSetBook(Book b){
@@ -467,6 +496,9 @@ public class DataBase implements IDataBase{
 	/* (non-Javadoc)
 	 * @see JavaDB.SDdasdasdasd#insertData(Classes.Comment)
 	 */
+	/* (non-Javadoc)
+	 * @see JavaDB.Agfgdfgf#insertData(Classes.Comment)
+	 */
 	@SuppressWarnings("unchecked")
 	public boolean insertData(Comment data) {
 		boolean sucesso = true;
@@ -483,6 +515,9 @@ public class DataBase implements IDataBase{
 	/* (non-Javadoc)
 	 * @see JavaDB.SDdasdasdasd#queryComment(java.util.Vector, java.util.Vector, java.util.Vector)
 	 */
+	/* (non-Javadoc)
+	 * @see JavaDB.Agfgdfgf#queryComment(java.util.Vector, java.util.Vector, java.util.Vector)
+	 */
 	public Comment[] queryComment(Vector<String> select,
 			Vector<String> where, Vector<String> order) {	
 		try {
@@ -496,17 +531,13 @@ public class DataBase implements IDataBase{
 			String w = stt.mountWhereStatement(where);
 			String o = stt.mountOrderStatement(order);
 
-			// making the query
-			//System.out.println(s + " FROM comment " + w + o);
 			ResultSet r = command.executeQuery(s + " FROM comment " + w + o);
 
 			int numbRows = 0, cont = 0;
 			while(r.next()){
 				numbRows++;
 			}
-			//System.out.println(numbRows);
 
-			// creates an array of objects book to return
 			Comment[] c = new Comment[numbRows];		
 			ResultSet result = command.executeQuery(s + " FROM comment " + w + o);
 
@@ -530,7 +561,6 @@ public class DataBase implements IDataBase{
 							System.out.println("Erro na data: " +e.getMessage());
 						}
 				}
-
 				c[cont] = temp;
 				cont++;
 			}
@@ -542,13 +572,16 @@ public class DataBase implements IDataBase{
 			System.out.println(erro.getMessage());
 			return null;
 		} catch (SQLException erro) {
-			System.out.println("Erro na consulta Book: " + erro.getMessage());
+			System.out.println("Erro na consulta Comment: " + erro.getMessage());
 			return null;
 		}
 	}
 
 	/* (non-Javadoc)
 	 * @see JavaDB.SDdasdasdasd#updateData(Classes.Comment, java.util.Vector)
+	 */
+	/* (non-Javadoc)
+	 * @see JavaDB.Agfgdfgf#updateData(Classes.Comment, java.util.Vector)
 	 */
 	@SuppressWarnings("unchecked")
 	public boolean updateData(Comment data, Vector<String> where) {
@@ -567,6 +600,9 @@ public class DataBase implements IDataBase{
 	/* (non-Javadoc)
 	 * @see JavaDB.SDdasdasdasd#deleteDataComment(java.util.Vector)
 	 */
+	/* (non-Javadoc)
+	 * @see JavaDB.Agfgdfgf#deleteDataComment(java.util.Vector)
+	 */
 	public boolean deleteDataComment(Vector<String> where){
 		boolean sucesso = true;
 		String w = stt.mountWhereStatement(where);
@@ -581,6 +617,9 @@ public class DataBase implements IDataBase{
 	/* (non-Javadoc)
 	 * @see JavaDB.SDdasdasdasd#getVectorComment(Classes.Comment)
 	 */
+	/* (non-Javadoc)
+	 * @see JavaDB.Agfgdfgf#getVectorComment(Classes.Comment)
+	 */
 	@SuppressWarnings("unchecked")
 	public Vector getVectorComment(Comment c){
 		Vector v = new Vector();
@@ -594,6 +633,9 @@ public class DataBase implements IDataBase{
 
 	/* (non-Javadoc)
 	 * @see JavaDB.SDdasdasdasd#getVectorSetComment(Classes.Comment)
+	 */
+	/* (non-Javadoc)
+	 * @see JavaDB.Agfgdfgf#getVectorSetComment(Classes.Comment)
 	 */
 	@SuppressWarnings("unchecked")
 	public Vector getVectorSetComment(Comment c){
@@ -615,6 +657,9 @@ public class DataBase implements IDataBase{
 	/* (non-Javadoc)
 	 * @see JavaDB.SDdasdasdasd#insertData(Classes.Review)
 	 */
+	/* (non-Javadoc)
+	 * @see JavaDB.Agfgdfgf#insertData(Classes.Review)
+	 */
 	@SuppressWarnings("unchecked")
 	public boolean insertData(Review data) {
 		boolean sucesso = true;
@@ -631,6 +676,9 @@ public class DataBase implements IDataBase{
 	/* (non-Javadoc)
 	 * @see JavaDB.SDdasdasdasd#queryReview(java.util.Vector, java.util.Vector, java.util.Vector)
 	 */
+	/* (non-Javadoc)
+	 * @see JavaDB.Agfgdfgf#queryReview(java.util.Vector, java.util.Vector, java.util.Vector)
+	 */
 	public Review[] queryReview(Vector<String> select,
 			Vector<String> where, Vector<String> order) {	
 		try {
@@ -644,7 +692,6 @@ public class DataBase implements IDataBase{
 			String w = stt.mountWhereStatement(where);
 			String o = stt.mountOrderStatement(order);
 
-			// making the query
 			ResultSet r = command.executeQuery(s + " FROM review " + w + o);
 
 			int numbRows = 0, cont = 0;
@@ -652,7 +699,6 @@ public class DataBase implements IDataBase{
 				numbRows++;
 			}
 
-			// creates an array of objects book to return
 			Review[] rv = new Review[numbRows];		
 			ResultSet result = command.executeQuery(s + " FROM review " + w + o);
 
@@ -700,6 +746,9 @@ public class DataBase implements IDataBase{
 	/* (non-Javadoc)
 	 * @see JavaDB.SDdasdasdasd#updateData(Classes.Review, java.util.Vector)
 	 */
+	/* (non-Javadoc)
+	 * @see JavaDB.Agfgdfgf#updateData(Classes.Review, java.util.Vector)
+	 */
 	@SuppressWarnings("unchecked")
 	public boolean updateData(Review data, Vector<String> where) {
 		boolean sucesso = true;
@@ -717,6 +766,9 @@ public class DataBase implements IDataBase{
 	/* (non-Javadoc)
 	 * @see JavaDB.SDdasdasdasd#deleteDataReview(java.util.Vector)
 	 */
+	/* (non-Javadoc)
+	 * @see JavaDB.Agfgdfgf#deleteDataReview(java.util.Vector)
+	 */
 	public boolean deleteDataReview(Vector<String> where){
 		boolean sucesso = true;
 		String w = stt.mountWhereStatement(where);
@@ -730,6 +782,9 @@ public class DataBase implements IDataBase{
 	
 	/* (non-Javadoc)
 	 * @see JavaDB.SDdasdasdasd#getVectorReview(Classes.Review)
+	 */
+	/* (non-Javadoc)
+	 * @see JavaDB.Agfgdfgf#getVectorReview(Classes.Review)
 	 */
 	@SuppressWarnings("unchecked")
 	public Vector getVectorReview(Review r){
@@ -746,6 +801,9 @@ public class DataBase implements IDataBase{
 
 	/* (non-Javadoc)
 	 * @see JavaDB.SDdasdasdasd#getVectorSetReview(Classes.Review)
+	 */
+	/* (non-Javadoc)
+	 * @see JavaDB.Agfgdfgf#getVectorSetReview(Classes.Review)
 	 */
 	@SuppressWarnings("unchecked")
 	public Vector getVectorSetReview(Review r){
@@ -766,8 +824,10 @@ public class DataBase implements IDataBase{
 	 */
 	////////////////////////////////////////////////////////////////////
 	
-	/* RATING AINDA NAO IMPLEMENTADO */
-	/*@SuppressWarnings("unchecked")
+	/* (non-Javadoc)
+	 * @see JavaDB.Agfgdfgf#insertData(Classes.Rating)
+	 */
+	@SuppressWarnings("unchecked")
 	public boolean insertData(Rating data) {
 		boolean sucesso = true;
 		Vector v = getVectorRating(data);
@@ -780,6 +840,9 @@ public class DataBase implements IDataBase{
 		return sucesso;
 	}
 
+	/* (non-Javadoc)
+	 * @see JavaDB.Agfgdfgf#queryRating(java.util.Vector, java.util.Vector, java.util.Vector)
+	 */
 	public Rating[] queryRating(Vector<String> select,
 			Vector<String> where, Vector<String> order) {	
 		try {
@@ -793,64 +856,52 @@ public class DataBase implements IDataBase{
 			String w = stt.mountWhereStatement(where);
 			String o = stt.mountOrderStatement(order);
 
-			// making the query
-			//System.out.println(s + " FROM rating " + w + o);
 			ResultSet r = command.executeQuery(s + " FROM rating " + w + o);
 
 			int numbRows = 0, cont = 0;
 			while(r.next()){
 				numbRows++;
 			}
-			//System.out.println(numbRows);
-
-			// creates an array of objects book to return
-			Rating[] b = new Book[numbRows];		
+			
+			Rating[] rt = new Rating[numbRows];		
 			ResultSet result = command.executeQuery(s + " FROM rating " + w + o);
 
 			while (result.next())
 			{
-				Book temp = new Book();
-
+				Rating temp = new Rating();
 				for(int i = 0; i < select.size(); i++){
-					if(select.get(i).equalsIgnoreCase("isbn")) 
-						temp.setISBN(result.getString("isbn"));
-					if(select.get(i).equalsIgnoreCase("name"))
-						temp.setName(result.getString("name"));
-					if(select.get(i).equalsIgnoreCase("authors"))
-						temp.setAuthors(result.getString("authors"));
-					if(select.get(i).equalsIgnoreCase("description"))
-						temp.setDescription(result.getString("description"));
-					if(select.get(i).equalsIgnoreCase("edition"))
-						temp.setEdition(result.getString("edition"));
-					if(select.get(i).equalsIgnoreCase("imagePath"))
-						temp.setImagePath(result.getString("imagePath"));
-					if(select.get(i).equalsIgnoreCase("publisher"))
-						temp.setPublisher(result.getString("publisher"));
-					if(select.get(i).equalsIgnoreCase("publishingDate"))
-						try {
-							temp.setPublishingDate(result.getDate("publishingDate"));
-						} catch (Exception e) {
-							System.out.println("Erro na data: " +e.getMessage());
-						}
+					if(select.get(i).equalsIgnoreCase("id")) 
+						temp.setID(result.getInt("id"));
+					if(select.get(i).equalsIgnoreCase("username"))
+						temp.setUsername(result.getString("username"));
+					if(select.get(i).equalsIgnoreCase("bookISBN"))
+						temp.setBookISBN(result.getString("bookISBN"));
+					if(select.get(i).equalsIgnoreCase("bookReview"))
+						temp.setBookReview(result.getInt("bookReview"));
+					if(select.get(i).equalsIgnoreCase("value"))
+						temp.setValue(result.getInt("value"));
+					if(select.get(i).equalsIgnoreCase("type"))
+						temp.setType(result.getInt("type") == 1);
 				}
-				//System.out.println("isbn: " +temp.getISBN() + ", cont: " + cont);
-
-				b[cont] = temp;
+				rt[cont] = temp;
 				cont++;
 			}
 			command.close();
 			conexion.close();
-			return b;
+			return rt;
 
 		} catch (ClassNotFoundException erro) {
 			System.out.println(erro.getMessage());
 			return null;
 		} catch (SQLException erro) {
-			System.out.println("Erro na consulta Book: " + erro.getMessage());
+			System.out.println("Erro na consulta Rating: " + erro.getMessage());
 			return null;
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see JavaDB.Agfgdfgf#updateData(Classes.Rating, java.util.Vector)
+	 */
 	@SuppressWarnings("unchecked")
 	public boolean updateData(Rating data, Vector<String> where) {
 		boolean sucesso = true;
@@ -865,6 +916,9 @@ public class DataBase implements IDataBase{
 		return sucesso;
 	}
 
+	/* (non-Javadoc)
+	 * @see JavaDB.Agfgdfgf#deleteDataRating(java.util.Vector)
+	 */
 	public boolean deleteDataRating(Vector<String> where){
 		boolean sucesso = true;
 		String w = stt.mountWhereStatement(where);
@@ -876,29 +930,35 @@ public class DataBase implements IDataBase{
 		return sucesso;
 	}
 	
+	/* (non-Javadoc)
+	 * @see JavaDB.Agfgdfgf#getVectorRating(Classes.Rating)
+	 */
 	@SuppressWarnings("unchecked")
 	public Vector getVectorRating(Rating r){
 		Vector v = new Vector();
-		v.add(r.getID());
-		v.add(r.getAuthor());
+		v.add(r.getID() + "'");
+		v.add(r.getUsername());
 		v.add(r.getBookISBN());
-		v.add(r.getReview());
+		v.add(r.getBookReview());
 		v.add(r.getValue());
-		v.add(r.getType());		
+		v.add((r.getType()? 1 : 0 ));				
 		return v;
 	}
 
+	/* (non-Javadoc)
+	 * @see JavaDB.Agfgdfgf#getVectorSetRating(Classes.Rating)
+	 */
 	@SuppressWarnings("unchecked")
 	public Vector getVectorSetRating(Rating r){
 		Vector v = new Vector();
 		v.add("id = '" + r.getID() + "'");
-		v.add("username = '" + r.getAuthor() + "'");
-		v.add("isbn = '" + r.getBookISBN() + "'");
-		v.add("review = '" + r.getReview() + "'");
+		v.add("username = '" + r.getUsername() + "'");
+		v.add("bookISBN = '" + r.getBookISBN() + "'");
+		v.add("bookReview = '" + r.getBookReview() + "'");
 		v.add("value = '" + r.getValue() + "'");
-		v.add("type = '" + r.getType() + "'");		
+		v.add("type = '" + (r.getType()? 1 : 0 )+ "'");		
 		return v;
-	}*/
+	}
 	
 	///////////////////////////////////////////////////////////////////
 	/*
@@ -906,6 +966,9 @@ public class DataBase implements IDataBase{
 	 */
 	////////////////////////////////////////////////////////////////////
 	
+	/* (non-Javadoc)
+	 * @see JavaDB.Agfgdfgf#insertData(Classes.Session)
+	 */
 	@SuppressWarnings("unchecked")
 	public boolean insertData(Session data) {
 		boolean sucesso = true;
@@ -919,6 +982,9 @@ public class DataBase implements IDataBase{
 		return sucesso;
 	}
 
+	/* (non-Javadoc)
+	 * @see JavaDB.Agfgdfgf#querySession(java.util.Vector, java.util.Vector, java.util.Vector)
+	 */
 	public Session[] querySession(Vector<String> select,
 			Vector<String> where, Vector<String> order) {	
 		try {
@@ -932,7 +998,6 @@ public class DataBase implements IDataBase{
 			String w = stt.mountWhereStatement(where);
 			String o = stt.mountOrderStatement(order);
 
-			// making the query
 			ResultSet r = command.executeQuery(s + " FROM session " + w + o);
 
 			int numbRows = 0, cont = 0;
@@ -940,7 +1005,7 @@ public class DataBase implements IDataBase{
 				numbRows++;
 			}
 
-			Session[] q = new Session[numbRows];
+			Session[] sn = new Session[numbRows];
 			ResultSet result = command.executeQuery(s + " FROM session " + w + o);
 
 			while (result.next())
@@ -955,13 +1020,12 @@ public class DataBase implements IDataBase{
 					if(select.get(i).equalsIgnoreCase("lastLogin"))
 						temp.setLastLogin(result.getDate("lastLogin"));
 				}
-
-				q[cont] = temp;
+				sn[cont] = temp;
 				cont++;
 			}
 			command.close();
 			conexion.close();
-			return q;
+			return sn;
 
 		} catch (ClassNotFoundException erro) {
 			System.out.println(erro.getMessage());
@@ -972,6 +1036,9 @@ public class DataBase implements IDataBase{
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see JavaDB.Agfgdfgf#updateData(Classes.Session, java.util.Vector)
+	 */
 	@SuppressWarnings("unchecked")
 	public boolean updateData(Session data, Vector<String> where) {
 		boolean sucesso = true;
@@ -986,6 +1053,9 @@ public class DataBase implements IDataBase{
 		return sucesso;
 	}
 
+	/* (non-Javadoc)
+	 * @see JavaDB.Agfgdfgf#deleteDataSession(java.util.Vector)
+	 */
 	public boolean deleteDataSession(Vector<String> where){
 		boolean sucesso = true;
 		String w = stt.mountWhereStatement(where);
@@ -997,6 +1067,9 @@ public class DataBase implements IDataBase{
 		return sucesso;
 	}
 	
+	/* (non-Javadoc)
+	 * @see JavaDB.Agfgdfgf#getVectorSession(Classes.Session)
+	 */
 	@SuppressWarnings("unchecked")
 	public Vector getVectorSession(Session s){
 		Vector v = new Vector();
@@ -1006,6 +1079,9 @@ public class DataBase implements IDataBase{
 		return v;
 	}
 
+	/* (non-Javadoc)
+	 * @see JavaDB.Agfgdfgf#getVectorSetSession(Classes.Session)
+	 */
 	@SuppressWarnings("unchecked")
 	public Vector getVectorSetSession(Session s){
 		Vector v = new Vector();
