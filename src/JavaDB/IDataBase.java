@@ -16,7 +16,7 @@ public interface IDataBase {
 	public void connectDataBase() throws SQLException;
 	/* User Operations */
 	public boolean insertData(User data);
-	public Book[] queryUser(Vector<String> select, Vector<String> where,
+	public User[] queryUser(Vector<String> select, Vector<String> where,
 			Vector<String> order);
 	public boolean updateData(User data, Vector<String> where);
 	public boolean deleteDataUser(Vector<String> where);
@@ -38,7 +38,7 @@ public interface IDataBase {
 	
 	/* Comment Operations */
 	public boolean insertData(Comment data);
-	public Book[] queryComment(Vector<String> select, Vector<String> where,
+	public Comment[] queryComment(Vector<String> select, Vector<String> where,
 			Vector<String> order);
 	public boolean updateData(Comment data, Vector<String> where);
 	public boolean deleteDataComment(Vector<String> where);
@@ -49,7 +49,7 @@ public interface IDataBase {
 	
 	/* Review Operations */
 	public boolean insertData(Review data);
-	public Book[] queryReview(Vector<String> select, Vector<String> where,
+	public Review[] queryReview(Vector<String> select, Vector<String> where,
 			Vector<String> order);
 	public boolean updateData(Review data, Vector<String> where);
 	public boolean deleteDataReview(Vector<String> where);

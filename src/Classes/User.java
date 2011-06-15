@@ -24,10 +24,14 @@ public class User extends Entity implements ILoggable {
 	
 	// TODO: review access scope, data types and checkings inside these methods.
 	
-	public boolean getAccesLevel() {
+	public boolean getAccessLevel() {
 		return accessLevel;
 	}
 	
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
 	public Date getBirthday() {
 		return birthday;
 	}

@@ -152,7 +152,7 @@ public class DataBase implements IDataBase{
 	/* (non-Javadoc)
 	 * @see JavaDB.SDdasdasdasd#queryUser(java.util.Vector, java.util.Vector, java.util.Vector)
 	 */
-	public Book[] queryUser(Vector<String> select,
+	public User[] queryUser(Vector<String> select,
 			Vector<String> where, Vector<String> order) {	
 		try {
 			Class.forName(driver);
@@ -166,8 +166,8 @@ public class DataBase implements IDataBase{
 			String o = stt.mountOrderStatement(order);
 
 			// making the query
-			//System.out.println(s + " FROM book " + w + o);
-			ResultSet r = command.executeQuery(s + " FROM book " + w + o);
+			//System.out.println(s + " FROM users " + w + o);
+			ResultSet r = command.executeQuery(s + " FROM users " + w + o);
 
 			int numbRows = 0, cont = 0;
 			while(r.next()){
@@ -176,49 +176,50 @@ public class DataBase implements IDataBase{
 			//System.out.println(numbRows);
 
 			// creates an array of objects book to return
-			Book[] b = new Book[numbRows];		
-			ResultSet result = command.executeQuery(s + " FROM book " + w + o);
+			User[] u = new User[numbRows];		
+			ResultSet result = command.executeQuery(s + " FROM users " + w + o);
 
 			while (result.next())
 			{
-				Book temp = new Book();
+				User temp = new User();
 
 				for(int i = 0; i < select.size(); i++){
-					if(select.get(i).equalsIgnoreCase("isbn")) 
-						temp.setISBN(result.getString("isbn"));
+					if(select.get(i).equalsIgnoreCase("userName")) 
+						temp.setUsername(result.getString("userName"));
+					if(select.get(i).equalsIgnoreCase("accessLevel"))
+						temp.setAccessLevel(result.getInt("accessLevel") == 1 ? true : false);
+					if(select.get(i).equalsIgnoreCase("birthday"))
+						temp.setBirthday(result.getDate("birthday"));
+					if(select.get(i).equalsIgnoreCase("college"))
+						temp.setCollege(result.getString("college"));
+					if(select.get(i).equalsIgnoreCase("course"))
+						temp.setCourse(result.getString("course"));
+					if(select.get(i).equalsIgnoreCase("email"))
+						temp.setEmail(result.getString("email"));
+					if(select.get(i).equalsIgnoreCase("gender"))
+						temp.setGender(result.getInt("gender") == 1 ? true : false);
 					if(select.get(i).equalsIgnoreCase("name"))
 						temp.setName(result.getString("name"));
-					if(select.get(i).equalsIgnoreCase("authors"))
-						temp.setAuthors(result.getString("authors"));
-					if(select.get(i).equalsIgnoreCase("description"))
-						temp.setDescription(result.getString("description"));
-					if(select.get(i).equalsIgnoreCase("edition"))
-						temp.setEdition(result.getString("edition"));
-					if(select.get(i).equalsIgnoreCase("imagePath"))
-						temp.setImagePath(result.getString("imagePath"));
-					if(select.get(i).equalsIgnoreCase("publisher"))
-						temp.setPublisher(result.getString("publisher"));
-					if(select.get(i).equalsIgnoreCase("publishingDate"))
-						try {
-							temp.setPublishingDate(result.getDate("publishingDate"));
-						} catch (Exception e) {
-							System.out.println("Erro na data: " +e.getMessage());
-						}
+					if(select.get(i).equalsIgnoreCase("password"))
+						temp.setPassword(result.getString("password"));
+					if(select.get(i).equalsIgnoreCase("selfDescription"))
+						temp.setSelfDescription(result.getString("selfDescription"));
+					if(select.get(i).equalsIgnoreCase("ingressYear"))
+						temp.setIngressYear(result.getDate("ingressYear"));
 				}
-				//System.out.println("isbn: " +temp.getISBN() + ", cont: " + cont);
-
-				b[cont] = temp;
+				
+				u[cont] = temp;
 				cont++;
 			}
 			command.close();
 			conexion.close();
-			return b;
+			return u;
 
 		} catch (ClassNotFoundException erro) {
 			System.out.println(erro.getMessage());
 			return null;
 		} catch (SQLException erro) {
-			System.out.println("Erro na consulta Book: " + erro.getMessage());
+			System.out.println("Erro na consulta Users: " + erro.getMessage());
 			return null;
 		}
 	}
@@ -261,7 +262,7 @@ public class DataBase implements IDataBase{
 	public Vector getVectorUser(User u){
 		Vector v = new Vector();
 		v.add(u.getUsername());
-		v.add((u.getAccesLevel() ? 1 : 0)); //como o banco não suporta boolean, deve ser 0 ou 1
+		v.add((u.getAccessLevel() ? 1 : 0)); //como o banco não suporta boolean, deve ser 0 ou 1
 		v.add(u.getBirthday());
 		v.add(u.getCollege());
 		v.add(u.getCourse());
@@ -281,7 +282,7 @@ public class DataBase implements IDataBase{
 	public Vector getVectorSetUser(User u){
 		Vector v = new Vector();
 		v.add("username = '" + u.getUsername() + "'");
-		v.add("accessLevel = '" + (u.getAccesLevel() ? 1 : 0) + "'"); //como o banco não suporta boolean, deve ser 0 ou 1
+		v.add("accessLevel = '" + (u.getAccessLevel() ? 1 : 0) + "'"); //como o banco não suporta boolean, deve ser 0 ou 1
 		v.add("birthday = '" + u.getBirthday() + "'");
 		v.add("college = '" + u.getCollege() + "'");
 		v.add("course = '" + u.getCourse() + "'");
@@ -481,7 +482,7 @@ public class DataBase implements IDataBase{
 	/* (non-Javadoc)
 	 * @see JavaDB.SDdasdasdasd#queryComment(java.util.Vector, java.util.Vector, java.util.Vector)
 	 */
-	public Book[] queryComment(Vector<String> select,
+	public Comment[] queryComment(Vector<String> select,
 			Vector<String> where, Vector<String> order) {	
 		try {
 			Class.forName(driver);
@@ -495,8 +496,8 @@ public class DataBase implements IDataBase{
 			String o = stt.mountOrderStatement(order);
 
 			// making the query
-			//System.out.println(s + " FROM book " + w + o);
-			ResultSet r = command.executeQuery(s + " FROM book " + w + o);
+			//System.out.println(s + " FROM comment " + w + o);
+			ResultSet r = command.executeQuery(s + " FROM comment " + w + o);
 
 			int numbRows = 0, cont = 0;
 			while(r.next()){
@@ -505,28 +506,22 @@ public class DataBase implements IDataBase{
 			//System.out.println(numbRows);
 
 			// creates an array of objects book to return
-			Book[] b = new Book[numbRows];		
-			ResultSet result = command.executeQuery(s + " FROM book " + w + o);
+			Comment[] c = new Comment[numbRows];		
+			ResultSet result = command.executeQuery(s + " FROM comment " + w + o);
 
 			while (result.next())
 			{
-				Book temp = new Book();
+				Comment temp = new Comment();
 
 				for(int i = 0; i < select.size(); i++){
-					if(select.get(i).equalsIgnoreCase("isbn")) 
-						temp.setISBN(result.getString("isbn"));
-					if(select.get(i).equalsIgnoreCase("name"))
-						temp.setName(result.getString("name"));
-					if(select.get(i).equalsIgnoreCase("authors"))
-						temp.setAuthors(result.getString("authors"));
-					if(select.get(i).equalsIgnoreCase("description"))
-						temp.setDescription(result.getString("description"));
-					if(select.get(i).equalsIgnoreCase("edition"))
-						temp.setEdition(result.getString("edition"));
-					if(select.get(i).equalsIgnoreCase("imagePath"))
-						temp.setImagePath(result.getString("imagePath"));
-					if(select.get(i).equalsIgnoreCase("publisher"))
-						temp.setPublisher(result.getString("publisher"));
+					if(select.get(i).equalsIgnoreCase("id")) 
+						temp.setID(result.getInt("id"));
+					if(select.get(i).equalsIgnoreCase("bookISBN")) 
+						//temp.setBookISBN(result.getString("bookISBN"));
+					if(select.get(i).equalsIgnoreCase("author"))
+						temp.setAuthor(result.getString("author"));
+					if(select.get(i).equalsIgnoreCase("content"))
+						temp.setContent(result.getString("content"));
 					if(select.get(i).equalsIgnoreCase("publishingDate"))
 						try {
 							temp.setPublishingDate(result.getDate("publishingDate"));
@@ -534,14 +529,13 @@ public class DataBase implements IDataBase{
 							System.out.println("Erro na data: " +e.getMessage());
 						}
 				}
-				//System.out.println("isbn: " +temp.getISBN() + ", cont: " + cont);
 
-				b[cont] = temp;
+				c[cont] = temp;
 				cont++;
 			}
 			command.close();
 			conexion.close();
-			return b;
+			return c;
 
 		} catch (ClassNotFoundException erro) {
 			System.out.println(erro.getMessage());
@@ -591,7 +585,7 @@ public class DataBase implements IDataBase{
 		Vector v = new Vector();
 		v.add(c.getID());
 		v.add(c.getAuthor());
-		//v.add(c.getISBN()); //FALTA ESTE MÉTODO NA CLASSE COMMENT 
+		//v.add(c.getBookISBN());  
 		v.add(c.getContent());
 		v.add(c.getPublishingDate());
 		return v;
@@ -605,7 +599,7 @@ public class DataBase implements IDataBase{
 		Vector v = new Vector();
 		v.add("id = '" + c.getID() + "'");
 		v.add("username = '" + c.getAuthor() + "'");
-		//v.add("isbn = '" + c.getISBN() + "'"); //FALTA ESTE MÉTODO NA CLASSE COMMENT 
+		v.add("bookISBN = '" + c.getISBN() + "'"); 
 		v.add("content = '" + c.getContent() + "'");
 		v.add("publishingDate = '" + c.getPublishingDate() + "'");
 		return v;
@@ -636,7 +630,7 @@ public class DataBase implements IDataBase{
 	/* (non-Javadoc)
 	 * @see JavaDB.SDdasdasdasd#queryReview(java.util.Vector, java.util.Vector, java.util.Vector)
 	 */
-	public Book[] queryReview(Vector<String> select,
+	public Review[] queryReview(Vector<String> select,
 			Vector<String> where, Vector<String> order) {	
 		try {
 			Class.forName(driver);
@@ -650,7 +644,7 @@ public class DataBase implements IDataBase{
 			String o = stt.mountOrderStatement(order);
 
 			// making the query
-			//System.out.println(s + " FROM book " + w + o);
+			//System.out.println(s + " FROM review " + w + o);
 			ResultSet r = command.executeQuery(s + " FROM review " + w + o);
 
 			int numbRows = 0, cont = 0;
@@ -660,28 +654,26 @@ public class DataBase implements IDataBase{
 			//System.out.println(numbRows);
 
 			// creates an array of objects book to return
-			Book[] b = new Book[numbRows];		
-			ResultSet result = command.executeQuery(s + " FROM book " + w + o);
+			Review[] rv = new Review[numbRows];		
+			ResultSet result = command.executeQuery(s + " FROM review " + w + o);
 
 			while (result.next())
 			{
-				Book temp = new Book();
-
+				Review temp = new Review();
+				
 				for(int i = 0; i < select.size(); i++){
-					if(select.get(i).equalsIgnoreCase("isbn")) 
-						temp.setISBN(result.getString("isbn"));
-					if(select.get(i).equalsIgnoreCase("name"))
-						temp.setName(result.getString("name"));
-					if(select.get(i).equalsIgnoreCase("authors"))
-						temp.setAuthors(result.getString("authors"));
-					if(select.get(i).equalsIgnoreCase("description"))
-						temp.setDescription(result.getString("description"));
-					if(select.get(i).equalsIgnoreCase("edition"))
-						temp.setEdition(result.getString("edition"));
-					if(select.get(i).equalsIgnoreCase("imagePath"))
-						temp.setImagePath(result.getString("imagePath"));
-					if(select.get(i).equalsIgnoreCase("publisher"))
-						temp.setPublisher(result.getString("publisher"));
+					if(select.get(i).equalsIgnoreCase("id")) 
+						temp.setID(result.getInt("id"));
+					if(select.get(i).equalsIgnoreCase("username"))
+						//temp.setUsername(result.getString("username"));
+					if(select.get(i).equalsIgnoreCase("bookIsbn"))
+						temp.setBookISBN(result.getString("bookIsbn"));
+					if(select.get(i).equalsIgnoreCase("bookName"))
+						temp.setBookName(result.getString("bookName"));
+					if(select.get(i).equalsIgnoreCase("content"))
+						temp.setContent(result.getString("content"));
+					if(select.get(i).equalsIgnoreCase("title"))
+						temp.setTitle(result.getString("title"));
 					if(select.get(i).equalsIgnoreCase("publishingDate"))
 						try {
 							temp.setPublishingDate(result.getDate("publishingDate"));
@@ -689,14 +681,13 @@ public class DataBase implements IDataBase{
 							System.out.println("Erro na data: " +e.getMessage());
 						}
 				}
-				//System.out.println("isbn: " +temp.getISBN() + ", cont: " + cont);
 
-				b[cont] = temp;
+				rv[cont] = temp;
 				cont++;
 			}
 			command.close();
 			conexion.close();
-			return b;
+			return rv;
 
 		} catch (ClassNotFoundException erro) {
 			System.out.println(erro.getMessage());
@@ -790,7 +781,7 @@ public class DataBase implements IDataBase{
 		return sucesso;
 	}
 
-	public Book[] queryRating(Vector<String> select,
+	public Rating[] queryRating(Vector<String> select,
 			Vector<String> where, Vector<String> order) {	
 		try {
 			Class.forName(driver);
@@ -804,8 +795,8 @@ public class DataBase implements IDataBase{
 			String o = stt.mountOrderStatement(order);
 
 			// making the query
-			//System.out.println(s + " FROM book " + w + o);
-			ResultSet r = command.executeQuery(s + " FROM book " + w + o);
+			//System.out.println(s + " FROM rating " + w + o);
+			ResultSet r = command.executeQuery(s + " FROM rating " + w + o);
 
 			int numbRows = 0, cont = 0;
 			while(r.next()){
@@ -814,8 +805,8 @@ public class DataBase implements IDataBase{
 			//System.out.println(numbRows);
 
 			// creates an array of objects book to return
-			Book[] b = new Book[numbRows];		
-			ResultSet result = command.executeQuery(s + " FROM book " + w + o);
+			Rating[] b = new Book[numbRows];		
+			ResultSet result = command.executeQuery(s + " FROM rating " + w + o);
 
 			while (result.next())
 			{
