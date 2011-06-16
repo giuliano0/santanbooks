@@ -2,7 +2,6 @@ package Classes;
 
 import java.sql.Date;
 import java.util.Calendar;
-import DataBase.Entity;
 import Interfaces.*;
 
 /**
@@ -10,7 +9,7 @@ import Interfaces.*;
  * @author Giuliano
  *
  */
-public class Book extends Entity implements ICommentable, IRateable, IReviewable {
+public class Book implements ICommentable, IRateable, IReviewable {
 	String authors;			// "James 'I'm awesome' Stewart"
 	String description;		// "Blah blah blah"
 	String edition;			// "7th ed."
@@ -19,6 +18,10 @@ public class Book extends Entity implements ICommentable, IRateable, IReviewable
 	String name;			// "Calculus - Early Transcedentals"
 	String publisher;		// "Brooks Cole"
 	Date publishingDate;	// January 1, 2011 (doesn't matter)
+	
+	Comment[] comments;
+	Review[] reviews;
+	float rating;			// Retornado direto de consulta à DB
 	
 	// TODO: review access scope, data types and checkings inside these methods.
 	
@@ -159,25 +162,6 @@ public class Book extends Entity implements ICommentable, IRateable, IReviewable
 		publishingDate = value;
 	}
 	
-	/*
-	 * Esses fields estão no lugar errado. São "placeholders".
-	 */
-	Comment[] comments;
-	Review[] reviews;
-	float rating;			// Retornado direto de consulta à DB
-
-	@Override
-	public void addComment(Comment comment) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void editComment() {
-		// TODO Auto-generated method stub
-		
-	}
-
 	@Override
 	public Comment[] getAllComments() {
 		if (comments == null); // dbGetComments(isbn);
@@ -194,18 +178,6 @@ public class Book extends Entity implements ICommentable, IRateable, IReviewable
 	@Override
 	public int getRating() {
 		return (int)Math.floor((double)rating);
-	}
-
-	@Override
-	public void updateRating(int rating) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void addReview() {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override

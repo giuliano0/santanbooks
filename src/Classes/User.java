@@ -1,7 +1,6 @@
 package Classes;
 import java.util.Date;
 
-import DataBase.Entity;
 import Interfaces.ILoggable;
 
 /**
@@ -9,7 +8,7 @@ import Interfaces.ILoggable;
  * @author Giuliano
  *
  */
-public class User extends Entity implements ILoggable {
+public class User implements ILoggable {
 	boolean accessLevel;
 	Date birthday;
 	String college;

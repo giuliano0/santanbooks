@@ -21,7 +21,7 @@ public class SearchEngine implements ISearchEngine { // TODO: colocar o IRequire
 	// Bithces, ajudem a popular o array abaixo, kkthxbye ;)
 	private static String[] notTags = {"a", "as", "o", "os", "e", "de", "do", "dos", "da", "das", 
 						"para", "como", "com", "em", "no", "nos", "na", "nas", "uns", "umas", 
-						"um", "algum", "alguém", "nenhum", "ninguém", "todo", "todos", "toda", "todas", "tudo"};
+						"um", "algum", "alguem", "nenhum", "ninguem", "todo", "todos", "toda", "todas", "tudo"};
 
 	// Verificar documentação do java para expressões regulares a respeito dos caracteres comentados abaixo.
 	// Eles são usados no Regex, e na verdade esse array inteiro pode ser substituído por um Regex Pattern...
@@ -33,6 +33,12 @@ public class SearchEngine implements ISearchEngine { // TODO: colocar o IRequire
 	public SearchEngine() {
 		Arrays.sort(notTags);
 	}
+
+	@Override
+	public Book[] search(String key) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 	@Override
 	public Book[] searchByAuthor(String key) {
@@ -42,23 +48,8 @@ public class SearchEngine implements ISearchEngine { // TODO: colocar o IRequire
 	}
 
 	@Override
-	public Book[] searchByISBN(String key) {
+	public Book searchByISBN(String key) {
 		//String nKey = keyNormalize(key);
-		
-		return null;
-	}
-
-	@Override
-	public Book[] searchByName(String key) {
-		//String nKey = keyNormalize(key);
-		
-		return null;
-	}
-
-	@Override
-	public Book[] searchByTags(String[] tags) {
-		//String[] nKeys; // Declaração errada!
-		//for (int i = 0; i < tags.length; i++) nKeys[i] = keyNormalize(tags[i]);
 		
 		return null;
 	}
@@ -73,7 +64,7 @@ public class SearchEngine implements ISearchEngine { // TODO: colocar o IRequire
 	 * <p>Mantém, porém, caracteres de pontuação, símbolos e caraceres especiais.</p> 
 	 * @author Giuliano
 	 */
-	public String keyNormalize(String value, boolean removePunctuation /*OPTIONAL*/) {
+	public String keyNormalize(String value) {
 		long start = System.currentTimeMillis();
 		String ret = "";
 		
@@ -94,10 +85,8 @@ public class SearchEngine implements ISearchEngine { // TODO: colocar o IRequire
 			ret += c;
 		}
 		
-		if (removePunctuation) {
-			for (int i = 0; i < punctuation.length; i++)
-				ret = ret.replaceAll(punctuation[i], ""); 
-		}
+		for (int i = 0; i < punctuation.length; i++)
+			ret = ret.replaceAll(punctuation[i], ""); 
 		
 		System.out.println("Running time (keyNormalize): " + (System.currentTimeMillis() - start) + "ms.");
 		return ret;
@@ -114,11 +103,17 @@ public class SearchEngine implements ISearchEngine { // TODO: colocar o IRequire
 		String tags[];
 		
 		// remove, além de acentos, pontuação
-		value = keyNormalize(value, true);
+		value = keyNormalize(value);
+		
+		// adiciona um espaço no começo e no final da string para o replaceAll()
+		value = " " + value + " ";
 		
 		// Remove cada match de não-tag da string
 		for (int i = 0; i < notTags.length; i++)
 			value = value.replaceAll(" " + notTags[i] + " ", " ");
+		
+		// trim dos espaços extras
+		value = value.trim();
 		
 		tags = value.split(" ");
 		Arrays.sort(tags);
@@ -127,5 +122,5 @@ public class SearchEngine implements ISearchEngine { // TODO: colocar o IRequire
 		
 		return tags;
 	}
-	
+
 }

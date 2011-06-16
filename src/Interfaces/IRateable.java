@@ -7,5 +7,5 @@ package Interfaces;
  */
 public interface IRateable {
 	int getRating();
-	void updateRating(int rating);
+	//void updateRating(int rating);
 }

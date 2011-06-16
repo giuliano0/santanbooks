@@ -15,7 +15,7 @@ public class SearchEngineTest {
 		"Não sei onde diabos usar ò, nem ù, nem â, nem ä, nem ì, nem î, muito menos ù e û, mas e daí? Foda-se!";
 		
 		SearchEngine se = new SearchEngine();
-		testKey = se.keyNormalize(testKey, false);
+		testKey = se.keyNormalize(testKey);
 		
 		System.out.println(testKey);
 		// Fim do teste de normalização de chave
@@ -33,7 +33,7 @@ public class SearchEngineTest {
 		// Fim do teste de Exception throwing
 		
 		// Teste da extração de tags
-		String phrase = "Equações Diferenciais Elementares e, Problemas. de Valores de Contorno!? ?";
+		String phrase = "Equações Diferenciais Elementares e, Problemas. de Valores de Contorno!? ? Alguém";
 		String tags[] = se.extractTags(phrase);
 		
 		System.out.print("{");

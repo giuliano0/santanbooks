@@ -1,7 +1,6 @@
 package Classes;
 import java.util.Date;
 
-import DataBase.Entity;
 import Interfaces.*;
 
 /**
@@ -9,7 +8,7 @@ import Interfaces.*;
  * @author Giuliano
  *
  */
-public class Review extends Entity implements ICommentable, IRateable {
+public class Review implements ICommentable, IRateable {
 	// Fields
 	int ID;
 	String username;
@@ -79,18 +78,6 @@ public class Review extends Entity implements ICommentable, IRateable {
 	public void setTitle(String value) {
 		title = value;
 	}
-	
-	@Override
-	public void addComment(Comment comment) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void editComment() {
-		// TODO Auto-generated method stub
-		
-	}
 
 	@Override
 	public Comment[] getAllComments() {
@@ -109,9 +96,4 @@ public class Review extends Entity implements ICommentable, IRateable {
 		return (int)Math.floor((double)rating);
 	}
 
-	@Override
-	public void updateRating(int rating) {
-		// TODO Auto-generated method stub
-		
-	}
 }

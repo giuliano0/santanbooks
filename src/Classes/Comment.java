@@ -2,7 +2,6 @@ package Classes;
 import java.util.Calendar;
 import java.util.Date;
 
-import DataBase.Entity;
 import Interfaces.IRateable;
 
 /**
@@ -10,7 +9,7 @@ import Interfaces.IRateable;
  * @author Giuliano
  *
  */
-public class Comment extends Entity implements IRateable {
+public class Comment implements IRateable {
 	// Fields
 	int ID;
 	String username;
@@ -71,12 +70,6 @@ public class Comment extends Entity implements IRateable {
 	@Override
 	public int getRating() {
 		return (int)Math.floor((double)rating);
-	}
-
-	@Override
-	public void updateRating(int rating) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	public String getBookISBN() {

@@ -7,7 +7,7 @@ import Classes.Review;
  *
  */
 public interface IReviewable {
-	void addReview();
+	//void addReview();
 	Review[] getAllReviews();
 	Review getReview(int id);
 }

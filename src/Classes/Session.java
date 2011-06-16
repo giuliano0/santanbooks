@@ -2,15 +2,30 @@ package Classes;
 
 import java.util.Date;
 
+import JavaDB.IDataBaseComponent;
+
 /**
  * Simula a sessão de servidor
  * @author Giuliano
  *
  */
 public class Session {
+	IDataBaseComponent db;
 	String username;
 	boolean status;
 	Date lastLogin;
+	//Date lastActivity;
+	
+	/**
+	 * Pergunta à Database se o usuário especificado está logado.
+	 * @param username
+	 * @return True se estiver logado, false caso contrário.
+	 * @author Giuliano
+	 */
+	public static boolean isUserLoggedIn(String username) {
+		// Conecta à database 
+		return true;
+	}
 	
 	public String getUsername() {
 		return username;
@@ -20,10 +35,16 @@ public class Session {
 		this.username = username;
 	}
 	
+	/**
+	 * @return True if the user is loggen in.
+	 */
 	public boolean getStatus() {
 		return status;
 	}
 	
+	/**
+	 * @param status online = true
+	 */
 	public void setStatus(boolean status) {
 		this.status = status;
 	}
@@ -36,6 +57,12 @@ public class Session {
 		this.lastLogin = lastLogin;
 	}
 	
+	/**
+	 * @author Giuliano
+	 * @param username
+	 * @param password
+	 * @return Boolean indicating wether the login was successful.
+	 */
 	public boolean loginChallenge(String username, String password) {
 		return true;
 	}
