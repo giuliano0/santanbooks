@@ -1,10 +1,12 @@
 package SearchEngine;
 
 import java.util.Arrays;
+import java.util.Vector;
 
-import anima.annotation.Component;
 import Classes.Book;
 import Interfaces.ISearchEngine;
+import JavaDB.DataBase;
+import anima.annotation.Component;
 
 /**
  * Componente de motor de buscas.
@@ -28,21 +30,49 @@ public class SearchEngine implements ISearchEngine { // TODO: colocar o IRequire
 	// Metacaracteres do Regex: ([{\^-$|]})?*+.
 	private static final String[] punctuation = {",", "\\.", ":", "\\-", ";", "\\?", "!", "\\(", "\\)", "\\n"};
 	
-	// TODO: Declarar a database e a factory, e instanciá-la no construtor.
+	DataBase dataBase = new DataBase();
 	
+	// TODO: Declarar a database e a factory, e instanciá-la no construtor.
+
 	public SearchEngine() {
 		Arrays.sort(notTags);
 	}
 
 	@Override
 	public Book[] search(String key) {
-		// TODO Auto-generated method stub
+		Vector<String> select = new Vector<String>();
+		Vector<String> where = new Vector<String>();
+		Vector<String> order = new Vector<String>();
+		select.add("name"); // Falta ver um jeito de selecionar todos os campos
+		
+		// 1º - Procura pela expressão exata
+		where.add("name = '" + key + "'");
+		order.add(""); // colocar aqui o jeito pra ordernar
+		//Book[] book = dataBase.queryBook(select, where, order);
+
+		// 2º - Procura por nomes semelhantes as tags procuradas
+		String[] nKey = extractTags(key);
+		where.clear();
+		where.add("name LIKE '%" + nKey[0] + "%'");
+		if (nKey.length > 1)
+			for (int i = 1; i < nKey.length - 1; i++)
+				where.add("name LIKE '%" + nKey[i] + "%'");
+		//Book[] books = dataBase.queryBook(select, where, order);
+		
+		/*
+			Depois disso, juntar os dois resultados "book" e "books", com o primeiro com maior prioridade que o segundo.
+			Por enquanto ele busca apenas pelo nome, mas uma idéia seria buscar pelos outros campos também,
+		com uma prioridade entre eles.
+			No final, juntar os dois resultados em um já ordenado na ordemd e mostrar e retornar isso.
+		*/
+		
 		return null;
 	}
 	
 	@Override
 	public Book[] searchByAuthor(String key) {
 		//String nKey = keyNormalize(key);
+		//Book[] books = mgrBusinessObject.selectBooksByAuthors(authors);
 
 		return null;
 	}
