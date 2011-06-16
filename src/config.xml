@@ -6,6 +6,6 @@
         <!-- <dcc mainModule="santanbooks.SearchEngine.SearchEngine"/> -->
         <!-- tem que mudar essas linhas depois -->
         
-        <dcc mainModule="JavaDB.DataBaseComponent"/>
+        <dcc mainModule="DataBase.BusinessObject"/>
     </dccs>
 </config>

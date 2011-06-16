@@ -1,4 +1,4 @@
-package JavaDB;
+package DataBase;
 
 import java.sql.Date;
 
@@ -8,7 +8,7 @@ import anima.factory.context.componentContext.ComponentContextFactory;
 import anima.factory.exception.FactoryException;
 import Classes.Book;
 
-public class AppDataBaseComponent {
+public class AppBusinessObjectExample {
 	public static void main(String[] args) {
 
 		IGlobalFactory factory = null;
@@ -17,8 +17,8 @@ public class AppDataBaseComponent {
 			// criado uma instancia do componente de database
 
 			factory = ComponentContextFactory.createGlobalFactory();
-			IDataBaseComponent dataBaseComponent = factory
-					.createInstance("<http://purl.org/dcc/JavaDB.DataBaseComponent>");
+			IBusinessObject dataBaseComponent = factory
+					.createInstance("<http://purl.org/dcc/DataBase.BusinessObject>");
 
 			Date dataAtual = new Date(System.currentTimeMillis());
 

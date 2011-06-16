@@ -1,4 +1,4 @@
-package JavaDB;
+package DataBase;
 
 import java.sql.SQLException;
 import java.util.Vector;
@@ -7,7 +7,9 @@ import Classes.Book;
 import Classes.Comment;
 import Classes.Rating;
 import Classes.Review;
+import Classes.Session;
 import Classes.User;
+import JavaDB.DataBase;
 import anima.annotation.Component;
 import anima.component.base.ComponentBase;
 
@@ -15,16 +17,18 @@ import anima.component.base.ComponentBase;
  * 
  * @author Mauricio Bertanha and Rodrigo Elizeu Goncalves
  */
-@Component(id = "<http://purl.org/dcc/JavaDB.DataBaseComponent>", provides = { "<http://purl.org/dcc/JavaDB.IDataBaseComponent>" })
-public class DataBaseComponent extends ComponentBase implements
-		IDataBaseComponent {
+@Component(id = "<http://purl.org/dcc/DataBase.BusinessObject>", provides = { "<http://purl.org/dcc/DataBase.IBusinessObject>" })
+public class BusinessObject extends ComponentBase implements
+		IBusinessObject {
 	DataBase db;
 
-	public DataBaseComponent() {
+	public BusinessObject() {
 		// TODO fazer com que esse componente não instancie uma Classe DataBase
 		// dentro ele, já que ela tb vai ser um componente
 
 		// conectando o banco e inserindo os dados
+		
+		//TODO fazer conexao com o componente de JavaDB
 		db = new DataBase();
 		try {
 			db.connectDataBase(); // deve sempre ser feito com try/catch
@@ -50,11 +54,11 @@ public class DataBaseComponent extends ComponentBase implements
 
 	@Override
 	public boolean deleteComment(Comment comment) {		
-		return deleteComment(comment.getIdentifier());
+		return deleteComment(comment.getID());
 	}
 
 	@Override
-	public boolean deleteComment(String comment_id) {
+	public boolean deleteComment(int comment_id) {
 		Vector<String> where = new Vector<String>();
 		where.add("comment_id = '" + comment_id + "'");
 
@@ -88,16 +92,16 @@ public class DataBaseComponent extends ComponentBase implements
 	}
 
 	@Override
-	public boolean deleteRating(Rating rating) {
-		return deleteRating(rating.getIdentifier());
-	}
-
-	@Override
-	public boolean deleteRating(String rating_id) {
+	public boolean deleteRating(int rating_id) {
 		Vector<String> where = new Vector<String>();
 		where.add("rating_id = '" + rating_id + "'");
 
 		return db.deleteDataRating(where);
+	}
+
+	@Override
+	public boolean deleteRating(Rating rating) {
+		return deleteRating(rating.getID());
 	}
 
 	@Override
@@ -127,12 +131,7 @@ public class DataBaseComponent extends ComponentBase implements
 	}
 
 	@Override
-	public boolean deleteRatingsForReview(Review review) {
-		return deleteRatingsForReview(review.getIdentifier());
-	}
-
-	@Override
-	public boolean deleteRatingsForReview(String review_id) {
+	public boolean deleteRatingsForReview(int review_id) {
 		Vector<String> where = new Vector<String>();
 		where.add("review_id = '" + review_id + "'");
 
@@ -140,16 +139,21 @@ public class DataBaseComponent extends ComponentBase implements
 	}
 
 	@Override
-	public boolean deleteReview(Review review) {
-		return deleteReview(review.getIdentifier());
+	public boolean deleteRatingsForReview(Review review) {
+		return deleteRatingsForReview(review.getID());
 	}
 
 	@Override
-	public boolean deleteReview(String review_id) {
+	public boolean deleteReview(int review_id) {
 		Vector<String> where = new Vector<String>();
 		where.add("review_id = '" + review_id + "'");
 
 		return db.deleteDataReview(where);
+	}
+
+	@Override
+	public boolean deleteReview(Review review) {
+		return deleteReview(review.getID());
 	}
 
 	@Override
@@ -176,6 +180,19 @@ public class DataBaseComponent extends ComponentBase implements
 	@Override
 	public boolean deleteReviewsByUser(User user) {
 		return deleteReviewsByUser(user.getUsername());
+	}
+
+	@Override
+	public boolean deleteSession(Session session) {
+		return deleteSession(session.getUsername());
+	}
+
+	@Override
+	public boolean deleteSession(String username) {
+		Vector<String> where = new Vector<String>();
+		where.add("username = '" + username + "'");
+
+		return db.deleteDataSession(where);
 	}
 
 	@Override
@@ -217,16 +234,21 @@ public class DataBaseComponent extends ComponentBase implements
 	}
 
 	@Override
+	public boolean insertSession(Session session) {
+		return db.insertData(session);
+	}
+	
+	@Override
 	public boolean insertUser(User user) {
 		return db.insertData(user);
 	}
-
+	
 	@Override
 	public Book selectBook(String isbn) {
 		Book books[] = selectBooks("isbn", isbn, "isbn");
 		return books[0];
 	}
-
+	
 	private Book[] selectBooks(String colunnName, String value, String orderBy) {	
 		// TODO por enquanto está fixo as colunas que retornam, era melhor retornar
 		// todas as colunas da tabela
@@ -253,19 +275,19 @@ public class DataBaseComponent extends ComponentBase implements
 	public Book[] selectBooksByAuthors(String authors) {
 		return selectBooks("authors", authors, "authors");
 	}
-	
+
 	@Override
 	public Book[] selectBooksByName(String name) {
 		return selectBooks("name", name, "name");
 	}
-	
+
 	@Override
-	public Comment selectComment(String comment_id) {
+	public Comment selectComment(int comment_id) {
 		Comment comments[] = selectComments("comment_id", comment_id, "comment_id");
 		return comments[0];
 	}
-	
-	private Comment[] selectComments(String colunnName, String value, String orderBy) {	
+
+	private Comment[] selectComments(String colunnName, Object value, String orderBy) {	
 		// TODO por enquanto está fixo as colunas que retornam, era melhor retornar
 		// todas as colunas da tabela
 		Vector<String> select = new Vector<String>();
@@ -306,7 +328,7 @@ public class DataBaseComponent extends ComponentBase implements
 	}
 
 	@Override
-	public Rating selectRating(String rating_id) {
+	public Rating selectRating(int rating_id) {
 		 Rating ratings[] = selectRatings("rating_id", rating_id, "rating_id");
 		 return ratings[0];
 	}
@@ -321,7 +343,7 @@ public class DataBaseComponent extends ComponentBase implements
 		return selectRatings("isbn", isbn, "isbn");
 	}
 
-	private Rating[] selectRatings(String colunnName, String value, String orderBy) {	
+	private Rating[] selectRatings(String colunnName, Object value, String orderBy) {	
 		// TODO por enquanto está fixo as colunas que retornam, era melhor retornar
 		// todas as colunas da tabela
 		Vector<String> select = new Vector<String>();
@@ -352,17 +374,17 @@ public class DataBaseComponent extends ComponentBase implements
 	}
 
 	@Override
-	public Rating[] selectRatingsForReview(Review review) {
-		return selectRatingsForReview(review.getIdentifier());
-	}
-
-	@Override
-	public Rating[] selectRatingsForReview(String review_id) {
+	public Rating[] selectRatingsForReview(int review_id) {
 		return selectRatings("review_id", review_id, "review_id");
 	}
 
 	@Override
-	public Review selectReview(String review_id) {
+	public Rating[] selectRatingsForReview(Review review) {
+		return selectRatingsForReview(review.getID());
+	}
+
+	@Override
+	public Review selectReview(int review_id) {
 		Review reviews[] = selectReviews("review_id", review_id, "review_id");
 		return reviews[0];
 	}
@@ -377,7 +399,7 @@ public class DataBaseComponent extends ComponentBase implements
 		return selectReviews("isbn", isbn, "isbn");
 	}
 
-	private Review[] selectReviews(String colunnName, String value, String orderBy) {	
+	private Review[] selectReviews(String colunnName, Object value, String orderBy) {	
 		// TODO por enquanto está fixo as colunas que retornam, era melhor retornar
 		// todas as colunas da tabela
 		Vector<String> select = new Vector<String>();
@@ -403,9 +425,33 @@ public class DataBaseComponent extends ComponentBase implements
 		return selectReviews("username", username, "username");
 	}
 
+	
 	@Override
 	public Review[] selectReviewsByUser(User user) {
 		return selectReviewsByUser(user.getUsername());
+	}
+
+	@Override
+	public Session selectSession(String username) {
+		// TODO por enquanto está fixo as colunas que retornam, era melhor retornar
+		// todas as colunas da tabela
+		Vector<String> select = new Vector<String>();
+		select.add("username");
+		select.add("status");
+		select.add("lastLogin");
+
+		// criando where
+		Vector<String> where = new Vector<String>();
+		where.add("username = '" + username + "'");
+
+		// criando order
+		Vector<String> order = new Vector<String>();
+		order.add("username");
+
+		// realizando a consulta
+		Session result[] = db.querySession(select, where, order);
+
+		return result[0];
 	}
 
 	@Override
@@ -437,7 +483,6 @@ public class DataBaseComponent extends ComponentBase implements
 		return result;
 	}
 
-	
 	@Override
 	public boolean updateBook(Book book) {
 		Vector<String> where = new Vector<String>();
@@ -449,7 +494,7 @@ public class DataBaseComponent extends ComponentBase implements
 	@Override
 	public boolean updateComment(Comment comment) {
 		Vector<String> where = new Vector<String>();
-		where.add("comment_id = '" + comment.getIdentifier() + "'");
+		where.add("comment_id = '" + comment.getID() + "'");
 
 		return db.updateData(comment, where);
 	}
@@ -457,7 +502,7 @@ public class DataBaseComponent extends ComponentBase implements
 	@Override
 	public boolean updateRating(Rating rating) {
 		Vector<String> where = new Vector<String>();
-		where.add("rating_id = '" + rating.getIdentifier() + "'");
+		where.add("rating_id = '" + rating.getID() + "'");
 
 		return db.updateData(rating, where);
 	}
@@ -465,15 +510,23 @@ public class DataBaseComponent extends ComponentBase implements
 	@Override
 	public boolean updateReview(Review review) {
 		Vector<String> where = new Vector<String>();
-		where.add("rating_id = '" + review.getIdentifier() + "'");
+		where.add("rating_id = '" + review.getID() + "'");
 
 		return db.updateData(review, where);
 	}
 
 	@Override
+	public boolean updateSession(Session session) {
+		Vector<String> where = new Vector<String>();
+		where.add("username = '" + session.getUsername() + "'");
+
+		return db.updateData(session, where);
+	}
+
+	@Override
 	public boolean updateUser(User user) {
 		Vector<String> where = new Vector<String>();
-		where.add("rating_id = '" + user.getIdentifier() + "'");
+		where.add("rating_id = '" + user.getUsername() + "'");
 
 		return db.updateData(user, where);
 	}
