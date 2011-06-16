@@ -2,7 +2,7 @@ package Classes;
 
 import java.util.Date;
 
-import JavaDB.IDataBaseComponent;
+import DataBase.IBusinessObject;
 
 /**
  * Simula a sessão de servidor
@@ -10,7 +10,7 @@ import JavaDB.IDataBaseComponent;
  *
  */
 public class Session {
-	IDataBaseComponent db;
+	IBusinessObject db;
 	String username;
 	boolean status;
 	Date lastLogin;

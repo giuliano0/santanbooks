@@ -1,6 +1,5 @@
 package Classes;
 
-import DataBase.Entity;
 
 /**
  * 
@@ -8,7 +7,7 @@ import DataBase.Entity;
  *
  */
 
-public class Rating extends Entity{
+public class Rating{
 	int ID;
 	String username;
 	String bookISBN;
