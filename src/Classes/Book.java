@@ -191,4 +191,29 @@ public class Book implements ICommentable, IRateable, IReviewable {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public void setReviews(Review[] reviews) {
+		// TODO Auto-generated method stub
+	}
+
+	@Override
+	public void setReview(Review review) {
+		// TODO Auto-generated method stub
+	}
+
+	@Override
+	public void setComments(Comment[] commments) {
+		// TODO Auto-generated method stub
+	}
+
+	@Override
+	public void setComment(Comment commment) {
+		// TODO Auto-generated method stub
+	}
+
+	@Override
+	public void setRating(float rating) {
+		// TODO Auto-generated method stub
+	}
 }

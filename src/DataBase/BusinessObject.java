@@ -245,7 +245,7 @@ public class BusinessObject extends ComponentBase implements
 	
 	@Override
 	public Book selectBook(String isbn) {
-		Book books[] = selectBooks("isbn", isbn, "isbn");
+		Book[] books = selectBooks("isbn", isbn, "isbn");
 		return books[0];
 	}
 	
@@ -266,7 +266,14 @@ public class BusinessObject extends ComponentBase implements
 		order.add(orderBy);
 
 		// realizando a consulta
-		Book result[] = db.queryBook(select, where, order);
+		Book[] result = db.queryBook(select, where, order);
+		
+		//coloca os valores no book correspondente a outras tabelas
+		for (int i=0;i<result.length;i++) {
+			result[i].setRating(selectRatingCalculed(result[i]));
+			result[i].setComments(selectCommentsBook(result[i]));
+			result[i].setReviews(selectReviews(result[i]));
+		}
 
 		return result;
 	}
@@ -283,7 +290,7 @@ public class BusinessObject extends ComponentBase implements
 
 	@Override
 	public Comment selectComment(int comment_id) {
-		Comment comments[] = selectComments("comment_id", comment_id, "comment_id");
+		Comment[] comments = selectComments("comment_id", comment_id, "comment_id");
 		return comments[0];
 	}
 
@@ -302,7 +309,7 @@ public class BusinessObject extends ComponentBase implements
 		order.add(orderBy);
 
 		// realizando a consulta
-		Comment result[] = db.queryComment(select, where, order);
+		Comment[] result = db.queryComment(select, where, order);
 
 		return result;
 	}
@@ -329,7 +336,7 @@ public class BusinessObject extends ComponentBase implements
 
 	@Override
 	public Rating selectRating(int rating_id) {
-		 Rating ratings[] = selectRatings("rating_id", rating_id, "rating_id");
+		 Rating[] ratings = selectRatings("rating_id", rating_id, "rating_id");
 		 return ratings[0];
 	}
 
@@ -385,7 +392,7 @@ public class BusinessObject extends ComponentBase implements
 
 	@Override
 	public Review selectReview(int review_id) {
-		Review reviews[] = selectReviews("review_id", review_id, "review_id");
+		Review[] reviews = selectReviews("review_id", review_id, "review_id");
 		return reviews[0];
 	}
 
@@ -415,8 +422,17 @@ public class BusinessObject extends ComponentBase implements
 		order.add(orderBy);
 
 		// realizando a consulta
-		Review result[] = db.queryReview(select, where, order);
+		Review[] result = db.queryReview(select, where, order);
 
+		//coloca os valores relacionados a reviews que estao em outras tabelas
+		for (int i=0;i<result.length;i++) {
+			result[i].setRating(selectRatingCalculed(result[i]));			
+			
+			//por enquanto o banco de dados nao permite um review ser comentado
+			//result[i].setComments(selectCommentsBook(result[i]));
+		}
+		
+		
 		return result;
 	}
 
@@ -449,14 +465,14 @@ public class BusinessObject extends ComponentBase implements
 		order.add("username");
 
 		// realizando a consulta
-		Session result[] = db.querySession(select, where, order);
+		Session[] result = db.querySession(select, where, order);
 
 		return result[0];
 	}
 
 	@Override
 	public User selectUser(String username) {
-		User users[] = selectUsers("username", username, "username");
+		User[] users = selectUsers("username", username, "username");
 		return users[0];
 	}
 
@@ -478,7 +494,7 @@ public class BusinessObject extends ComponentBase implements
 		order.add(orderBy);
 
 		// realizando a consulta
-		User result[] = db.queryUser(select, where, order);
+		User[] result = db.queryUser(select, where, order);
 
 		return result;
 	}
@@ -529,6 +545,30 @@ public class BusinessObject extends ComponentBase implements
 		where.add("rating_id = '" + user.getUsername() + "'");
 
 		return db.updateData(user, where);
+	}
+
+	@Override
+	public float selectRatingCalculed(Book book) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public float selectRatingCalculed(String isbn) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public float selectRatingCalculed(Review review) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public float selectRatingCalculed(int review_id) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 }

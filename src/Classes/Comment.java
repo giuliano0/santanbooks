@@ -79,5 +79,11 @@ public class Comment implements IRateable {
 	public void setBookISBN(String value) {
 		bookISBN = value;
 	}
+
+	@Override
+	public void setRating(float rating) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 }

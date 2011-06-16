@@ -11,4 +11,6 @@ public interface ICommentable {
 	//void editComment();					// O commentID é conferido
 	Comment[] getAllComments();
 	Comment getComment(int id);
+	void setComments(Comment[] commments);
+	void setComment(Comment commment);
 }

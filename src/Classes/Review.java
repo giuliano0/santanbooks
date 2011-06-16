@@ -96,4 +96,19 @@ public class Review implements ICommentable, IRateable {
 		return (int)Math.floor((double)rating);
 	}
 
+	@Override
+	public void setComments(Comment[] commments) {
+		// TODO Auto-generated method stub
+	}
+
+	@Override
+	public void setComment(Comment commment) {
+		// TODO Auto-generated method stub
+	}
+
+	@Override
+	public void setRating(float rating) {
+		// TODO Auto-generated method stub
+	}
+
 }
