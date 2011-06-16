@@ -18,17 +18,19 @@ import anima.component.base.ComponentBase;
  * @author Mauricio Bertanha and Rodrigo Elizeu Goncalves
  */
 @Component(id = "<http://purl.org/dcc/DataBase.BusinessObject>", provides = { "<http://purl.org/dcc/DataBase.IBusinessObject>" })
-public class BusinessObject extends ComponentBase implements
-		IBusinessObject {
+public class BusinessObject extends ComponentBase implements IBusinessObject {
 	DataBase db;
+
+	// TODO ainda faltam alguns tratamentos de erros quando não retorna nada no
+	// select
 
 	public BusinessObject() {
 		// TODO fazer com que esse componente não instancie uma Classe DataBase
 		// dentro ele, já que ela tb vai ser um componente
 
 		// conectando o banco e inserindo os dados
-		
-		//TODO fazer conexao com o componente de JavaDB
+
+		// TODO fazer conexao com o componente de JavaDB
 		db = new DataBase();
 		try {
 			db.connectDataBase(); // deve sempre ser feito com try/catch
@@ -53,27 +55,27 @@ public class BusinessObject extends ComponentBase implements
 	}
 
 	@Override
-	public boolean deleteComment(Comment comment) {		
+	public boolean deleteComment(Comment comment) {
 		return deleteComment(comment.getID());
 	}
 
 	@Override
 	public boolean deleteComment(int comment_id) {
 		Vector<String> where = new Vector<String>();
-		where.add("comment_id = '" + comment_id + "'");
+		where.add("id = " + comment_id);
 
 		return db.deleteDataComment(where);
 	}
 
 	@Override
-	public boolean deleteComments(Book book) {		
+	public boolean deleteComments(Book book) {
 		return deleteCommentsByIsbn(book.getISBN());
 	}
 
 	@Override
 	public boolean deleteCommentsByIsbn(String isbn) {
 		Vector<String> where = new Vector<String>();
-		where.add("isnb = '" + isbn + "'");
+		where.add("bookISBN = '" + isbn + "'");
 
 		return db.deleteDataComment(where);
 	}
@@ -94,7 +96,7 @@ public class BusinessObject extends ComponentBase implements
 	@Override
 	public boolean deleteRating(int rating_id) {
 		Vector<String> where = new Vector<String>();
-		where.add("rating_id = '" + rating_id + "'");
+		where.add("id = " + rating_id);
 
 		return db.deleteDataRating(where);
 	}
@@ -112,7 +114,7 @@ public class BusinessObject extends ComponentBase implements
 	@Override
 	public boolean deleteRatings(String isbn) {
 		Vector<String> where = new Vector<String>();
-		where.add("isbn = '" + isbn + "'");
+		where.add("bookISBN = '" + isbn + "'");
 
 		return db.deleteDataRating(where);
 	}
@@ -133,7 +135,7 @@ public class BusinessObject extends ComponentBase implements
 	@Override
 	public boolean deleteRatingsForReview(int review_id) {
 		Vector<String> where = new Vector<String>();
-		where.add("review_id = '" + review_id + "'");
+		where.add("bookReview = " + review_id);
 
 		return db.deleteDataRating(where);
 	}
@@ -164,7 +166,7 @@ public class BusinessObject extends ComponentBase implements
 	@Override
 	public boolean deleteReviews(String isbn) {
 		Vector<String> where = new Vector<String>();
-		where.add("review_id = '" + isbn + "'");
+		where.add("bookISBN = '" + isbn + "'");
 
 		return db.deleteDataReview(where);
 	}
@@ -237,25 +239,33 @@ public class BusinessObject extends ComponentBase implements
 	public boolean insertSession(Session session) {
 		return db.insertData(session);
 	}
-	
+
 	@Override
 	public boolean insertUser(User user) {
 		return db.insertData(user);
 	}
-	
+
 	@Override
 	public Book selectBook(String isbn) {
 		Book[] books = selectBooks("isbn", isbn, "isbn");
-		return books[0];
+
+		if (books != null) {
+			return books[0];
+		}
+
+		return null;
 	}
-	
-	private Book[] selectBooks(String colunnName, String value, String orderBy) {	
-		// TODO por enquanto está fixo as colunas que retornam, era melhor retornar
-		// todas as colunas da tabela
+
+	private Book[] selectBooks(String colunnName, String value, String orderBy) {
 		Vector<String> select = new Vector<String>();
 		select.add("isbn");
 		select.add("name");
 		select.add("authors");
+		select.add("description");
+		select.add("edition");
+		select.add("imagepath");
+		select.add("publisher");
+		select.add("publishingDate");
 
 		// criando where
 		Vector<String> where = new Vector<String>();
@@ -267,17 +277,19 @@ public class BusinessObject extends ComponentBase implements
 
 		// realizando a consulta
 		Book[] result = db.queryBook(select, where, order);
-		
-		//coloca os valores no book correspondente a outras tabelas
-		for (int i=0;i<result.length;i++) {
-			result[i].setRating(selectRatingCalculed(result[i]));
-			result[i].setComments(selectCommentsBook(result[i]));
-			result[i].setReviews(selectReviews(result[i]));
+
+		// coloca os valores no book correspondente a outras tabelas
+		if (result != null) {
+			for (int i = 0; i < result.length; i++) {
+				result[i].setRating(selectRatingCalculed(result[i]));
+				result[i].setComments(selectCommentsBook(result[i]));
+				result[i].setReviews(selectReviews(result[i]));
+			}
 		}
 
 		return result;
 	}
-	
+
 	@Override
 	public Book[] selectBooksByAuthors(String authors) {
 		return selectBooks("authors", authors, "authors");
@@ -290,15 +302,23 @@ public class BusinessObject extends ComponentBase implements
 
 	@Override
 	public Comment selectComment(int comment_id) {
-		Comment[] comments = selectComments("comment_id", comment_id, "comment_id");
-		return comments[0];
+		Comment[] comments = selectComments("id", comment_id, "id");
+
+		if (comments != null) {
+			return comments[0];
+		}
+
+		return null;
 	}
 
-	private Comment[] selectComments(String colunnName, Object value, String orderBy) {	
-		// TODO por enquanto está fixo as colunas que retornam, era melhor retornar
-		// todas as colunas da tabela
+	private Comment[] selectComments(String colunnName, Object value,
+			String orderBy) {
 		Vector<String> select = new Vector<String>();
+		select.add("id");
+		select.add("username");
+		select.add("bookISBN");
 		select.add("content");
+		select.add("publishingDate");
 
 		// criando where
 		Vector<String> where = new Vector<String>();
@@ -321,7 +341,7 @@ public class BusinessObject extends ComponentBase implements
 
 	@Override
 	public Comment[] selectCommentsBookByIsbn(String isbn) {
-		return selectComments("isbn", isbn, "isbn");
+		return selectComments("bookISBN", isbn, "bookISBN");
 	}
 
 	@Override
@@ -336,8 +356,13 @@ public class BusinessObject extends ComponentBase implements
 
 	@Override
 	public Rating selectRating(int rating_id) {
-		 Rating[] ratings = selectRatings("rating_id", rating_id, "rating_id");
-		 return ratings[0];
+		Rating[] ratings = selectRatings("id", rating_id, "id");
+
+		if (ratings != null) {
+			return ratings[0];
+		}
+
+		return null;
 	}
 
 	@Override
@@ -347,14 +372,18 @@ public class BusinessObject extends ComponentBase implements
 
 	@Override
 	public Rating[] selectRatings(String isbn) {
-		return selectRatings("isbn", isbn, "isbn");
+		return selectRatings("bookISBN", isbn, "bookISBN");
 	}
 
-	private Rating[] selectRatings(String colunnName, Object value, String orderBy) {	
-		// TODO por enquanto está fixo as colunas que retornam, era melhor retornar
-		// todas as colunas da tabela
+	private Rating[] selectRatings(String colunnName, Object value,
+			String orderBy) {
 		Vector<String> select = new Vector<String>();
+		select.add("id");
+		select.add("username");
+		select.add("bookISBN");
+		select.add("bookReview");
 		select.add("value");
+		select.add("type");
 
 		// criando where
 		Vector<String> where = new Vector<String>();
@@ -381,8 +410,8 @@ public class BusinessObject extends ComponentBase implements
 	}
 
 	@Override
-	public Rating[] selectRatingsForReview(int review_id) {
-		return selectRatings("review_id", review_id, "review_id");
+	public Rating[] selectRatingsForReview(int rating_id) {
+		return selectRatings("id", rating_id, "id");
 	}
 
 	@Override
@@ -392,8 +421,13 @@ public class BusinessObject extends ComponentBase implements
 
 	@Override
 	public Review selectReview(int review_id) {
-		Review[] reviews = selectReviews("review_id", review_id, "review_id");
-		return reviews[0];
+		Review[] reviews = selectReviews("id", review_id, "id");
+
+		if (reviews != null) {
+			return reviews[0];
+		}
+
+		return null;
 	}
 
 	@Override
@@ -403,15 +437,18 @@ public class BusinessObject extends ComponentBase implements
 
 	@Override
 	public Review[] selectReviews(String isbn) {
-		return selectReviews("isbn", isbn, "isbn");
+		return selectReviews("bookISBN", isbn, "bookISBN");
 	}
 
-	private Review[] selectReviews(String colunnName, Object value, String orderBy) {	
-		// TODO por enquanto está fixo as colunas que retornam, era melhor retornar
-		// todas as colunas da tabela
+	private Review[] selectReviews(String colunnName, Object value,
+			String orderBy) {
 		Vector<String> select = new Vector<String>();
-		select.add("comment");
-		select.add("name");
+		select.add("id");
+		select.add("username");
+		select.add("bookISBN");
+		select.add("content");
+		select.add("publishingDate");
+		select.add("title");
 
 		// criando where
 		Vector<String> where = new Vector<String>();
@@ -424,15 +461,17 @@ public class BusinessObject extends ComponentBase implements
 		// realizando a consulta
 		Review[] result = db.queryReview(select, where, order);
 
-		//coloca os valores relacionados a reviews que estao em outras tabelas
-		for (int i=0;i<result.length;i++) {
-			result[i].setRating(selectRatingCalculed(result[i]));			
-			
-			//por enquanto o banco de dados nao permite um review ser comentado
-			//result[i].setComments(selectCommentsBook(result[i]));
+		// coloca os valores relacionados a reviews que estao em outras tabelas
+		if (result != null) {
+			for (int i = 0; i < result.length; i++) {
+				result[i].setRating(selectRatingCalculed(result[i]));
+
+				// por enquanto o banco de dados nao permite um review ser
+				// comentado
+				// result[i].setComments(selectCommentsBook(result[i]));
+			}
 		}
-		
-		
+
 		return result;
 	}
 
@@ -441,7 +480,6 @@ public class BusinessObject extends ComponentBase implements
 		return selectReviews("username", username, "username");
 	}
 
-	
 	@Override
 	public Review[] selectReviewsByUser(User user) {
 		return selectReviewsByUser(user.getUsername());
@@ -449,8 +487,6 @@ public class BusinessObject extends ComponentBase implements
 
 	@Override
 	public Session selectSession(String username) {
-		// TODO por enquanto está fixo as colunas que retornam, era melhor retornar
-		// todas as colunas da tabela
 		Vector<String> select = new Vector<String>();
 		select.add("username");
 		select.add("status");
@@ -467,23 +503,37 @@ public class BusinessObject extends ComponentBase implements
 		// realizando a consulta
 		Session[] result = db.querySession(select, where, order);
 
-		return result[0];
+		if (result != null) {
+			return result[0];
+		}
+
+		return null;
 	}
 
 	@Override
 	public User selectUser(String username) {
 		User[] users = selectUsers("username", username, "username");
-		return users[0];
+
+		if (users != null) {
+			return users[0];
+		}
+
+		return null;
 	}
 
-	private User[] selectUsers(String colunnName, String value, String orderBy) {	
-		// TODO por enquanto está fixo as colunas que retornam, era melhor retornar
-		// todas as colunas da tabela
+	private User[] selectUsers(String colunnName, String value, String orderBy) {
 		Vector<String> select = new Vector<String>();
 		select.add("username");
-		select.add("name");
-		select.add("gender");
+		select.add("accessLevel");
+		select.add("birthday");
+		select.add("college");
+		select.add("course");
 		select.add("email");
+		select.add("gender");
+		select.add("name");
+		select.add("password");
+		select.add("selfDescription");
+		select.add("ingressYear");
 
 		// criando where
 		Vector<String> where = new Vector<String>();
@@ -510,7 +560,7 @@ public class BusinessObject extends ComponentBase implements
 	@Override
 	public boolean updateComment(Comment comment) {
 		Vector<String> where = new Vector<String>();
-		where.add("comment_id = '" + comment.getID() + "'");
+		where.add("id = " + comment.getID());
 
 		return db.updateData(comment, where);
 	}
@@ -518,7 +568,7 @@ public class BusinessObject extends ComponentBase implements
 	@Override
 	public boolean updateRating(Rating rating) {
 		Vector<String> where = new Vector<String>();
-		where.add("rating_id = '" + rating.getID() + "'");
+		where.add("id = " + rating.getID());
 
 		return db.updateData(rating, where);
 	}
@@ -526,7 +576,7 @@ public class BusinessObject extends ComponentBase implements
 	@Override
 	public boolean updateReview(Review review) {
 		Vector<String> where = new Vector<String>();
-		where.add("rating_id = '" + review.getID() + "'");
+		where.add("id = " + review.getID());
 
 		return db.updateData(review, where);
 	}
@@ -542,32 +592,71 @@ public class BusinessObject extends ComponentBase implements
 	@Override
 	public boolean updateUser(User user) {
 		Vector<String> where = new Vector<String>();
-		where.add("rating_id = '" + user.getUsername() + "'");
+		where.add("id = '" + user.getUsername());
 
 		return db.updateData(user, where);
 	}
 
 	@Override
 	public float selectRatingCalculed(Book book) {
-		// TODO Auto-generated method stub
-		return 0;
+		return selectRatingCalculed(book.getISBN());
 	}
 
 	@Override
 	public float selectRatingCalculed(String isbn) {
-		// TODO Auto-generated method stub
+
+		if (selectRatings(isbn).length > 0) {
+			System.out.println("test");
+			Vector<String> select = new Vector<String>();
+			select.add("value/count(value) as value");
+
+			// criando where
+			Vector<String> where = new Vector<String>();
+			where.add("bookISBN = '" + isbn + "'");
+
+			// criando order
+			Vector<String> order = new Vector<String>();
+			order.add("value");
+
+			// realizando a consulta
+			Rating[] result = db.queryRating(select, where, order);
+
+			if (result != null) {
+				return result[0].getValue();
+			}
+		}
+
 		return 0;
 	}
 
 	@Override
 	public float selectRatingCalculed(Review review) {
-		// TODO Auto-generated method stub
-		return 0;
+		return selectRatingCalculed(review.getID());
 	}
 
 	@Override
 	public float selectRatingCalculed(int review_id) {
-		// TODO Auto-generated method stub
+
+		if (selectRatingsForReview(review_id).length > 0) {
+			Vector<String> select = new Vector<String>();
+			select.add("value/count(value) as value");
+
+			// criando where
+			Vector<String> where = new Vector<String>();
+			where.add("bookReview = " + review_id);
+
+			// criando order
+			Vector<String> order = new Vector<String>();
+			order.add("value");
+
+			// realizando a consulta
+			Rating[] result = db.queryRating(select, where, order);
+
+			if (result != null) {
+				return result[0].getValue();
+			}
+		}
+
 		return 0;
 	}
 

@@ -95,9 +95,9 @@ public interface IBusinessObject extends ISupports {
 	public Rating[] selectRatingsForReview(Review review);
 	public Rating[] selectRatingsForReview(int review_id);
 	
+	//this methods calculates the rating
 	public float selectRatingCalculed(Book book);
-	public float selectRatingCalculed(String isbn);
-	
+	public float selectRatingCalculed(String isbn);	
 	public float selectRatingCalculed(Review review);
 	public float selectRatingCalculed(int review_id);
 	
