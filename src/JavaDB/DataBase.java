@@ -20,7 +20,7 @@ import anima.component.IRequires;
 import anima.component.base.ComponentBase;
 
 /**
- * class handling database
+ * Componente para manipulação de dados
  * @author Fernando Costa e João Scalett
  */
 @Component(id = "<http://purl.org/dcc/JavaDB.DataBase>", 

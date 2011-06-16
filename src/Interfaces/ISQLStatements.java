@@ -8,7 +8,7 @@ import anima.annotation.ComponentInterface;
 import anima.component.ISupports;
 
 /**
- * Interface Description
+ * Prove metodos auxiliares e de sintaxe de comandos SQL.
  * @author Fernando Costa e João Scalett
  */
 @ComponentInterface("<http://purl.org/dcc/Interfaces.ISQLStatements>")

@@ -12,6 +12,11 @@ import anima.component.InterfaceType;
 import anima.factory.IGlobalFactory;
 import anima.factory.context.componentContext.ComponentContextFactory;
 
+/**
+ * Pequena aplicação exemplificando o uso do componente DataBase
+ * @author Fernando Costa, João Scalett
+ *
+ */
 public class AppDataBase {
 
 	public final static int MILI_SECONDS_PER_MONTH = 24*60*60*100;

@@ -14,7 +14,7 @@ import Classes.Session;
 import Classes.User;
 
 /**
- * manipulation interface database
+ * Interface prove metodos de manipulacao de banco de dados, para o sistema Santanbooks
  * @author Fernando Costa e João Scalett
  */
 @ComponentInterface("<http://purl.org/dcc/Interfaces.IDataBase>")

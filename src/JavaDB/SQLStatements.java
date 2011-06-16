@@ -12,6 +12,10 @@ import anima.component.base.ComponentBase;
 
 import Interfaces.ISQLStatements;
 
+/**
+ * Metodos auxiliares e de sintaxe de comandos SQL.
+ * @author Fernando Costa e João Scalett
+ */
 @Component(id = "<http://purl.org/dcc/JavaDB.SQLStatements>", 
 		provides = { "<http://purl.org/dcc/Interfaces.ISQLStatements>" })
 public class SQLStatements extends ComponentBase implements ISQLStatements {
