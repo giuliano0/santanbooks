@@ -1,7 +1,11 @@
 package Classes;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.sql.Date;
 import java.util.Calendar;
+
+import Exceptions.InvalidArgumentException;
 import Interfaces.*;
 
 /**
@@ -22,8 +26,6 @@ public class Book implements ICommentable, IRateable, IReviewable {
 	Comment[] comments;
 	Review[] reviews;
 	float rating;			// Retornado direto de consulta à DB
-	
-	// TODO: review access scope, data types and checkings inside these methods.
 	
 	public String getAuthors() {
 		return authors;
@@ -69,8 +71,18 @@ public class Book implements ICommentable, IRateable, IReviewable {
 		edition = value.trim();
 	}
 	
-	public void setImagePath(String value) {
-		// DEVE checar pela existência do arquivo!
+	public void setImagePath(String value) throws FileNotFoundException {
+
+		try{
+			File file = new File(value);
+			
+			if(!file.exists()) throw new FileNotFoundException("Arquivo de imagem não encontrado.");
+		}
+		catch (FileNotFoundException ex){
+			throw ex;
+		}
+		
+		
 		imagePath = value;
 	}
 	
@@ -162,58 +174,98 @@ public class Book implements ICommentable, IRateable, IReviewable {
 		publishingDate = value;
 	}
 	
-	@Override
 	public Comment[] getAllComments() {
-		if (comments == null); // dbGetComments(isbn);
-		
 		return comments;
 	}
 
-	@Override
-	public Comment getComment(int id) {
-		if (comments == null) return null; // return dbGetComment(isbn, commentID);
-		else return comments[id];
+	public Comment getComment(int id) throws InvalidArgumentException, NullPointerException {
+		try {
+			if(id == 0) throw new InvalidArgumentException();
+			if(reviews == null) throw new NullPointerException("Nenhuma review encontrada.");
+		}	
+		catch (InvalidArgumentException iaEx) {
+			throw iaEx;
+		}
+		catch (NullPointerException npEx) {
+			throw npEx;
+		}
+		
+		for(int i = 0; i < reviews.length; i++) {
+			if(reviews[i].ID == id)
+				return comments[i];
+		}
+		
+		return null;
 	}
-
-	@Override
+	
 	public int getRating() {
-		return (int)Math.floor((double)rating);
+		return (int)Math.round(rating);
 	}
 
-	@Override
+	/**
+	 * @author Davi
+	 */
 	public Review[] getAllReviews() {
-		// TODO Auto-generated method stub
+		return reviews;
+	}
+
+	/**
+	 * @author Davi
+	 * @throws InvalidArgumentException, NullPointerException 
+	 */
+	public Review getReview(int id) throws InvalidArgumentException, NullPointerException {
+		try {
+			if(id == 0) throw new InvalidArgumentException();
+			if(reviews == null) throw new NullPointerException("Nenhuma review encontrada.");
+		}	
+		catch (InvalidArgumentException iaEx) {
+			throw iaEx;
+		}
+		catch (NullPointerException npEx) {
+			throw npEx;
+		}
+		
+		for(int i = 0; i < reviews.length; i++) {
+			if(reviews[i].ID == id)
+				return reviews[i];
+		}
+		
 		return null;
 	}
 
-	@Override
-	public Review getReview(int id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
+	/**
+	 * @author Davi
+	 */
 	public void setReviews(Review[] reviews) {
-		// TODO Auto-generated method stub
+		this.reviews = reviews;
 	}
 
-	@Override
-	public void setReview(Review review) {
-		// TODO Auto-generated method stub
-	}
-
-	@Override
+	/**
+	 * @author Davi
+	 */
 	public void setComments(Comment[] commments) {
-		// TODO Auto-generated method stub
+		this.comments = commments;
+	}
+	
+	/**
+	 * @author Davi
+	 */
+	public void setRating(float value) throws InvalidArgumentException {
+		try {
+			if(value < 0 || value > 5) throw new InvalidArgumentException();
+		}	
+		catch (InvalidArgumentException iaEx) {
+			throw iaEx;
+		}
+		
+		this.rating = value;
 	}
 
-	@Override
-	public void setComment(Comment commment) {
+	// TODO Consertar
+	public Comment getComment(String username) throws InvalidArgumentException,
+			NullPointerException {
 		// TODO Auto-generated method stub
+		return null;
 	}
 
-	@Override
-	public void setRating(float rating) {
-		// TODO Auto-generated method stub
-	}
 }

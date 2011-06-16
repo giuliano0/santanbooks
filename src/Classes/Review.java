@@ -1,6 +1,8 @@
 package Classes;
+import java.util.Calendar;
 import java.util.Date;
 
+import Exceptions.InvalidArgumentException;
 import Interfaces.*;
 
 /**
@@ -71,44 +73,54 @@ public class Review implements ICommentable, IRateable {
 		content = value;
 	}
 	
-	public void setPublishingDate(Date value) {
+	public void setPublishingDate(Date value) throws Exception {
+		if (value.after(Calendar.getInstance().getTime()))
+			throw new Exception("A publicação é inválida. O sistema só aceita títulos já lançados.");
+		
 		publishingDate = value;
 	}
 	
 	public void setTitle(String value) {
-		title = value;
+		title = value.trim();
 	}
 
-	@Override
 	public Comment[] getAllComments() {
-		// TODO Auto-generated method stub
+		return comments;
+	}
+
+	public Comment getComment(String username) throws InvalidArgumentException, NullPointerException {
+		try {
+			if(username.length() == 0) throw new InvalidArgumentException();
+			if(comments == null) throw new NullPointerException("Nenhuma review encontrada.");
+		}	
+		catch (InvalidArgumentException iaEx) {
+			throw iaEx;
+		}
+		catch (NullPointerException npEx) {
+			throw npEx;
+		}
+		
+		for(int i = 0; i < comments.length; i++) {
+			if(comments[i].getUsername().equalsIgnoreCase(username))
+				return comments[i];
+		}
+		
 		return null;
 	}
 
-	@Override
-	public Comment getComment(int id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public int getRating() {
-		return (int)Math.floor((double)rating);
+		return (int)Math.round(rating);
 	}
 
-	@Override
-	public void setComments(Comment[] commments) {
-		// TODO Auto-generated method stub
-	}
-
-	@Override
-	public void setComment(Comment commment) {
-		// TODO Auto-generated method stub
-	}
-
-	@Override
-	public void setRating(float rating) {
-		// TODO Auto-generated method stub
+	public void setRating(float value) throws InvalidArgumentException {
+		try {
+			if(value < 0 || value > 5) throw new InvalidArgumentException();
+		}	
+		catch (InvalidArgumentException iaEx) {
+			throw iaEx;
+		}
+		
+		this.rating = value;
 	}
 
 }

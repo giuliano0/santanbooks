@@ -2,6 +2,7 @@ package Classes;
 import java.util.Calendar;
 import java.util.Date;
 
+import Exceptions.InvalidArgumentException;
 import Interfaces.IRateable;
 
 /**
@@ -19,8 +20,6 @@ public class Comment implements IRateable {
 	boolean visible;
 	
 	float rating;
-	
-	// TODO: review access scope, data types and checkings inside these methods.
 	
 	public int getID() {
 		return ID;
@@ -67,9 +66,8 @@ public class Comment implements IRateable {
 		visible = value;
 	}
 
-	@Override
 	public int getRating() {
-		return (int)Math.floor((double)rating);
+		return (int)Math.round(rating);
 	}
 
 	public String getBookISBN() {
@@ -80,9 +78,18 @@ public class Comment implements IRateable {
 		bookISBN = value;
 	}
 
-	@Override
-	public void setRating(float rating) {
-		// TODO Auto-generated method stub
+	/**
+	 * @author Davi
+	 */
+	public void setRating(float value) throws InvalidArgumentException {
+		try {
+			if(value < 0 || value > 5) throw new InvalidArgumentException();
+		}	
+		catch (InvalidArgumentException iaEx) {
+			throw iaEx;
+		}
+		
+		this.rating = value;
 		
 	}
 	
