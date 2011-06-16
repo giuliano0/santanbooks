@@ -2,7 +2,7 @@ package Classes;
 
 import java.util.Date;
 
-import DataBase.IBusinessObject;
+import Interfaces.IBusinessObject;
 
 /**
  * Simula a sessão de servidor

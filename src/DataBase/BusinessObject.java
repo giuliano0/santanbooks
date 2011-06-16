@@ -9,37 +9,26 @@ import Classes.Rating;
 import Classes.Review;
 import Classes.Session;
 import Classes.User;
+import Interfaces.IBusinessObject;
+import Interfaces.IDataBase;
 import JavaDB.DataBase;
 import anima.annotation.Component;
+import anima.component.IRequires;
 import anima.component.base.ComponentBase;
 
 /**
- * 
+ * Esse componente disponibiilza metodos principais para consulta no banco de dados,
+ * fazendo com que a consulta, insercao, delecao, e atualizacao seja mais simples de se fazer
  * @author Mauricio Bertanha and Rodrigo Elizeu Goncalves
  */
-@Component(id = "<http://purl.org/dcc/DataBase.BusinessObject>", provides = { "<http://purl.org/dcc/DataBase.IBusinessObject>" })
-public class BusinessObject extends ComponentBase implements IBusinessObject {
-	DataBase db;
+@Component(id = "<http://purl.org/dcc/DataBase.BusinessObject>", 
+		provides = { "<http://purl.org/dcc/Interfaces.IBusinessObject>"},
+		requires= { "<http://purl.org/dcc/Interfaces.IDataBase>" })
+public class BusinessObject extends ComponentBase implements IBusinessObject, IRequires<IDataBase> {
+	private IDataBase db;
 
-	// TODO ainda faltam alguns tratamentos de erros quando não retorna nada no
-	// select
-
-	public BusinessObject() {
-		// TODO fazer com que esse componente não instancie uma Classe DataBase
-		// dentro ele, já que ela tb vai ser um componente
-
-		// conectando o banco e inserindo os dados
-
-		// TODO fazer conexao com o componente de JavaDB
-		db = new DataBase();
-		try {
-			db.connectDataBase(); // deve sempre ser feito com try/catch
-		} catch (SQLException e) {
-			// na verdade nao deve fazer nada, pois essa excecao acontecera se o
-			// banco ja existir
-			System.out.println(e.getMessage());
-		}
-	}
+	// TODO quando fazer um insert update tb tem que atualizar os ratings, comments e reviews associados
+	
 
 	@Override
 	public boolean deleteBook(Book book) {
@@ -208,11 +197,6 @@ public class BusinessObject extends ComponentBase implements IBusinessObject {
 	@Override
 	public boolean deleteUser(User user) {
 		return deleteUser(user.getUsername());
-	}
-
-	@Override
-	public DataBase getConnection() {
-		return db;
 	}
 
 	@Override
@@ -658,6 +642,49 @@ public class BusinessObject extends ComponentBase implements IBusinessObject {
 		}
 
 		return 0;
+	}
+
+	@Override
+	public Book[] selectAllBooks() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public User[] selectAllUsers() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Book[] selectAllComments() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Review[] selectAllReviews() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Rating[] selectAllRatings() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void connect(IDataBase dataBase) {
+		db = dataBase;
+		try {
+			db.connectDataBase(); // deve sempre ser feito com try/catch
+		} catch (SQLException e) {
+			// na verdade nao deve fazer nada, pois essa excecao acontecera se o
+			// banco ja existir
+			System.out.println(e.getMessage());
+		}		
+		
 	}
 
 }

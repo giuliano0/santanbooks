@@ -1,4 +1,4 @@
-package DataBase;
+package Interfaces;
 
 import Classes.Book;
 import Classes.Comment;
@@ -6,7 +6,6 @@ import Classes.Rating;
 import Classes.Review;
 import Classes.Session;
 import Classes.User;
-import JavaDB.DataBase;
 import anima.annotation.ComponentInterface;
 import anima.component.ISupports;
 
@@ -14,13 +13,12 @@ import anima.component.ISupports;
  * 
  * @author Mauricio Bertanha and Rodrigo Elizeu Goncalves 
  */
-@ComponentInterface("<http://purl.org/dcc/DataBase.IBusinessObject>")
+@ComponentInterface("<http://purl.org/dcc/Interfaces.IBusinessObject>")
 public interface IBusinessObject extends ISupports {
-	
-	public DataBase getConnection();
 		
 	//Books
 	//select
+	public Book[] selectAllBooks();
 	public Book selectBook(String isbn);	
 	public Book[] selectBooksByName(String name);	
 	public Book[] selectBooksByAuthors(String authors);		
@@ -35,6 +33,7 @@ public interface IBusinessObject extends ISupports {
 		
 	//Users
 	//select
+	public User[] selectAllUsers();
 	public User selectUser(String username);	
 	//insert
 	public boolean insertUser(User user);	
@@ -47,6 +46,7 @@ public interface IBusinessObject extends ISupports {
 	
 	//Comments
 	//select
+	public Book[] selectAllComments();
 	public Comment selectComment(int comment_id);
 	public Comment[] selectCommentsBook(Book book);
 	public Comment[] selectCommentsBookByIsbn(String isbn);
@@ -66,6 +66,7 @@ public interface IBusinessObject extends ISupports {
 	
 	//Reviews
 	//select
+	public Review[] selectAllReviews();
 	public Review selectReview(int review_id);
 	public Review[] selectReviews(Book book);
 	public Review[] selectReviews(String isbn);
@@ -87,6 +88,7 @@ public interface IBusinessObject extends ISupports {
 
 	//Ratings
 	//select
+	public Rating[] selectAllRatings();
 	public Rating selectRating(int rating_id);
 	public Rating[] selectRatings(Book book);
 	public Rating[] selectRatings(String isbn);	

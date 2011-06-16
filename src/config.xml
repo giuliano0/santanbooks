@@ -1,11 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <config>
     <dccs>
-    	<!-- tem que mudar essas linhas depois -->
-        <!-- <dcc mainModule="santanbooks.dataBase.DataBaseEntity"/>  -->        
-        <!-- <dcc mainModule="santanbooks.SearchEngine.SearchEngine"/> -->
-        <!-- tem que mudar essas linhas depois -->
-        
         <dcc mainModule="DataBase.BusinessObject"/>
         <dcc mainModule="JavaDB.SQLStatements"/>
         <dcc mainModule="JavaDB.DataBase"/>
