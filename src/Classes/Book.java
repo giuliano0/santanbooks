@@ -72,18 +72,19 @@ public class Book implements ICommentable, IRateable, IReviewable {
 	}
 	
 	public void setImagePath(String value) throws FileNotFoundException {
-
-		try{
+		/*try {
 			File file = new File(value);
 			
 			if(!file.exists()) throw new FileNotFoundException("Arquivo de imagem não encontrado.");
 		}
 		catch (FileNotFoundException ex){
 			throw ex;
-		}
+		}*/
 		
+		if(!new File(value).exists()) imagePath = "";
+		else imagePath = value;
 		
-		imagePath = value;
+		//imagePath = value;
 	}
 	
 	/* 
@@ -251,20 +252,14 @@ public class Book implements ICommentable, IRateable, IReviewable {
 	 * @author Davi
 	 */
 	public void setRating(float value) throws InvalidArgumentException {
-		try {
-			if(value < 0 || value > 5) throw new InvalidArgumentException();
-		}	
-		catch (InvalidArgumentException iaEx) {
-			throw iaEx;
-		}
-		
-		this.rating = value;
+		if (value < 0) rating = 0; 
+		else if (value > 5) rating = 5;
+		else rating = value;
 	}
 
 	// TODO Consertar
 	public Comment getComment(String username) throws InvalidArgumentException,
 			NullPointerException {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

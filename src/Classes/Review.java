@@ -1,5 +1,5 @@
 package Classes;
-import java.util.Calendar;
+//import java.util.Calendar;
 import java.util.Date;
 
 import Exceptions.InvalidArgumentException;
@@ -74,8 +74,8 @@ public class Review implements ICommentable, IRateable {
 	}
 	
 	public void setPublishingDate(Date value) throws Exception {
-		if (value.after(Calendar.getInstance().getTime()))
-			throw new Exception("A publicação é inválida. O sistema só aceita títulos já lançados.");
+		//if (value.after(Calendar.getInstance().getTime()))
+			//throw new Exception("A publicação é inválida. O sistema só aceita títulos já lançados.");
 		
 		publishingDate = value;
 	}
@@ -113,14 +113,9 @@ public class Review implements ICommentable, IRateable {
 	}
 
 	public void setRating(float value) throws InvalidArgumentException {
-		try {
-			if(value < 0 || value > 5) throw new InvalidArgumentException();
-		}	
-		catch (InvalidArgumentException iaEx) {
-			throw iaEx;
-		}
-		
-		this.rating = value;
+		if (value < 0) rating = 0;
+		else if (value > 5) rating = 5; 
+		else rating = value;
 	}
 
 }
