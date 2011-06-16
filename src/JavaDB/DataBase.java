@@ -13,26 +13,35 @@ import Classes.Rating;
 import Classes.Review;
 import Classes.Session;
 import Classes.User;
+import Interfaces.IDataBase;
+import Interfaces.ISQLStatements;
+import anima.annotation.Component;
+import anima.component.IRequires;
+import anima.component.base.ComponentBase;
 
 /**
  * class handling database
  * @author Fernando Costa e João Scalett
  */
-public class DataBase implements IDataBase{
-	private SQLStatements stt; 
+@Component(id = "<http://purl.org/dcc/JavaDB.DataBase>", 
+		provides = { "<http://purl.org/dcc/Interfaces.IDataBase>" },
+		requires= { "<http://purl.org/dcc/Interfaces.ISQLStatements>" })
+public class DataBase extends ComponentBase implements IDataBase, IRequires<ISQLStatements>{
+	private ISQLStatements stt; 
 	private String bd, driver;
 
 	public DataBase(){
 		bd = "jdbc:derby:db;create=true";
 		driver = "org.apache.derby.jdbc.EmbeddedDriver";
-		stt = new SQLStatements(); //nao devera ser instanciado aqui, e sim recebido no metodo connect (componente)
+	}
+
+	@Override
+	public void connect(ISQLStatements stt) {
+		this.stt = stt;
 		stt.setBd("jdbc:derby:db;create=true");
 		stt.setDriver("org.apache.derby.jdbc.EmbeddedDriver");
 	}
-
-	/* (non-Javadoc)
-	 * @see JavaDB.Agfgdfgf#connectDataBase()
-	 */
+	
 	public void connectDataBase() throws SQLException {
 		try {
 			/* Creates table users */
@@ -387,6 +396,7 @@ public class DataBase implements IDataBase{
 		try {
 			stt.delete("book", w);
 		} catch (SQLException erro) {
+			System.out.println(erro.getMessage()); 
 			sucesso = false;
 		}
 		return sucesso;
@@ -914,6 +924,5 @@ public class DataBase implements IDataBase{
 		v.add("status = '" + (s.getStatus() ? 1 : 0) + "'");
 		v.add("lastLogin = '" + s.getLastLogin() + "'");
 		return v;
-	}
-	
+	}	
 }

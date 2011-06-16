@@ -1,7 +1,10 @@
-package JavaDB;
+package Interfaces;
 
 import java.sql.SQLException;
 import java.util.Vector;
+
+import anima.annotation.ComponentInterface;
+import anima.component.ISupports;
 
 import Classes.Book;
 import Classes.Comment;
@@ -14,8 +17,10 @@ import Classes.User;
  * manipulation interface database
  * @author Fernando Costa e João Scalett
  */
-public interface IDataBase {
+@ComponentInterface("<http://purl.org/dcc/Interfaces.IDataBase>")
+public interface IDataBase extends ISupports{
 	public void connectDataBase() throws SQLException;
+	public void dropAllTables(); //TODO método temporário. Deverá ser removido da interface
 
 	/* User Operations */
 	public boolean insertData(User data);

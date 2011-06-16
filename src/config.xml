@@ -7,5 +7,7 @@
         <!-- tem que mudar essas linhas depois -->
         
         <dcc mainModule="DataBase.BusinessObject"/>
+        <dcc mainModule="JavaDB.SQLStatements"/>
+        <dcc mainModule="JavaDB.DataBase"/>
     </dccs>
 </config>
