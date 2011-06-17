@@ -1,12 +1,16 @@
 package SearchEngine;
 
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.Vector;
 
 import Classes.Book;
+import Interfaces.IDataBase;
 import Interfaces.ISearchEngine;
-import JavaDB.DataBase;
 import anima.annotation.Component;
+import anima.component.IRequires;
+import anima.component.ISupports;
+import anima.component.InterfaceType;
 
 /**
  * Componente de motor de buscas.
@@ -17,7 +21,7 @@ import anima.annotation.Component;
  */
 @Component(id="<http://purl.org/dcc/santanbooks.SearchEngine.SearchEngine>",
         provides={"<http://purl.org/dcc/santanbooks.Interfaces.ISearchEngine>"})
-public class SearchEngine implements ISearchEngine { // TODO: colocar o IRequires<IDataBase>, ajuda aqui please =)
+public class SearchEngine implements ISearchEngine, IRequires<IDataBase> { // TODO: colocar o IRequires<IDataBase>, ajuda aqui please =)
 
 	// Preposições, artigos, conjunções, e tudo mais (pontuação, sinais gráficos). 42!
 	// Bithces, ajudem a popular o array abaixo, kkthxbye ;)
@@ -30,7 +34,7 @@ public class SearchEngine implements ISearchEngine { // TODO: colocar o IRequire
 	// Metacaracteres do Regex: ([{\^-$|]})?*+.
 	private static final String[] punctuation = {",", "\\.", ":", "\\-", ";", "\\?", "!", "\\(", "\\)", "\\n"};
 	
-	DataBase dataBase = new DataBase();
+	private IDataBase dataBase;
 	
 	// TODO: Declarar a database e a factory, e instanciá-la no construtor.
 
@@ -43,12 +47,19 @@ public class SearchEngine implements ISearchEngine { // TODO: colocar o IRequire
 		Vector<String> select = new Vector<String>();
 		Vector<String> where = new Vector<String>();
 		Vector<String> order = new Vector<String>();
-		select.add("name"); // Falta ver um jeito de selecionar todos os campos
+		select.add("name"); // Falta ver um jeito de selecionar todos os campo
+		select.add("isbn");
+		select.add("authors");
+		select.add("description");
+		select.add("edition");
+		select.add("imagePath");
+		select.add("publisher");
+		select.add("publishingDate");
 		
 		// 1º - Procura pela expressão exata
 		where.add("name = '" + key + "'");
 		order.add(""); // colocar aqui o jeito pra ordernar
-		//Book[] book = dataBase.queryBook(select, where, order);
+		Book[] book = dataBase.queryBook(select, where, order);
 
 		// 2º - Procura por nomes semelhantes as tags procuradas
 		String[] nKey = extractTags(key);
@@ -57,7 +68,36 @@ public class SearchEngine implements ISearchEngine { // TODO: colocar o IRequire
 		if (nKey.length > 1)
 			for (int i = 1; i < nKey.length - 1; i++)
 				where.add("name LIKE '%" + nKey[i] + "%'");
-		//Book[] books = dataBase.queryBook(select, where, order);
+		Book[] books = dataBase.queryBook(select, where, order);
+		
+		Book[] livros = new Book[books.length + book.length];
+		
+		for (int i=0; i< livros.length; i++)
+			if (i < book.length)
+				livros[i] = book[i];
+			else
+				livros[i] = books[i - book.length];
+		
+		Arrays.sort(livros, 
+			new Comparator<Book>() {  
+				public int compare(Book b1, Book b2) { 
+					Vector<String> select = new Vector<String>();
+					select.add("value");
+
+					Vector<String> where = new Vector<String>();
+					where.add("bookISBN = '" + b1.getISBN() + "'");
+
+					Vector<String> order = new Vector<String>();
+					order.add("value");
+					float bb1 = b1.getRating()*b1.getRating()*dataBase.queryRating(select, where, order).length;
+					
+					where.clear();
+					where.add("bookISBN = '" + b2.getISBN() + "'");
+					float bb2 = b2.getRating()*b2.getRating()*dataBase.queryRating(select, where, order).length;
+				    return bb1 < bb2 ? 1 : (bb1 > bb2 ? -1 : 0);
+				}
+			} 
+		);
 		
 		/*
 			Depois disso, juntar os dois resultados "book" e "books", com o primeiro com maior prioridade que o segundo.
@@ -66,7 +106,7 @@ public class SearchEngine implements ISearchEngine { // TODO: colocar o IRequire
 			No final, juntar os dois resultados em um já ordenado na ordemd e mostrar e retornar isso.
 		*/
 		
-		return null;
+		return livros;
 	}
 	
 	@Override
@@ -151,6 +191,48 @@ public class SearchEngine implements ISearchEngine { // TODO: colocar o IRequire
 		System.out.println("Running time (extractTags): " + (System.currentTimeMillis() - start) + "ms.");
 		
 		return tags;
+	}
+
+	@Override
+	public void connect(IDataBase arg0) {
+		this.dataBase = arg0;	
+	}
+
+	@Override
+	public int addRef() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public String getInstanceId() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public <T extends ISupports> T queryInterface(String arg0) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public <T extends ISupports> T queryInterface(String arg0,
+			InterfaceType arg1) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public <T extends ISupports> IRequires<T> queryReceptacle(String arg0) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int release() {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 }
