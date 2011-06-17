@@ -9,15 +9,15 @@ import Classes.Rating;
 import Classes.Review;
 import Classes.Session;
 import Classes.User;
+import Exceptions.InvalidArgumentException;
 import Interfaces.IBusinessObject;
 import Interfaces.IDataBase;
-import JavaDB.DataBase;
 import anima.annotation.Component;
 import anima.component.IRequires;
 import anima.component.base.ComponentBase;
 
 /**
- * Esse componente disponibiilza metodos principais para consulta no banco de dados,
+ * Esse componente disponibilza metodos principais para consulta no banco de dados,
  * fazendo com que a consulta, insercao, delecao, e atualizacao seja mais simples de se fazer
  * @author Mauricio Bertanha and Rodrigo Elizeu Goncalves
  */
@@ -36,9 +36,14 @@ public class BusinessObject extends ComponentBase implements IBusinessObject, IR
 	}
 
 	@Override
-	public boolean deleteBook(String isnb) {
+	public boolean deleteBook(String isbn) {
+		
+		deleteCommentsByIsbn(isbn);
+		deleteRatings(isbn);
+		deleteReviews(isbn);
+				
 		Vector<String> where = new Vector<String>();
-		where.add("isbn = '" + isnb + "'");
+		where.add("isbn = '" + isbn + "'");
 
 		return db.deleteDataBook(where);
 	}
@@ -201,6 +206,20 @@ public class BusinessObject extends ComponentBase implements IBusinessObject, IR
 
 	@Override
 	public boolean insertBook(Book book) {
+		Comment[] comments = book.getAllComments();
+		if (comments != null) {
+			for (Comment comment:comments) {
+				insertComment(comment);
+			}
+		}
+				
+		Review[] reviews = book.getAllReviews();
+		if (reviews != null) {
+			for (Review review:reviews) {
+				insertReview(review);
+			}
+		}
+		
 		return db.insertData(book);
 	}
 
@@ -265,7 +284,11 @@ public class BusinessObject extends ComponentBase implements IBusinessObject, IR
 		// coloca os valores no book correspondente a outras tabelas
 		if (result != null) {
 			for (int i = 0; i < result.length; i++) {
-				result[i].setRating(selectRatingCalculed(result[i]));
+				try {
+					result[i].setRating(selectRatingCalculed(result[i]));
+				} catch (InvalidArgumentException e) {
+					e.printStackTrace();
+				}
 				result[i].setComments(selectCommentsBook(result[i]));
 				result[i].setReviews(selectReviews(result[i]));
 			}
@@ -448,7 +471,11 @@ public class BusinessObject extends ComponentBase implements IBusinessObject, IR
 		// coloca os valores relacionados a reviews que estao em outras tabelas
 		if (result != null) {
 			for (int i = 0; i < result.length; i++) {
-				result[i].setRating(selectRatingCalculed(result[i]));
+				try {
+					result[i].setRating(selectRatingCalculed(result[i]));
+				} catch (InvalidArgumentException e) {
+					e.printStackTrace();
+				}
 
 				// por enquanto o banco de dados nao permite um review ser
 				// comentado
@@ -535,6 +562,22 @@ public class BusinessObject extends ComponentBase implements IBusinessObject, IR
 
 	@Override
 	public boolean updateBook(Book book) {
+						
+		Comment[] comments = book.getAllComments();
+		if (comments != null) {
+			for (Comment comment: comments){
+				updateComment(comment);
+			}		
+		}
+		
+		Review[] reviews = book.getAllReviews();
+		if (reviews != null) {
+			for(Review review: reviews){
+				updateReview(review);
+			}
+		}
+		
+		
 		Vector<String> where = new Vector<String>();
 		where.add("isbn = '" + book.getISBN() + "'");
 
@@ -646,32 +689,27 @@ public class BusinessObject extends ComponentBase implements IBusinessObject, IR
 
 	@Override
 	public Book[] selectAllBooks() {
-		// TODO Auto-generated method stub
-		return null;
+		return selectBooks("1", "1", "1");
 	}
 
 	@Override
 	public User[] selectAllUsers() {
-		// TODO Auto-generated method stub
-		return null;
+		return selectUsers("1", "1", "1");
 	}
 
 	@Override
-	public Book[] selectAllComments() {
-		// TODO Auto-generated method stub
-		return null;
+	public Comment[] selectAllComments() {
+		return selectComments("1", "1", "1");
 	}
 
 	@Override
 	public Review[] selectAllReviews() {
-		// TODO Auto-generated method stub
-		return null;
+		return selectReviews("1", "1", "1");
 	}
 
 	@Override
 	public Rating[] selectAllRatings() {
-		// TODO Auto-generated method stub
-		return null;
+		return selectRatings("1", "1", "1");
 	}
 
 	@Override

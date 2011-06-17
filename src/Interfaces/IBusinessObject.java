@@ -28,7 +28,7 @@ public interface IBusinessObject extends ISupports {
 	public boolean updateBook(Book book);
 	//delete
 	public boolean deleteBook(Book book);	
-	public boolean deleteBook(String isnb);
+	public boolean deleteBook(String isbn);
 	
 		
 	//Users
@@ -46,7 +46,7 @@ public interface IBusinessObject extends ISupports {
 	
 	//Comments
 	//select
-	public Book[] selectAllComments();
+	public Comment[] selectAllComments();
 	public Comment selectComment(int comment_id);
 	public Comment[] selectCommentsBook(Book book);
 	public Comment[] selectCommentsBookByIsbn(String isbn);

@@ -1,5 +1,6 @@
 package JavaDB;
 
+import java.io.FileNotFoundException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -350,7 +351,12 @@ public class DataBase extends ComponentBase implements IDataBase, IRequires<ISQL
 					if(select.get(i).equalsIgnoreCase("edition"))
 						temp.setEdition(result.getString("edition"));
 					if(select.get(i).equalsIgnoreCase("imagePath"))
-						temp.setImagePath(result.getString("imagePath"));
+						try {
+							temp.setImagePath(result.getString("imagePath"));
+						} catch (FileNotFoundException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
 					if(select.get(i).equalsIgnoreCase("publisher"))
 						temp.setPublisher(result.getString("publisher"));
 					if(select.get(i).equalsIgnoreCase("publishingDate"))
