@@ -198,7 +198,7 @@ public class GUIReview extends JFrame{
 				 
 				 /*Refreshes the rating in the database and in the screen*/
 				try {
-					bo.insertRating(review.getID(), toRate.getSelectedItem(), parent.getUser());
+					bo.insertRating(review.getID(), Integer.parseInt((String)toRate.getSelectedItem()), parent.getUser().getName());
 					review.setRating(bo.selectRatingCalculed(review.getID()));
 					Integer x = review.getRating();
 					rating.setText(x.toString());
@@ -335,9 +335,9 @@ public class GUIReview extends JFrame{
 		rev.setTitle("Quimdou");
 		rev.setContent("<p align=\"LEFT\">Este texto é um <a href=\"gmail.com\">exemplo</a> de livro a ser lido no QuimDou.</p><p align=\"right\">O dispositivo QuimDou revolucionará a maneira como as pessoas lêem livros. A sua interface arrojada, dotada de comandos intuitivos e uma tela de 16 x 2 caracteres tornará a leitura muito mais divertida e desafiante.</p> <p align \"center\"><i>O inteligente modo de exibição automática do QuimDou permite que o usuário leia o livro inteiro sem ter que apertar botões para troca de linhas ou páginas. <u>Além disso, com seu modo automático de leitura reversa, o QuimDou é o dispositivo certo para aqueles que gostam, ou só sabem ler de trás para frente.</u></i></p><img src=\"../Programa/Santanbooks/src/Santanbooks.png\" alt=\"\" />");
 		
-		GUIReview guirev = new GUIReview();
+		/*GUIReview guirev = new GUIReview();
 		guirev.setReview(rev);
 		guirev.setVisible(true);
-
+*/
 	}
 }
