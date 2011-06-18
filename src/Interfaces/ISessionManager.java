@@ -12,8 +12,6 @@ import anima.component.ISupports;
 public interface ISessionManager extends ISupports {
 
 	public User loginChallenge(String username, String password);
-	
-	public void logoutUser(int userID);
 	public void logoutUser(String username);
 	
 	public boolean isUserLoggedIn(String username);
