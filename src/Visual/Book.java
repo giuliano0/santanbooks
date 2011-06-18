@@ -150,7 +150,7 @@ public class Book extends javax.swing.JPanel {
 
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				GUIReview guiReview = new GUIReview();
+				GUIReview guiReview = new GUIReview(parent);
 				
 				
 				
