@@ -54,7 +54,7 @@ public class Book extends javax.swing.JPanel {
         
         jLabel3.setIcon(new ImageIcon(livroAtual.getImagePath()));
 
-        publisher5 = new GUIReviewGroup(livroAtual);
+        //publisher5.setText(livroAtual.getAllReviews().toString());
         
         //publisher6.setText(livroAtual.getAllComments().toString());
     }
@@ -85,7 +85,7 @@ public class Book extends javax.swing.JPanel {
         jLabel4 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         description1 = new javax.swing.JLabel();
-        publisher5 = new javax.swing.JScrollPane();
+        publisher5 = new javax.swing.JLabel();
         description2 = new javax.swing.JLabel();
         publisher6 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
@@ -137,6 +137,9 @@ public class Book extends javax.swing.JPanel {
 
         description1.setFont(new java.awt.Font("Lucida Grande 13 Negrito 13 Negrito", 1, 13)); // NOI18N
         description1.setText("Avaliacoes");
+
+        publisher5.setFont(new java.awt.Font("Lucida Grande 13 Negrito 13 Negrito", 0, 12)); // NOI18N
+        publisher5.setText("<AVALIACOES>");
 
         description2.setFont(new java.awt.Font("Lucida Grande 13 Negrito 13 Negrito", 1, 13)); // NOI18N
         description2.setText("Comentarios");
@@ -369,7 +372,7 @@ public class Book extends javax.swing.JPanel {
     private javax.swing.JLabel publisher1;
     private javax.swing.JLabel publisher3;
     private javax.swing.JLabel publisher4;
-    private javax.swing.JScrollPane publisher5;
+    private javax.swing.JLabel publisher5;
     private javax.swing.JLabel publisher6;
     private javax.swing.JLabel year;
     // End of variables declaration//GEN-END:variables
