@@ -114,7 +114,7 @@ public class AddBook extends javax.swing.JPanel {
         description.setFont(new java.awt.Font("Lucida Grande 13 Negrito 13 Negrito 13 Negrito", 0, 12));
         description.setText("Resumo");
 
-        isbnField.setText("xxx-x-xxx-xxxxx-x");
+        isbnField.setText("xxx-xx-xxx-xxxx-x");
         isbnField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 isbnFieldActionPerformed(evt);
@@ -270,24 +270,28 @@ public class AddBook extends javax.swing.JPanel {
         imageField.setText(null);    }//GEN-LAST:event_clearButtonActionPerformed
 
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {
-        Classes.Book novo = new Classes.Book();
-        
-        novo.setAuthors(authorsField.getText());
-        novo.setDescription(descriptionField.getText());
-        novo.setEdition(editionField.getText());
-        novo.setImagePath(imageField.getText());
-        novo.setISBN(isbnField.getText());
-        novo.setName(titleField.getText());
-        novo.setPublisher(publisherField.getText());
-        novo.setPublishingDate(new Date(Integer.parseInt(yearField.getText()), 1,1));
-        
-        if (this.parent.getBusinessObject().insertBook(novo)) {
-        	JOptionPane.showMessageDialog(null, "Livro inserido com sucesso!");
-        	this.parent.changePanel(Santanbooks.PANEL_HOME);
+    	try{	
+    		Classes.Book novo = new Classes.Book();
+	
+	    	novo.setAuthors(authorsField.getText());
+	    	novo.setDescription(descriptionField.getText());
+	    	novo.setEdition(editionField.getText());
+	    	novo.setImagePath(imageField.getText());
+	    	novo.setISBN(isbnField.getText());
+	    	novo.setName(titleField.getText());
+	    	novo.setPublisher(publisherField.getText());
+	    	novo.setPublishingDate(new Date(Integer.parseInt(yearField.getText()), 1,1));
+
+        	if (this.parent.getBusinessObject().insertBook(novo)) {
+        		JOptionPane.showMessageDialog(null, "Livro inserido com sucesso!");
+        		this.parent.changePanel(Santanbooks.PANEL_HOME);
+        	}
+        	else
+        		JOptionPane.showMessageDialog(null, "Erro ao inserir um livro!");
         }
-        else
-        	JOptionPane.showMessageDialog(null, "Erro ao inserir um livro!");
-        
+        catch (Exception erro){
+        	JOptionPane.showMessageDialog(null, erro.getMessage());
+        }  
     }
 
     private void isbnFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_isbnFieldActionPerformed
