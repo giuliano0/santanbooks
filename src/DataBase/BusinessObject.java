@@ -1,7 +1,7 @@
 package DataBase;
 
 import java.sql.SQLException;
-import java.util.Date;
+import java.sql.Date;
 import java.util.Vector;
 
 import Classes.Book;
@@ -9,7 +9,6 @@ import Classes.Comment;
 import Classes.Rating;
 import Classes.Review;
 import Classes.SessionData;
-import Classes.SessionManager;
 import Classes.User;
 import Exceptions.InvalidArgumentException;
 import Interfaces.IBusinessObject;
@@ -799,6 +798,7 @@ public class BusinessObject extends ComponentBase implements IBusinessObject, IR
 
 	@Override
 	public boolean insertComment(String isbn, String content, String username) {
+
 		Date dataAtual = new Date(System.currentTimeMillis());
 		
 		Comment comment = new Comment();
