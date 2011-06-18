@@ -8,7 +8,7 @@ import Interfaces.ILoggable;
  * @author Giuliano
  *
  */
-public class User implements ILoggable {
+public class User {
 	boolean accessLevel;
 	Date birthday;
 	String college;
@@ -114,16 +114,5 @@ public class User implements ILoggable {
 	public void setIngressYear(Date value) {
 		ingressYear = value;
 	}
-
-	@Override
-	public boolean login(String username, String password) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public void logout(int userID) {
-		// TODO Auto-generated method stub
-		
-	}
+	
 }
