@@ -1,5 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.*;
 
 public class Home extends JPanel {
     private Santanbooks parent;
@@ -90,8 +91,8 @@ public class Home extends JPanel {
 
         lblCadastro.setText("Ainda não é cadastado? Cadastre-se já!");
         lblCadastro.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        lblCadastro.addMouseListener(new event.MouseAdapter() {
-            public void mouseClicked(event.MouseEvent evt) {
+        lblCadastro.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent evt) {
                 lblCadastroMouseClicked(evt);
             }
         });
@@ -107,7 +108,7 @@ public class Home extends JPanel {
         edSenha.setBounds(110, 120, 140, 20);
     }
 
-    private void lblCadastroMouseClicked(event.MouseEvent evt) {
+    private void lblCadastroMouseClicked(MouseEvent evt) {
         this.parent.changePanel(Santanbooks.REGISTER);
     }
 }
