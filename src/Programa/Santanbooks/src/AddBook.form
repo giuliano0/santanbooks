@@ -283,6 +283,13 @@
           </Events>
         </Component>
         <Component class="javax.swing.JFormattedTextField" name="imageField1">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Separe suas categorias com espa&#xe7;os"/>
+          </Properties>
+          <Events>
+            <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="imageField1FocusGained"/>
+            <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="imageField1FocusLost"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="image">
           <Properties>

@@ -77,19 +77,19 @@ public class AddBook extends javax.swing.JPanel {
             }
         });
 
-        authors.setFont(new java.awt.Font("Lucida Grande 13 Negrito", 0, 12)); // NOI18N
+        authors.setFont(new java.awt.Font("Lucida Grande 13 Negrito", 0, 12));
         authors.setText("Autores");
 
         edition.setFont(new java.awt.Font("Lucida Grande 13 Negrito 13 Negrito", 0, 12));
         edition.setText("Edição");
 
-        title.setFont(new java.awt.Font("Lucida Grande 13 Negrito", 0, 12)); // NOI18N
+        title.setFont(new java.awt.Font("Lucida Grande 13 Negrito", 0, 12));
         title.setText("Título");
 
-        isbn.setFont(new java.awt.Font("Lucida Grande 13 Negrito", 0, 12)); // NOI18N
+        isbn.setFont(new java.awt.Font("Lucida Grande 13 Negrito", 0, 12));
         isbn.setText("ISBN");
 
-        publisher.setFont(new java.awt.Font("Lucida Grande 13 Negrito 13 Negrito", 0, 12)); // NOI18N
+        publisher.setFont(new java.awt.Font("Lucida Grande 13 Negrito 13 Negrito", 0, 12));
         publisher.setText("Editora");
 
         yearField.setText("YYYY");
@@ -102,7 +102,7 @@ public class AddBook extends javax.swing.JPanel {
             }
         });
 
-        description.setFont(new java.awt.Font("Lucida Grande 13 Negrito 13 Negrito 13 Negrito", 0, 12)); // NOI18N
+        description.setFont(new java.awt.Font("Lucida Grande 13 Negrito 13 Negrito 13 Negrito", 0, 12));
         description.setText("Resumo");
 
         isbnField.setText("xxx-x-xxx-xxxxx-x");
@@ -139,10 +139,20 @@ public class AddBook extends javax.swing.JPanel {
             }
         });
 
-        image.setFont(new java.awt.Font("Lucida Grande 13 Negrito 13 Negrito 13 Negrito 13 Negrito", 0, 12)); // NOI18N
+        imageField1.setText("Separe suas categorias com espaços");
+        imageField1.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                imageField1FocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                imageField1FocusLost(evt);
+            }
+        });
+
+        image.setFont(new java.awt.Font("Lucida Grande 13 Negrito 13 Negrito 13 Negrito 13 Negrito", 0, 12));
         image.setText("Imagem");
 
-        image1.setFont(new java.awt.Font("Lucida Grande 13 Negrito 13 Negrito 13 Negrito 13 Negrito", 0, 12)); // NOI18N
+        image1.setFont(new java.awt.Font("Lucida Grande 13 Negrito 13 Negrito 13 Negrito 13 Negrito", 0, 12));
         image1.setText("Categorias");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -235,7 +245,7 @@ public class AddBook extends javax.swing.JPanel {
         add(jPanel1);
         jPanel1.setBounds(100, 100, 600, 470);
 
-        pageTitle.setFont(new java.awt.Font("SansSerif 24 Plano", 1, 24)); // NOI18N
+        pageTitle.setFont(new java.awt.Font("SansSerif 24 Plano", 1, 24));
         pageTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         pageTitle.setText("Adicionar novo livro");
         add(pageTitle);
@@ -289,6 +299,16 @@ public class AddBook extends javax.swing.JPanel {
     private void isbnFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_isbnFieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_isbnFieldActionPerformed
+
+    private void imageField1FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_imageField1FocusGained
+        if(imageField1.getText().equalsIgnoreCase("Separe suas categorias com espaços"))
+            imageField1.setText(null);
+    }//GEN-LAST:event_imageField1FocusGained
+
+    private void imageField1FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_imageField1FocusLost
+        if(imageField1.getText().equalsIgnoreCase(""))
+            imageField1.setText("Separe suas categorias com espaços");
+    }//GEN-LAST:event_imageField1FocusLost
  
     
     
