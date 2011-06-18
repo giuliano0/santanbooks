@@ -30,6 +30,8 @@ public class Book extends javax.swing.JPanel {
     }
     
     public void updateForm(){
+    	pageTitle.setText(livroAtual.getName());
+    	
     	jLabel1.setText(livroAtual.getEdition());
 
         jLabel2.setText(livroAtual.getPublishingDate().toString());
@@ -97,7 +99,7 @@ public class Book extends javax.swing.JPanel {
         authors.setText("Autores:");
 
         edition.setFont(new java.awt.Font("Lucida Grande 13 Negrito 13 Negrito", 1, 13)); // NOI18N
-        edition.setText("Edição:");
+        edition.setText("Edicao:");
 
         isbn.setFont(new java.awt.Font("Lucida Grande 13 Negrito 13 Negrito", 1, 13)); // NOI18N
         isbn.setText("ISBN:");
@@ -108,7 +110,7 @@ public class Book extends javax.swing.JPanel {
         description.setFont(new java.awt.Font("Lucida Grande 13 Negrito 13 Negrito", 1, 13)); // NOI18N
         description.setText("Resumo:");
 
-        jLabel1.setText("<EDIÇÃO>");
+        jLabel1.setText("<EDICAO>");
 
         jLabel2.setText("<ANO>");
 
@@ -126,20 +128,20 @@ public class Book extends javax.swing.JPanel {
         jLabel3.setText("<IMAGEM DO LIVRO>");
 
         description1.setFont(new java.awt.Font("Lucida Grande 13 Negrito 13 Negrito", 1, 13)); // NOI18N
-        description1.setText("Avaliações");
+        description1.setText("Avaliacoes");
 
         publisher5.setFont(new java.awt.Font("Lucida Grande 13 Negrito 13 Negrito", 0, 12)); // NOI18N
-        publisher5.setText("<AVALIAÇÕES>");
+        publisher5.setText("<AVALIACOES>");
 
         description2.setFont(new java.awt.Font("Lucida Grande 13 Negrito 13 Negrito", 1, 13)); // NOI18N
-        description2.setText("Comentários");
+        description2.setText("Comentarios");
 
         publisher6.setFont(new java.awt.Font("Lucida Grande 13 Negrito 13 Negrito", 0, 12)); // NOI18N
-        publisher6.setText("<COMENT�?RIOS>");
+        publisher6.setText("<COMENTARIOS>");
 
-        jButton1.setText("Adicionar avaliação");
+        jButton1.setText("Adicionar avaliacao");
 
-        jTextField1.setText("Digite seu comentário aqui");
+        jTextField1.setText("Digite seu comentario aqui");
 
         jButton2.setText("Enviar");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
