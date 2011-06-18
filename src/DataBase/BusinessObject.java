@@ -37,9 +37,6 @@ public class BusinessObject extends ComponentBase implements IBusinessObject, IR
 	}
 	
 
-	// TODO quando fazer um insert update tb tem que atualizar os ratings, comments e reviews associados
-	
-
 	@Override
 	public void connect(IDataBase dataBase) {
 		db = dataBase;
