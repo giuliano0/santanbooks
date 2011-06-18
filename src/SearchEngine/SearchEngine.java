@@ -46,115 +46,135 @@ public class SearchEngine implements ISearchEngine, IRequires<IDataBase> { // TO
 
 	@Override
 	public Book[] search(String key) {
-		Vector<String> select = new Vector<String>();
-		Vector<String> where = new Vector<String>();
-		Vector<String> order = new Vector<String>();
-		select.add("name"); // Falta ver um jeito de selecionar todos os campo
-		select.add("isbn");
-		select.add("authors");
-		select.add("description");
-		select.add("edition");
-		select.add("imagePath");
-		select.add("publisher");
-		select.add("publishingDate");
-		
-		// 1º - Procura pela expressão exata
-		where.add("name = '" + key + "'");
-		order.add(""); // colocar aqui o jeito pra ordernar
-		Book[] book = dataBase.queryBook(select, where, order);
-
-		// 2º - Procura por nomes semelhantes as tags procuradas
-		String[] nKey = extractTags(key);
-		where.clear();
-		where.add("name LIKE '%" + nKey[0] + "%'");
-		if (nKey.length > 1)
-			for (int i = 1; i < nKey.length - 1; i++)
-				where.add("name LIKE '%" + nKey[i] + "%'");
-		Book[] books = dataBase.queryBook(select, where, order);
-		
-		Book[] livros = new Book[books.length + book.length];
-		
-		for (int i=0; i< livros.length; i++)
-			if (i < book.length)
-				livros[i] = book[i];
-			else
-				livros[i] = books[i - book.length];
-		
-		Arrays.sort(livros, 
-			new Comparator<Book>() {  
-				public int compare(Book b1, Book b2) { 
-					Vector<String> select = new Vector<String>();
-					select.add("value");
-
-					Vector<String> where = new Vector<String>();
-					where.add("bookISBN = '" + b1.getISBN() + "'");
-
-					Vector<String> order = new Vector<String>();
-					order.add("value");
-					float bb1 = b1.getRating()*b1.getRating()*dataBase.queryRating(select, where, order).length;
-					
-					where.clear();
-					where.add("bookISBN = '" + b2.getISBN() + "'");
-					float bb2 = b2.getRating()*b2.getRating()*dataBase.queryRating(select, where, order).length;
-				    return bb1 < bb2 ? 1 : (bb1 > bb2 ? -1 : 0);
-				}
-			} 
-		);
-		
-		/*
-			Depois disso, juntar os dois resultados "book" e "books", com o primeiro com maior prioridade que o segundo.
-			Por enquanto ele busca apenas pelo nome, mas uma idéia seria buscar pelos outros campos também,
-		com uma prioridade entre eles.
-			No final, juntar os dois resultados em um já ordenado na ordemd e mostrar e retornar isso.
-		*/
-		
-		return livros;
+		Book[] booksByName = searchByParameter(key, "name");
+		Book[] booksByISBN = searchByParameter(key, "isbn");
+		Book[] booksByAuthors = searchByParameter(key, "authors");
+		Book[] booksByDescription = searchByParameter(key, "description");
+		Book[] booksByPublisher = searchByParameter(key, "publisher");
+		Book[] resultadoFinal = mergeByBooks(booksByName, mergeByBooks(booksByISBN, mergeByBooks(booksByAuthors, mergeByBooks(booksByDescription, booksByPublisher))));
+		return resultadoFinal;
 	}
-	
-	public Book[] mergeBooks(Book[] b1, Book[] b2) {
-		ArrayList<Book> books = new ArrayList<Book>();
-		for (Book b : b1) books.add(b);
-		for (Book b : b2) if (!books.contains(b)) books.add(b);
-		return books.toArray(new Book[books.size()]);
-	}
-	
+
 	@Override
 	public Book[] searchByAuthor(String key) {
-	Vector<String> select = new Vector<String>();
-	Vector<String> where = new Vector<String>();
-	select.add("authors");
-
-	Book[] myBooks, books2;
-
-	// 1º - Procura pela nome exato do autor
-	where.add("authors LIKE '%" + key + "%'");
-	myBooks = dataBase.queryBook(select, where, null);
-
-	// 2º - Procura por cada um dos termos no nome do autor passado
-	String words[] = key.split(" ");
-	for(int i =0; i < words.length ; i++){
-	books2 = null;
-	where.add("authors LIKE '%" + words[i] + "%'");
-	//pega todos os livros contendo o trecho do nome do autor nessa iteracao
-	books2 = dataBase.queryBook(select, where, null);
-	myBooks = this.mergeBooks(myBooks, books2);
-	}
-
-	/*TODO:
-	* cada vez q um livro eh encontrado ele sobe no "ranking" da resposta
-	*/
-
-	return myBooks;
+		return searchByParameter(key, "authors");
 	}
 
 	@Override
 	public Book searchByISBN(String key) {
 		//String nKey = keyNormalize(key);
-		
 		return null;
 	}
+
+	private Book[] mergeByBooks(Book[] b1, Book[] b2) {
+		ArrayList<Book> books = new ArrayList<Book>();
+		for (Book b : b1) 
+			books.add(b);
+		
+		boolean existe = false;
+		for (Book b : b2){
+			for (Book b0 : books)
+				if (b.getISBN().equalsIgnoreCase(b0.getISBN())) {
+					existe = true;
+					break;
+				}
+			if (!existe) books.add(b);
+			existe = false;
+		}
+		return books.toArray(new Book[books.size()]);
+	}
+
+	private String[] mergeByString(String[] s1, String[] s2) {
+		ArrayList<String> tags = new ArrayList<String>();
+		for (String s : s1) tags.add(s);
+		for (String s : s2) if (!tags.contains(s)) tags.add(s);
+		return tags.toArray(new String[tags.size()]);
+	}
+
+	public Book[] searchByParameter(String key, String campo) {
+		Vector<String> select = new Vector<String>();
+		Vector<String> where = new Vector<String>();
+		select = returnSelect();
+		key = key.toLowerCase();
+		Book[] myBooks, books2;
 	
-	public Vector<String> returnSelect() {
+		// 1º - Procura pela nome exato do autor
+		where.add(campo + " LIKE '%" + key + "%'");
+		myBooks = dataBase.queryBook(select, where, null);
+		
+		// 2º - Procura por cada um dos termos no nome do autor passado
+		String words1[] = key.split(" ");
+		String words2[] = extractTags(key);
+		String words[] = mergeByString(words1, words2);
+		
+		for(int i =0; i < words.length ; i++){
+			books2 = null;
+			where.clear();
+			where.add(campo + " LIKE '%" + keyNormalize(words[i]) + "%'");
+			//pega todos os livros contendo o trecho do nome do autor nessa iteracao
+			books2 = dataBase.queryBook(select, where, null);
+			myBooks = this.mergeByBooks(myBooks, books2);
+		}
+	
+		// Se encontrou mais de um livro, ordenar por quantidade de tags encontradas
+		if (myBooks.length > 1){
+			String[][] booksQtdsTags = new String[myBooks.length][2];
+			for (int i = 0; i < myBooks.length; i++){
+				ArrayList<String> tagLivro = new ArrayList<String>();
+				String[] tagAux = extractTags(myBooks[i].getName());
+				for (int q = 0; q < tagAux.length; q++)
+					tagLivro.add(tagAux[q]);
+				Integer qtd = 0;
+				for (int j = 0; j < words.length; j++)
+					if (tagLivro.contains(words[j]))
+						qtd++;
+				booksQtdsTags[i][0] = myBooks[i].getName();
+				booksQtdsTags[i][1] = qtd.toString();
+			}
+			String[][] temp = new String[2][2];
+		    for (int z = 0; z < booksQtdsTags.length; z++){
+	            temp[0] = booksQtdsTags[z];
+	            for (int y = 0; y <= z; y++){
+                    if(Integer.parseInt(temp[0][1]) > Integer.parseInt(booksQtdsTags[y][1])){
+                    	temp[1] = booksQtdsTags[y];
+                    	booksQtdsTags[y] = temp[0];
+	                    y++;
+	                    for(; y <=z; y++){
+	                    	temp[0] = booksQtdsTags[y];
+	                    	booksQtdsTags[y] = temp[1];
+	                    	temp[1] = temp[0];
+	                    }
+                    }
+	            }
+		    }
+		}
+		
+		/*		Arrays.sort(livros, 
+		new Comparator<Book>() {  
+			public int compare(Book b1, Book b2) { 
+				Vector<String> select = new Vector<String>();
+				select.add("value");
+
+				Vector<String> where = new Vector<String>();
+				where.add("bookISBN = '" + b1.getISBN() + "'");
+
+				Vector<String> order = new Vector<String>();
+				order.add("value");
+				float bb1 = b1.getRating()*b1.getRating()*dataBase.queryRating(select, where, order).length;
+				
+				where.clear();
+				where.add("bookISBN = '" + b2.getISBN() + "'");
+				float bb2 = b2.getRating()*b2.getRating()*dataBase.queryRating(select, where, order).length;
+			    return bb1 < bb2 ? 1 : (bb1 > bb2 ? -1 : 0);
+			}
+		} 
+	);
+*/		
+
+		return myBooks;
+	}
+
+	private Vector<String> returnSelect() {
 		Vector<String> select = new Vector<String>();
 		select.add("name"); // Falta ver um jeito de selecionar todos os campo
 		select.add("isbn");
@@ -169,15 +189,13 @@ public class SearchEngine implements ISearchEngine, IRequires<IDataBase> { // TO
 
 	// Métodos auxiliares
 	
-	// TODO: TROCAR ESPECIFICADOR DE ESCOPO PARA PRIVATE!
-	
 	/**
 	 * <p>Normaliza a chave de pesquisa, retirando acentos e sinais, <br />
 	 * deixando a  string em minúsculas e tirando os espaços.<br /></p>
 	 * <p>Mantém, porém, caracteres de pontuação, símbolos e caraceres especiais.</p> 
 	 * @author Giuliano
 	 */
-	public String keyNormalize(String value) {
+	private String keyNormalize(String value) {
 		long start = System.currentTimeMillis();
 		String ret = "";
 		
@@ -211,7 +229,7 @@ public class SearchEngine implements ISearchEngine, IRequires<IDataBase> { // TO
 	 * @param value é a string a sofrer extração
 	 * @return Retorna um array de strings com as tags encontradas.
 	 */
-	public String[] extractTags(String value) {
+	private String[] extractTags(String value) {
 		long start = System.currentTimeMillis();
 		String tags[];
 		
