@@ -14,7 +14,7 @@ import anima.component.ISupports;
  * @author Mauricio Bertanha and Rodrigo Elizeu Goncalves 
  */
 @ComponentInterface("<http://purl.org/dcc/Interfaces.IBusinessObject>")
-public interface IBusinessObject extends ISupports {
+public interface IBusinessObject extends ISupports, INotifyU {
 		
 	//Books
 	//select

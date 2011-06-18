@@ -12,4 +12,5 @@ import Classes.Book;
 @ComponentInterface("<http://purl.org/dcc/santanbooks.Interfaces.ISearchEngine>")
 public interface ISearchEngine extends ISupports, ISeeU {
 	public Book[] search(String key);
+	public String[] autoComplete(String arg);
 }

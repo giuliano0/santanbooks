@@ -1,10 +1,10 @@
 package SearchEngine;
 
-import Interfaces.IBusinessObject;
+import Interfaces.IDataBase;
 import anima.component.IReceptacle;
 
 public interface IReceptacleDataBase extends IReceptacle{
-        public void connect(IBusinessObject bussinessobject);
+        public void connect(IDataBase bussinessobject);
 }
 
 

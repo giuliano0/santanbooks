@@ -18,7 +18,8 @@ import anima.component.base.ComponentBase;
  */
 @Component(id="<http://purl.org/dcc/SearchEngine.SearchEngine>",
         provides={"<http://purl.org/dcc/Interfaces.ISearchEngine>"}, 
-        requires= { "<http://purl.org/dcc/Interfaces.IBusinessObject>" })
+        requires= { "<http://purl.org/dcc/Interfaces.IBusinessObject>",
+					"<http://purl.org/dcc/Interfaces.IDataBase>"})
 public class SearchEngine extends ComponentBase implements ISearchEngine, IReceptacleDataBase, IReceptacleBussinessObject {
 
 	// Preposições, artigos, conjunções, e tudo mais (pontuação, sinais gráficos)

@@ -28,7 +28,7 @@ import anima.component.base.ComponentBase;
 @Component(id = "<http://purl.org/dcc/DataBase.BusinessObject>", 
 		provides = { "<http://purl.org/dcc/Interfaces.IBusinessObject>"},
 		requires= { "<http://purl.org/dcc/Interfaces.IDataBase>" })
-public class BusinessObject extends ComponentBase implements IBusinessObject, IRequires<IDataBase>, INotifyU {
+public class BusinessObject extends ComponentBase implements IBusinessObject, IRequires<IDataBase> {
 	private IDataBase db;
 	private ISearchEngine se;
 	
