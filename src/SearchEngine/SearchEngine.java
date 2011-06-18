@@ -1,5 +1,6 @@
 package SearchEngine;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Vector;
@@ -107,6 +108,13 @@ public class SearchEngine implements ISearchEngine, IRequires<IDataBase> { // TO
 		*/
 		
 		return livros;
+	}
+	
+	public Book[] mergeBooks(Book[] b1, Book[] b2) {
+		ArrayList<Book> books = new ArrayList<Book>();
+		for (Book b : b1) books.add(b);
+		for (Book b : b2) if (!books.contains(b)) books.add(b);
+		return books.toArray(new Book[books.size()]);
 	}
 	
 	@Override
