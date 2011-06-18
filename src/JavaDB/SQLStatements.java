@@ -93,7 +93,7 @@ public class SQLStatements extends ComponentBase implements ISQLStatements {
 		if(table.equals("comment"))
 			s = " (username, bookISBN, content, publishingDate) ";
 		else if(table.equals("review"))
-			s = " (username, bookISBN, bookName, content, publishingDate, title) ";
+			s = " (username, bookISBN, content, publishingDate, title) ";
 		else if(table.equals("rating"))
 			s = " (username, bookISBN, bookReview, value, type) ";
 		return s;
@@ -117,7 +117,7 @@ public class SQLStatements extends ComponentBase implements ISQLStatements {
 
 	public String mountValuesStatement(Vector<Object> v) {
 		String values = new String();
-		for(int i = 0; i < v.size(); i++){
+		for (int i = 0; i < v.size(); i++){			
 			if(i != v.size() - 1)
 				if(v.get(i) != null){
 					if(v.get(i) instanceof Integer)
@@ -136,6 +136,7 @@ public class SQLStatements extends ComponentBase implements ISQLStatements {
 				}
 				else
 					values += "''";
+			
 		}
 		return values;
 	}

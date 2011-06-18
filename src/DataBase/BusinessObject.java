@@ -384,7 +384,13 @@ public class BusinessObject extends ComponentBase implements IBusinessObject, IR
 		// criando where
 		if (colunnName != null && value != null) {
 			where = new Vector<String>();
-			where.add(colunnName + " = '" + value + "'");
+			
+			if(value instanceof Integer) {
+				where.add(colunnName + " = " + value);
+			}
+			else {
+				where.add(colunnName + " = '" + value + "'");
+			}
 		}
 
 		// criando order
@@ -518,7 +524,12 @@ public class BusinessObject extends ComponentBase implements IBusinessObject, IR
 		// criando where
 		if (colunnName != null && value != null) {
 			where = new Vector<String>();
-			where.add(colunnName + " = '" + value + "'");
+			if(value instanceof Integer) {
+				where.add(colunnName + " = " + value);
+			}
+			else {
+				where.add(colunnName + " = '" + value + "'");
+			}
 		}
 		
 		if (type != null) {
@@ -593,7 +604,13 @@ public class BusinessObject extends ComponentBase implements IBusinessObject, IR
 		// criando where
 		if (colunnName != null && value != null) {
 			where = new Vector<String>();
-			where.add(colunnName + " = '" + value + "'");
+			if(value instanceof Integer) {
+				where.add(colunnName + " = " + value);
+			}
+			else {
+				where.add(colunnName + " = '" + value + "'");
+			}
+			
 		}
 
 		// criando order

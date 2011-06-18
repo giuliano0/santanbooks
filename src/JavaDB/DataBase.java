@@ -90,7 +90,6 @@ public class DataBase extends ComponentBase implements IDataBase, IRequires<ISQL
 					"(START WITH 1, INCREMENT BY 1), " +
 					"username VARCHAR(100) NOT NULL, " +
 					"bookISBN VARCHAR(100) NOT NULL, " +
-					"bookName VARCHAR(100) NOT NULL, " +
 					"content VARCHAR(10000) NOT NULL, " +
 					"publishingDate DATE NOT NULL, " +
 					"title VARCHAR(100) NOT NULL)"
@@ -550,7 +549,7 @@ public class DataBase extends ComponentBase implements IDataBase, IRequires<ISQL
 		Vector<Object> v = getVectorReview(data);
 		String values = stt.mountValuesStatement(v);
 		try {
-			stt.insert("comment", values);
+			stt.insert("review", values);
 		} catch (SQLException erro) {
 			sucesso = false;
 		}
@@ -591,8 +590,6 @@ public class DataBase extends ComponentBase implements IDataBase, IRequires<ISQL
 						temp.setUsername(result.getString("username"));
 					if(select.get(i).equalsIgnoreCase("bookIsbn"))
 						temp.setBookISBN(result.getString("bookIsbn"));
-					if(select.get(i).equalsIgnoreCase("bookName"))
-						temp.setBookName(result.getString("bookName"));
 					if(select.get(i).equalsIgnoreCase("content"))
 						temp.setContent(result.getString("content"));
 					if(select.get(i).equalsIgnoreCase("title"))
@@ -650,7 +647,6 @@ public class DataBase extends ComponentBase implements IDataBase, IRequires<ISQL
 		//v.add(r.getID());
 		v.add(r.getUsername());
 		v.add(r.getBookISBN());
-		v.add(r.getBookName());
 		v.add(r.getContent());
 		v.add(r.getPublishingDate());
 		v.add(r.getTitle());
@@ -662,7 +658,6 @@ public class DataBase extends ComponentBase implements IDataBase, IRequires<ISQL
 		//v.add("id = '" + r.getID() + "'");
 		v.add("username = '" + r.getUsername() + "'");
 		v.add("bookISBN = '" + r.getBookISBN() + "'");
-		v.add("bookName = '" + r.getBookName() + "'");
 		v.add("content = '" + r.getContent() + "'");
 		v.add("publishingDate = '" + r.getPublishingDate() + "'");
 		v.add("title = '" + r.getTitle() + "'");
@@ -783,9 +778,9 @@ public class DataBase extends ComponentBase implements IDataBase, IRequires<ISQL
 		//v.add("id = '" + r.getID() + "'");
 		v.add("username = '" + r.getUsername() + "'");
 		v.add("bookISBN = '" + r.getBookISBN() + "'");
-		v.add("bookReview = '" + r.getBookReview() + "'");
-		v.add("value = '" + r.getValue() + "'");
-		v.add("type = '" + (r.getType()? 1 : 0 )+ "'");		
+		v.add("bookReview = " + r.getBookReview());
+		v.add("value = " + r.getValue());
+		v.add("type = " + (r.getType()? 1 : 0 ));		
 		return v;
 	}
 	

@@ -10,6 +10,8 @@ import anima.factory.context.componentContext.ComponentContextFactory;
 import anima.factory.exception.FactoryException;
 import Classes.Book;
 import Classes.Comment;
+import Classes.Rating;
+import Classes.Review;
 import Classes.User;
 import Interfaces.IBusinessObject;
 import Interfaces.IDataBase;
@@ -66,7 +68,7 @@ public class AppBusinessObjectExample {
 		} catch (FactoryException e) {
 			System.err.println(e.getMessage());
 		}
-		
+
 		System.exit(0);
 	}
 
@@ -147,7 +149,7 @@ public class AppBusinessObjectExample {
 		Book result4[] = businessObjectComponent.selectAllBooks();
 		System.out.println("todos os livros");
 		for (int j = 0; j < result4.length; j++) {
-			
+
 			System.out.println("ISBN: " + result4[j].getISBN() + ", Name: "
 					+ result4[j].getName());
 		}
@@ -155,46 +157,161 @@ public class AppBusinessObjectExample {
 	}
 
 	public static void exemploRatings(IBusinessObject businessObjectComponent) {
-		// TODO
+		businessObjectComponent
+				.insertRating("978-85-233-0143-2", 3, "testuser");
+		businessObjectComponent.insertRating("978-85-233-0143-2", 1,
+				"testuser1");
+		businessObjectComponent.insertRating("978-85-233-0143-2", 3,
+				"testuser3");
+		businessObjectComponent.insertRating("978-85-233-0143-2", 4,
+				"testuser5");
+
+		Rating[] ratings = businessObjectComponent.selectAllRatings();
+		System.out.println("Rating");
+		for (int j = 0; j < ratings.length; j++) {
+			System.out.println("ISBN: " + ratings[j].getBookISBN()
+					+ ", value: " + ratings[j].getValue());
+		}
+
+		ratings[0].setValue(5);
+		businessObjectComponent.updateRating(ratings[0]);
+
+		ratings = businessObjectComponent.selectAllRatings();
+		System.out.println("Rating atualizado");
+		for (int j = 0; j < ratings.length; j++) {
+			System.out.println("ISBN: " + ratings[j].getBookISBN()
+					+ ", value: " + ratings[j].getValue());
+		}
+
+		businessObjectComponent.deleteRating(ratings[0]);
 	}
 
 	public static void exemploComents(IBusinessObject businessObjectComponent) {
-		businessObjectComponent.insertComment("978-85-233-0143-2", "livro bomm", "testuser");		
-		businessObjectComponent.insertComment("978-85-233-0143-2", "livro bomm2342", "testuser");
-		businessObjectComponent.insertComment("978-85-233-0143-2", "livro bomm2342234", "testuser");
-		
-		Comment[] result = businessObjectComponent.selectCommentsBookByIsbn("978-85-233-0143-2");
+		businessObjectComponent.insertComment("978-85-233-0143-2",
+				"livro bomm", "testuser");
+		businessObjectComponent.insertComment("978-85-233-0143-2",
+				"livro bomm2342", "testuser");
+		businessObjectComponent.insertComment("978-85-233-0143-2",
+				"livro bomm2342234", "testuser");
+
+		Comment[] result = businessObjectComponent
+				.selectCommentsBookByIsbn("978-85-233-0143-2");
 		System.out.println("Comments");
-		
-		for (int j = 0; j < result.length; j++) {			
-			System.out.println("usename: " + result[j].getUsername() + ", content: "
-					+ result[j].getContent());
-		}		
-		
-		businessObjectComponent.deleteCommentsByUser("testuser");		
-		
+
+		for (int j = 0; j < result.length; j++) {
+			System.out.println("usename: " + result[j].getUsername()
+					+ ", content: " + result[j].getContent());
+		}
+
+		businessObjectComponent.deleteCommentsByUser("testuser");
+		result = businessObjectComponent
+				.selectCommentsBookByIsbn("978-85-233-0143-2");
+		System.out.println("Comments deletado");
+		for (int j = 0; j < result.length; j++) {
+			System.out.println("usename: " + result[j].getUsername()
+					+ ", content: " + result[j].getContent());
+		}
+
 	}
 
 	public static void exemploUsers(IBusinessObject businessObjectComponent) {
-//		Date dataAtual = new Date(System.currentTimeMillis());
-//		
-//		User user = new User();
-//		user.setAccessLevel(false);
-//		
-//		try {
-//			user.setBirthday(dataAtual);
-//		} catch (Exception e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//		
-//		user.setCollege("Unicamp");
-//		user.setCourse("CC");				
-		
+		Date birth = new Date(System.currentTimeMillis());
+
+		User u = new User();
+		u.setUsername("jombler");
+		u.setAccessLevel(false);
+
+		try {
+			u.setBirthday(birth);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		u.setCollege("Unicamp");
+		u.setCourse("CC");
+		u.setEmail("jombler@students.ic.unicamp.br");
+		u.setGender(true);
+		u.setName("Joao Paulo");
+		u.setPassowrd("123456");
+		u.setSelfDescription("Aluno de ciencia da computacao, unicamp");
+		u.setIngressYear(birth);
+
+		if (businessObjectComponent.insertUser(u))
+			System.out.println("Usuario " + u.getUsername()
+					+ " inserido com sucesso!");
+		else
+			System.out.println("Username " + u.getUsername()
+					+ " invalido ou ja existente!");
+
+		u.setUsername("my user name");
+		if (businessObjectComponent.insertUser(u))
+			System.out.println("Usuario " + u.getUsername()
+					+ " inserido com sucesso!");
+		else
+			System.out.println("Username " + u.getUsername()
+					+ " invalido ou ja existente!");
+
+		System.out.println("USUARIOS:");
+		for (User usuario : businessObjectComponent.selectAllUsers()) {
+			System.out.println(usuario.getUsername());
+		}
+
+		u.setCollege("Unip");
+		u.setCourse("Moda");
+		u.setPassowrd("432432");
+		businessObjectComponent.updateUser(u);
+
+		System.out.println("ATUALIZACAO");
+		u = businessObjectComponent.selectUser(u.getUsername());
+		System.out.println(u.getUsername());
+		System.out.println(u.getCollege());
+		System.out.println(u.getCourse());
+		System.out.println(u.getPassword());
+
+		System.out.println("DELECAO");
+		businessObjectComponent.deleteUser(u.getUsername());
+		System.out.println("USUARIOS:");
+		for (User usuario : businessObjectComponent.selectAllUsers()) {
+			System.out.println(usuario.getUsername());
+		}
 	}
 
 	public static void exemploReviews(IBusinessObject businessObjectComponent) {
-		// TODO
+		businessObjectComponent.insertReview("978-85-233-0143-2", "title1",
+				"content1", "testuser");
+		businessObjectComponent.insertReview("978-85-233-0143-2", "title2",
+				"content2", "testuser1");
+		businessObjectComponent.insertReview("978-85-233-0143-2", "title3",
+				"content3", "testuser2");
+		businessObjectComponent.insertReview("978-85-233-0143-2", "title4",
+				"content4", "testuser3");
+		businessObjectComponent.insertReview("978-85-233-0143-2", "title5",
+				"content5", "testuser5");
+
+		Review[] review = businessObjectComponent.selectAllReviews();
+		System.out.println("Review");
+		for (int j = 0; j < review.length; j++) {
+			System.out.println("ISBN: " + review[j].getBookISBN() + ", value: "
+					+ review[j].getContent());
+		}
+
+		review[0].setContent("Review atualizado");
+		businessObjectComponent.updateReview(review[0]);
+
+		review = businessObjectComponent.selectAllReviews();
+		System.out.println("Review atualizado");
+		for (int j = 0; j < review.length; j++) {
+			System.out.println("ISBN: " + review[j].getBookISBN()
+					+ ", content: " + review[j].getContent());
+		}
+
+		businessObjectComponent.deleteReview(review[0]);
+
+		review = businessObjectComponent.selectAllReviews();
+		System.out.println("Review deletado");
+		for (int j = 0; j < review.length; j++) {
+			System.out.println("ISBN: " + review[j].getBookISBN()
+					+ ", content: " + review[j].getContent());
+		}
 	}
 
 	public static void exemploSessions(IBusinessObject businessObjectComponent) {
