@@ -65,7 +65,7 @@ public class AddBook extends javax.swing.JPanel {
         jPanel1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jPanel1.setPreferredSize(new java.awt.Dimension(600, 330));
 
-        year.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        year.setFont(new java.awt.Font("Tahoma", 0, 12));
         year.setText("Ano");
 
         imageButton.setText("Adicionar");
@@ -75,19 +75,19 @@ public class AddBook extends javax.swing.JPanel {
             }
         });
 
-        authors.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        authors.setFont(new java.awt.Font("Tahoma", 0, 12));
         authors.setText("Autores");
 
-        edition.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        edition.setFont(new java.awt.Font("Tahoma", 0, 12));
         edition.setText("Edição");
 
-        title.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        title.setFont(new java.awt.Font("Tahoma", 0, 12));
         title.setText("Título");
 
-        isbn.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        isbn.setFont(new java.awt.Font("Tahoma", 0, 12));
         isbn.setText("ISBN");
 
-        publisher.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        publisher.setFont(new java.awt.Font("Tahoma", 0, 12));
         publisher.setText("Editora");
 
         yearField.setText("YYYY");
@@ -100,7 +100,7 @@ public class AddBook extends javax.swing.JPanel {
             }
         });
 
-        description.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        description.setFont(new java.awt.Font("Tahoma", 0, 12));
         description.setText("Resumo");
 
         isbnField.setText("xxx-x-xxx-xxxxx-x");
@@ -119,6 +119,7 @@ public class AddBook extends javax.swing.JPanel {
         });
 
         descriptionField.setColumns(20);
+        descriptionField.setFont(new java.awt.Font("Tahoma", 0, 11)); // NOI18N
         descriptionField.setLineWrap(true);
         descriptionField.setRows(5);
         jScrollPane1.setViewportView(descriptionField);
@@ -147,10 +148,10 @@ public class AddBook extends javax.swing.JPanel {
             }
         });
 
-        image.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        image.setFont(new java.awt.Font("Tahoma", 0, 12));
         image.setText("Imagem");
 
-        image1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        image1.setFont(new java.awt.Font("Tahoma", 0, 12));
         image1.setText("Categorias");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -245,7 +246,7 @@ public class AddBook extends javax.swing.JPanel {
         add(jPanel1);
         jPanel1.setBounds(100, 100, 600, 470);
 
-        pageTitle.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        pageTitle.setFont(new java.awt.Font("Tahoma", 1, 24));
         pageTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         pageTitle.setText("Adicionar novo livro");
         add(pageTitle);

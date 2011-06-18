@@ -91,7 +91,7 @@ public class RegUser extends javax.swing.JPanel {
         add(collegeLabel1);
         collegeLabel1.setBounds(188, 337, 62, 14);
 
-        personalTitle1.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
+        personalTitle1.setFont(new java.awt.Font("Tahoma", 1, 13));
         personalTitle1.setText("Informações pessoais:");
         add(personalTitle1);
         personalTitle1.setBounds(189, 55, 180, 16);
@@ -156,7 +156,7 @@ public class RegUser extends javax.swing.JPanel {
         add(yearLabel1);
         yearLabel1.setBounds(513, 368, 19, 14);
 
-        loginTitle1.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
+        loginTitle1.setFont(new java.awt.Font("Tahoma", 1, 13));
         loginTitle1.setText("Informações de login :");
         add(loginTitle1);
         loginTitle1.setBounds(189, 400, 180, 16);
@@ -173,20 +173,21 @@ public class RegUser extends javax.swing.JPanel {
         add(yearText1);
         yearText1.setBounds(538, 365, 50, 20);
 
-        academicTitle1.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
+        academicTitle1.setFont(new java.awt.Font("Tahoma", 1, 13));
         academicTitle1.setText("Informações acadêmicas :");
         add(academicTitle1);
         academicTitle1.setBounds(189, 304, 200, 16);
 
         descriptionText1.setColumns(20);
+        descriptionText1.setFont(new java.awt.Font("Tahoma", 0, 11)); // NOI18N
         descriptionText1.setLineWrap(true);
         descriptionText1.setRows(5);
         jScrollPane2.setViewportView(descriptionText1);
 
         add(jScrollPane2);
-        jScrollPane2.setBounds(188, 197, 400, 96);
+        jScrollPane2.setBounds(188, 197, 400, 76);
 
-        title1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        title1.setFont(new java.awt.Font("Tahoma", 1, 24));
         title1.setText("Registre sua conta");
         add(title1);
         title1.setBounds(282, 11, 250, 29);
