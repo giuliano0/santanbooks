@@ -66,26 +66,47 @@ public class RegUser extends javax.swing.JPanel {
         setMinimumSize(new java.awt.Dimension(800, 600));
         setPreferredSize(new java.awt.Dimension(800, 600));
         setRequestFocusEnabled(false);
+        setLayout(null);
 
         bdayLabel1.setText("Nascimento");
+        add(bdayLabel1);
+        bdayLabel1.setBounds(430, 116, 55, 14);
 
         userLabel1.setText("Nome de usuário");
+        add(userLabel1);
+        userLabel1.setBounds(227, 435, 80, 14);
+        add(pwordText1);
+        pwordText1.setBounds(315, 464, 217, 20);
 
         pwordLabel1.setText("Senha");
+        add(pwordLabel1);
+        pwordLabel1.setBounds(277, 467, 30, 14);
 
         buttonGroup1.add(maleButton1);
         maleButton1.setText("Masc.");
+        add(maleButton1);
+        maleButton1.setBounds(287, 112, 53, 23);
 
         collegeLabel1.setText("Universidade");
+        add(collegeLabel1);
+        collegeLabel1.setBounds(188, 337, 62, 14);
 
         personalTitle1.setFont(new java.awt.Font("DejaVu Sans 13 13", 1, 13));
         personalTitle1.setText("Informações pessoais:");
+        add(personalTitle1);
+        personalTitle1.setBounds(189, 55, 140, 16);
 
         nameLabel1.setText("Nome");
+        add(nameLabel1);
+        nameLabel1.setBounds(189, 85, 27, 14);
 
         emailLabel1.setText("E-mail");
+        add(emailLabel1);
+        emailLabel1.setBounds(189, 149, 28, 14);
 
         descriptionLabel1.setText("Descreva-se em poucas linhas:");
+        add(descriptionLabel1);
+        descriptionLabel1.setBounds(189, 177, 148, 14);
 
         bdayText1.setText("DD/MM/YYYY");
         bdayText1.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -96,6 +117,12 @@ public class RegUser extends javax.swing.JPanel {
                 bdayText1FocusLost(evt);
             }
         });
+        add(bdayText1);
+        bdayText1.setBounds(489, 113, 99, 20);
+        add(collegeText1);
+        collegeText1.setBounds(255, 334, 333, 20);
+        add(emailText1);
+        emailText1.setBounds(225, 146, 363, 20);
 
         clearButton1.setText("Limpar");
         clearButton1.setMaximumSize(new java.awt.Dimension(45, 30));
@@ -105,20 +132,34 @@ public class RegUser extends javax.swing.JPanel {
                 clearButton1ActionPerformed(evt);
             }
         });
+        add(clearButton1);
+        clearButton1.setBounds(315, 526, 82, 23);
 
         saveButton1.setText("Enviar");
         saveButton1.setMaximumSize(new java.awt.Dimension(45, 30));
         saveButton1.setMinimumSize(new java.awt.Dimension(45, 30));
+        add(saveButton1);
+        saveButton1.setBounds(405, 526, 82, 23);
 
         buttonGroup1.add(femaleButton1);
         femaleButton1.setText("Fem.");
+        add(femaleButton1);
+        femaleButton1.setBounds(225, 112, 49, 23);
+        add(courseText1);
+        courseText1.setBounds(255, 365, 250, 20);
 
         genderLabel1.setText("Sexo");
+        add(genderLabel1);
+        genderLabel1.setBounds(192, 116, 24, 14);
 
         yearLabel1.setText("Ano");
+        add(yearLabel1);
+        yearLabel1.setBounds(513, 368, 19, 14);
 
         loginTitle1.setFont(new java.awt.Font("DejaVu Sans 13 13", 1, 13));
         loginTitle1.setText("Informações de login :");
+        add(loginTitle1);
+        loginTitle1.setBounds(189, 400, 142, 18);
 
         yearText1.setText("YYYY");
         yearText1.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -129,162 +170,40 @@ public class RegUser extends javax.swing.JPanel {
                 yearText1FocusLost(evt);
             }
         });
+        add(yearText1);
+        yearText1.setBounds(538, 365, 50, 20);
 
-        academicTitle1.setFont(new java.awt.Font("DejaVu Sans 13 13", 1, 13));
+        academicTitle1.setFont(new java.awt.Font("DejaVu Sans 13 13", 1, 13)); // NOI18N
         academicTitle1.setText("Informações acadêmicas :");
+        add(academicTitle1);
+        academicTitle1.setBounds(189, 304, 166, 18);
 
         descriptionText1.setColumns(20);
         descriptionText1.setLineWrap(true);
         descriptionText1.setRows(5);
         jScrollPane2.setViewportView(descriptionText1);
 
+        add(jScrollPane2);
+        jScrollPane2.setBounds(188, 197, 400, 96);
+
         title1.setFont(new java.awt.Font("SansSerif 24 24", 1, 24));
         title1.setText("Registre sua conta");
+        add(title1);
+        title1.setBounds(282, 11, 214, 32);
+        add(userText1);
+        userText1.setBounds(315, 432, 217, 20);
 
         repeatpwordLabel1.setText("Redigite sua senha");
+        add(repeatpwordLabel1);
+        repeatpwordLabel1.setBounds(216, 498, 91, 14);
+        add(repeatpwordText1);
+        repeatpwordText1.setBounds(315, 495, 217, 20);
 
         courseLabel1.setText("Curso");
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(282, 282, 282)
-                .addComponent(title1)
-                .addContainerGap(304, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(197, 197, 197)
-                .addComponent(personalTitle1)
-                .addContainerGap(463, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(188, 188, 188)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(12, 12, 12)
-                        .addComponent(academicTitle1)
-                        .addContainerGap())
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(descriptionLabel1)
-                            .addContainerGap())
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 405, Short.MAX_VALUE)
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                    .addGap(28, 28, 28)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addComponent(userLabel1)
-                                        .addComponent(pwordLabel1)
-                                        .addComponent(repeatpwordLabel1))
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                            .addComponent(repeatpwordText1, javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(pwordText1, javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(userText1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGroup(layout.createSequentialGroup()
-                                            .addComponent(clearButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                            .addComponent(saveButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addComponent(courseLabel1)
-                                        .addComponent(collegeLabel1))
-                                    .addGap(18, 18, 18)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(layout.createSequentialGroup()
-                                            .addComponent(courseText1, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                            .addComponent(yearLabel1)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                            .addComponent(yearText1, javax.swing.GroupLayout.DEFAULT_SIZE, 102, Short.MAX_VALUE))
-                                        .addComponent(collegeText1, javax.swing.GroupLayout.DEFAULT_SIZE, 325, Short.MAX_VALUE)))
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addComponent(genderLabel1)
-                                        .addComponent(emailLabel1)
-                                        .addComponent(nameLabel1))
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(layout.createSequentialGroup()
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                            .addComponent(emailText1, javax.swing.GroupLayout.DEFAULT_SIZE, 373, Short.MAX_VALUE))
-                                        .addGroup(layout.createSequentialGroup()
-                                            .addGap(10, 10, 10)
-                                            .addComponent(femaleButton1)
-                                            .addGap(12, 12, 12)
-                                            .addComponent(maleButton1)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 84, Short.MAX_VALUE)
-                                            .addComponent(bdayLabel1)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                            .addComponent(bdayText1, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGroup(layout.createSequentialGroup()
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                            .addComponent(nameText1, javax.swing.GroupLayout.DEFAULT_SIZE, 373, Short.MAX_VALUE)))))
-                            .addGap(207, 207, 207)))))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(199, 199, 199)
-                .addComponent(loginTitle1)
-                .addContainerGap(459, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(title1)
-                .addGap(12, 12, 12)
-                .addComponent(personalTitle1, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(nameLabel1)
-                    .addComponent(nameText1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(maleButton1)
-                    .addComponent(bdayText1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(bdayLabel1)
-                    .addComponent(femaleButton1)
-                    .addComponent(genderLabel1))
-                .addGap(11, 11, 11)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(emailLabel1)
-                    .addComponent(emailText1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(descriptionLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(academicTitle1)
-                .addGap(12, 12, 12)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(collegeLabel1)
-                    .addComponent(collegeText1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(courseText1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(courseLabel1)
-                    .addComponent(yearLabel1)
-                    .addComponent(yearText1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(loginTitle1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(userText1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(userLabel1))
-                .addGap(12, 12, 12)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(pwordLabel1)
-                    .addComponent(pwordText1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(repeatpwordLabel1)
-                    .addComponent(repeatpwordText1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(clearButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(saveButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(80, 80, 80))
-        );
+        add(courseLabel1);
+        courseLabel1.setBounds(222, 368, 28, 14);
+        add(nameText1);
+        nameText1.setBounds(225, 82, 363, 20);
     }// </editor-fold>//GEN-END:initComponents
 
     private void bdayText1FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_bdayText1FocusGained

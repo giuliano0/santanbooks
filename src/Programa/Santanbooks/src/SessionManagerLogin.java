@@ -38,33 +38,47 @@ public class SessionManagerLogin extends javax.swing.JPanel {
         noAccountLabel = new javax.swing.JLabel();
         signInButton = new javax.swing.JButton();
         registerLabel = new javax.swing.JLabel();
+        logoPanel = new javax.swing.JLabel();
 
         setMaximumSize(new java.awt.Dimension(800, 50));
         setMinimumSize(new java.awt.Dimension(800, 50));
         setPreferredSize(new java.awt.Dimension(800, 50));
+        setLayout(null);
 
         loginTitle.setFont(new java.awt.Font("Tahoma", 1, 16));
         loginTitle.setText("Login");
+        add(loginTitle);
+        loginTitle.setBounds(470, 10, 50, 20);
 
         userLabel.setFont(new java.awt.Font("Tahoma", 0, 10));
         userLabel.setText("Usuário");
+        add(userLabel);
+        userLabel.setBounds(530, 0, 70, 14);
 
         userText.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 userTextActionPerformed(evt);
             }
         });
+        add(userText);
+        userText.setBounds(530, 15, 90, 15);
 
         pwordText.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 pwordTextActionPerformed(evt);
             }
         });
+        add(pwordText);
+        pwordText.setBounds(640, 15, 90, 15);
 
         pwordLabel.setFont(new java.awt.Font("Tahoma", 0, 10));
         pwordLabel.setText("Password");
+        add(pwordLabel);
+        pwordLabel.setBounds(640, 0, 43, 13);
 
         noAccountLabel.setText("Não possui uma conta?");
+        add(noAccountLabel);
+        noAccountLabel.setBounds(530, 35, 110, 14);
 
         signInButton.setText("Entrar");
         signInButton.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -75,61 +89,33 @@ public class SessionManagerLogin extends javax.swing.JPanel {
                 signInButtonActionPerformed(evt);
             }
         });
+        add(signInButton);
+        signInButton.setBounds(740, 10, 50, 20);
 
         registerLabel.setForeground(new java.awt.Color(0, 0, 255));
         registerLabel.setText("Cadastre-se aqui");
         registerLabel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        registerLabel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                registerLabelMouseClicked(evt);
+            }
+        });
+        add(registerLabel);
+        registerLabel.setBounds(646, 35, 82, 14);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(470, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(60, 60, 60)
-                        .addComponent(noAccountLabel)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(registerLabel))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(loginTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(10, 10, 10)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(userLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(userText, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(20, 20, 20)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(pwordLabel)
-                            .addComponent(pwordText, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(10, 10, 10)
-                        .addComponent(signInButton, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap())
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addComponent(loginTitle))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(userLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(1, 1, 1)
-                        .addComponent(userText, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(pwordLabel)
-                        .addGap(2, 2, 2)
-                        .addComponent(pwordText, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addComponent(signInButton, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(5, 5, 5)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(noAccountLabel)
-                    .addComponent(registerLabel))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+        logoPanel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Santanbooks_Small.png"))); // NOI18N
+        logoPanel.setText("jLabel1");
+        logoPanel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        logoPanel.setMaximumSize(new java.awt.Dimension(214, 45));
+        logoPanel.setMinimumSize(new java.awt.Dimension(214, 45));
+        logoPanel.setPreferredSize(new java.awt.Dimension(214, 45));
+        logoPanel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                logoPanelMouseClicked(evt);
+            }
+        });
+        add(logoPanel);
+        logoPanel.setBounds(10, 5, 210, 40);
     }// </editor-fold>//GEN-END:initComponents
 
     private void userTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userTextActionPerformed
@@ -144,8 +130,17 @@ public class SessionManagerLogin extends javax.swing.JPanel {
         // TODO add your handling code here:
 }//GEN-LAST:event_signInButtonActionPerformed
 
+    private void logoPanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoPanelMouseClicked
+        parent.changePanel(Santanbooks.PANEL_HOME);
+    }//GEN-LAST:event_logoPanelMouseClicked
+
+    private void registerLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_registerLabelMouseClicked
+        parent.changePanel(Santanbooks.PANEL_REG_USER);
+    }//GEN-LAST:event_registerLabelMouseClicked
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel loginTitle;
+    private javax.swing.JLabel logoPanel;
     private javax.swing.JLabel noAccountLabel;
     private javax.swing.JLabel pwordLabel;
     private javax.swing.JPasswordField pwordText;
