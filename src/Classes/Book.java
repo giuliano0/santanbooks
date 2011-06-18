@@ -190,7 +190,6 @@ public class Book implements ICommentable, IRateable, IReviewable {
 	 * @throws InvalidArgumentException, NullPointerException 
 	 */
 	public Review getReview(int id) throws InvalidArgumentException, NullPointerException {
-		if (id == 0) throw new InvalidArgumentException();
 		if (reviews == null) throw new NullPointerException("Nenhuma review encontrada.");
 		
 		for(int i = 0; i < reviews.length; i++) {
