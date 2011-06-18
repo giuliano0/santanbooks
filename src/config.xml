@@ -4,5 +4,7 @@
         <dcc mainModule="DataBase.BusinessObject"/>
         <dcc mainModule="JavaDB.SQLStatements"/>
         <dcc mainModule="JavaDB.DataBase"/>
+        <dcc mainModule="SearchEngine.SearchEngine"/>
+        <dcc mainModule="Classes.SessionManager"/>
     </dccs>
 </config>

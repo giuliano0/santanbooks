@@ -20,8 +20,9 @@ import anima.component.InterfaceType;
  * no código que vocês escreverem, e salvem numa planilha o que vcs fizeram, precisaremos <br />
  * dessa informação mais tarde! Thanks ;)
  */
-@Component(id="<http://purl.org/dcc/santanbooks.SearchEngine.SearchEngine>",
-        provides={"<http://purl.org/dcc/santanbooks.Interfaces.ISearchEngine>"})
+@Component(id="<http://purl.org/dcc/SearchEngine.SearchEngine>",
+        provides={"<http://purl.org/dcc/Interfaces.ISearchEngine>"}, 
+        requires= { "<http://purl.org/dcc/Interfaces.IBusinessObject>" })
 public class SearchEngine implements ISearchEngine, IRequires<IDataBase> { // TODO: colocar o IRequires<IDataBase>, ajuda aqui please =)
 
 	// Preposições, artigos, conjunções, e tudo mais (pontuação, sinais gráficos). 42!

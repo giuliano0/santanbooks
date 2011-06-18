@@ -1,6 +1,7 @@
 package Interfaces;
 
 import anima.annotation.ComponentInterface;
+import anima.component.ISupports;
 import Classes.Book;
 
 /**
@@ -8,8 +9,8 @@ import Classes.Book;
  * @author Giuliano
  *
  */
-@ComponentInterface("<http://purl.org/dcc/santanbooks.Interfaces.ISearchEngine>")
-public interface ISearchEngine {
+@ComponentInterface("<http://purl.org/dcc/Interfaces.ISearchEngine>")
+public interface ISearchEngine extends ISupports {
 	public Book[] search(String key);			// Busca a database por match exata de nome e tags do nome (usa extractTags).
 	public Book[] searchByAuthor(String key);	// Busca por nome do autor, match exato, de preferência.
 	public Book searchByISBN(String key);		// Busca por ISBN. Deve redirecionar direto ao livro encontrado, caso haja.
