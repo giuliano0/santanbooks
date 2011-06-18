@@ -113,7 +113,7 @@ public class DataBase extends ComponentBase implements IDataBase, IRequires<ISQL
 			);
 			
 		} catch (SQLException erro) {
-			throw new SQLException("Erro na criacao das tabelas: " + erro.getMessage());
+			throw new SQLException("");
 		}
 	}
 	
