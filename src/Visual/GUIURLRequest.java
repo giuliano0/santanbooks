@@ -1,11 +1,13 @@
-package visual;
+package Visual;
 
 import java.awt.event.MouseEvent;
 
 /**
  * Opens a frame that requests the user an
  *  URL that a selected link will lead to
- * @author Jos� Am�rico Nabuco Leva Ferreira de Freitas
+ *  
+ * @author Jose Americo Nabuco Leva Ferreira de Freitas ra 105153
+ * @author Douglas Afonso de Sousa Costa ra 104825
  */
 public class GUIURLRequest extends javax.swing.JFrame {
     private GUIReviewEditor parent;
