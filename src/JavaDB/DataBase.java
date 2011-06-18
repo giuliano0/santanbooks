@@ -35,7 +35,6 @@ public class DataBase extends ComponentBase implements IDataBase, IRequires<ISQL
 		driver = "org.apache.derby.jdbc.EmbeddedDriver";
 	}
 
-	@Override
 	public void connect(ISQLStatements stt) {
 		this.stt = stt;
 		stt.setBd("jdbc:derby:db;create=true;collation=TERRITORY_BASED:PRIMARY");
@@ -81,7 +80,6 @@ public class DataBase extends ComponentBase implements IDataBase, IRequires<ISQL
 					"bookISBN VARCHAR(100) NOT NULL, " +
 					"content VARCHAR(255) NOT NULL, " +
 					"publishingDate DATE NOT NULL)"
-					/*"FOREIGN KEY(username, isbn))"*/
 			);
 
 			/* Creates table review */
@@ -93,7 +91,6 @@ public class DataBase extends ComponentBase implements IDataBase, IRequires<ISQL
 					"content VARCHAR(10000) NOT NULL, " +
 					"publishingDate DATE NOT NULL, " +
 					"title VARCHAR(100) NOT NULL)"
-					/*"FOREIGN KEY(username, isbn))"*/
 			);
 
 			/* Creates table rating */
@@ -105,7 +102,6 @@ public class DataBase extends ComponentBase implements IDataBase, IRequires<ISQL
 					"bookReview INT, " +
 					"value INT NOT NULL," +
 					"type INT NOT NULL)"
-					/*"FOREIGN KEY(username, isbn, review))"*/
 			);
 			
 			/* Creates table SessionData */
@@ -114,7 +110,6 @@ public class DataBase extends ComponentBase implements IDataBase, IRequires<ISQL
 					"(username VARCHAR(100) NOT NULL, " +
 					"status INT NOT NULL, " +
 					"lastLogin DATE NOT NULL, PRIMARY KEY(username))"
-					/*"FOREIGN KEY(username, isbn, review))"*/
 			);
 			
 		} catch (SQLException erro) {
@@ -122,7 +117,7 @@ public class DataBase extends ComponentBase implements IDataBase, IRequires<ISQL
 		}
 	}
 	
-	/* Método temporário. Até pq não é vantagem poder sair excluindo tudo */
+	/* metodo para deleção das tabelas do banco */
 	public void dropAllTables(){
 		try{
 			stt.executeStatement("DROP TABLE users");

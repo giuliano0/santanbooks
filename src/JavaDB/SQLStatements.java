@@ -81,7 +81,6 @@ public class SQLStatements extends ComponentBase implements ISQLStatements {
 	public void insert(String table, String values) throws SQLException{
 		try {
 			String columns = getColumns(table);
-			//executeStatement("INSERT INTO " + table + " VALUES (" + values + ")");
 			executeStatement("INSERT INTO " + table + columns + " VALUES (" + values + ")");
 		} catch (SQLException erro) {
 			throw new SQLException("Erro na insercao em " + table + ": " + erro.getMessage());

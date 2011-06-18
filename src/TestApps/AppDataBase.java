@@ -1,6 +1,5 @@
 package TestApps;
 
-import java.io.FileNotFoundException;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.util.Vector;
@@ -161,12 +160,7 @@ public class AppDataBase {
 		b3.setAuthors("Stewart");
 		b3.setDescription("Equacoes diferencias ordinarias, transformadas, séries, sistemas, PVC");
 		b3.setEdition("5");
-		try {
-			b3.setImagePath("//images/books/ed-boyce.jpeg");
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		b3.setImagePath("//images/books/ed-boyce.jpeg");
 		b3.setPublisher("atica");
 		dataEdicao = new Date((2002-1970)* MILI_SECONDS_PER_YEAR + 7 * MILI_SECONDS_PER_MONTH);
 		try {
@@ -186,12 +180,7 @@ public class AppDataBase {
 		b2.setAuthors("Stewart");
 		b2.setDescription("Derivadas parcias, gradiente, Integrais múltiplas");
 		b2.setEdition("7");
-		try {
-			b2.setImagePath("//images/books/calc2-stewart.jpeg");
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		b2.setImagePath("//images/books/calc2-stewart.jpeg");
 		b2.setPublisher("Thompson");
 		dataEdicao = new Date((2004-1970)* MILI_SECONDS_PER_YEAR + 7 * MILI_SECONDS_PER_MONTH);
 		try {
@@ -209,12 +198,7 @@ public class AppDataBase {
 		b1.setAuthors("Stewart");
 		b1.setDescription("Limite, derivada, integral");
 		b1.setEdition("3");
-		try {
-			b1.setImagePath("//images/books/calc1-stewart.jpeg");
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		b1.setImagePath("//images/books/calc1-stewart.jpeg");
 		b1.setPublisher("Thompson");
 		Date dataEdicao = new Date((1997-1970)* MILI_SECONDS_PER_YEAR + 5 * MILI_SECONDS_PER_MONTH);
 		try {
