@@ -34,14 +34,14 @@ public class SearchEngineTest {
 					InterfaceType.REQUIRED);
 			/* Conecta o SQLStatements no DataBase */
 			connectStatements.connect(stt);
-
+	
 			// Teste de normalização de chave
 			String testKey = "No espanhol, existe tanto o ene comum como 'la enhe', ñ.\n" + 
 			"Ö jardinêro é Gëzúïs, è às árvrezes çômõs nózès.\n" + 
 			"Não sei onde diabos usar ò, nem ù, nem â, nem ä, nem ì, nem î, muito menos ù e û, mas e daí? Foda-se!";
 			
 			SearchEngine se = new SearchEngine();
-			testKey = se.keyNormalize(testKey);
+			//testKey = se.keyNormalize(testKey);
 			
 			System.out.println(testKey);
 			// Fim do teste de normalização de chave
@@ -50,8 +50,8 @@ public class SearchEngineTest {
 			// Simula um not found da página de livro, como por exemplo, qdo eh acessada com um ISBN inexistente.
 			try {
 				throw new BookNotFoundException();
-			} catch (BookNotFoundException e) {
-				// TODO Auto-generated catch block
+			}
+			catch (BookNotFoundException e) {
 				System.out.println();
 				System.out.println("Peguei uma exception, chefe, saca só:");
 				System.out.println(e.getMessage());
@@ -60,21 +60,24 @@ public class SearchEngineTest {
 			
 			// Teste da extração de tags
 			String phrase = "Equações Diferenciais Elementares e, Problemas. de Valores de Contorno!? ? Alguém";
-			String tags[] = se.extractTags(phrase);
+			//String tags[] = se.extractTags(phrase);
 			Book[] books = se.search(phrase);
-			System.out.print("{");
-			for (int i = 0; i < tags.length; i++)
-				if (i == tags.length - 1) System.out.print(tags[i]);
-				else System.out.print(tags[i] + ", ");
-			System.out.println("}");
+			
+			for (Book b : books) {
+				System.out.println(b.getName());
+			}
+			//System.out.print("{");
+			//for (int i = 0; i < tags.length; i++)
+				//if (i == tags.length - 1) System.out.print(tags[i]);
+				//else System.out.print(tags[i] + ", ");
+			//System.out.println("}");
 			// Fim do teste de extração de tags
-			} catch (ContextException e1) {
-				// TODO Auto-generated catch block
+			}
+			catch (ContextException e1) {
 				e1.printStackTrace();
-		} catch (FactoryException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+			} catch (FactoryException e) {
+				e.printStackTrace();
+			}
 	}
 
 }
