@@ -43,6 +43,7 @@ public class GUIComment extends JPanel{
 	private JToggleButton visible;
 	private SpringLayout layout;
 	private JPanel me;
+	private Santanbooks parent;
 	
 	private JButton cancelar, salvar;
 	
@@ -51,7 +52,8 @@ public class GUIComment extends JPanel{
 	/**
 	 * Configura o painel
 	 */
-	public GUIComment(){
+	public GUIComment(Santanbooks p){
+		parent = p;
 		layout = new SpringLayout();
 		setLayout(layout);
 		me = this;
@@ -85,7 +87,20 @@ public class GUIComment extends JPanel{
 	 * Configura o painel de acordo com os dados da review.
 	 * @param arg0
 	 */
-	public void setComment(Comment arg0) {
+	public void setComment(Comment arg0, String ISBN) {
+		if(arg0 == null){
+			comment = new Comment();
+			comment.setUsername(parent.getUser().getName());
+			try {
+				comment.setPublishingDate(new java.util.Date());
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			comment.setBookISBN(ISBN);
+			comment.setContent(new String());
+			comment.setVisibility(true);
+		}
+		
 		comment=arg0;
 		user.setText("by "+arg0.getUsername());
 		date.setText(arg0.getPublishingDate().toString());
@@ -268,14 +283,14 @@ public class GUIComment extends JPanel{
 		rev.setVisibility(true);
 		rev.setContent("O Umamão é uma base de perguntas e respostas expandida e melhorada constantemente por acadêmicos e profissionais. Temos orgulho de produzir conteúdo de qualidade.");
 		
-		GUIComment guirev = new GUIComment();
+	/*	GUIComment guirev = new GUIComment();
 		guirev.setComment(rev);
 		
 		JFrame frame = new JFrame();
 		frame.add(guirev);
 		frame.setVisible(true);
 		frame.setSize(500, 250);
-
+*/
 	}
 
 }
