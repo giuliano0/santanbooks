@@ -236,9 +236,13 @@ public class GUIReview extends JFrame{
 					factory.registerPrototype(GUIReviewEditor.class);
 					IGUIReviewEditor editor = factory.createInstance(
 							 "<http://purl.org/dcc/Visual.GUIReviewEditor>");
-					editor.setReview(review.getContent());
+					editor.setReview("test");
 					editor.setPai(me);
 					editor.setVisible(true);
+					
+					Review r = new Review();
+					r.setContent("fadsfasd");
+					setReview(r);
 					
 				} catch (ContextException e) {
 					e.printStackTrace();

@@ -37,7 +37,7 @@ public class SessionManagerLoggedIn extends javax.swing.JPanel implements MouseL
         helloLabel.setBounds(620, 10, 100, 14);
 
         editProfileLabel.setForeground(new java.awt.Color(0, 0, 255));
-        editProfileLabel.setText("Edite seu perfil");
+        editProfileLabel.setText("Exibir perfil");
         editProfileLabel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         add(editProfileLabel);
         editProfileLabel.setBounds(620, 30, 80, 14);
