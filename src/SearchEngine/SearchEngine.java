@@ -294,6 +294,7 @@ public class SearchEngine extends ComponentBase implements ISearchEngine, IRecep
 	
 	private ArrayList<String> mergeString(ArrayList<String> s1, ArrayList<String> s2) {
 		ArrayList<String> strings = new ArrayList<String>();
+		if (s1.size() == 0) for (String s : s2) strings.add(s);
 		for (String s : s1) if (s2.contains(s)) strings.add(s);
 		return strings;
 	}
@@ -310,6 +311,7 @@ public class SearchEngine extends ComponentBase implements ISearchEngine, IRecep
 			temp.add(keyNormalize(b.getAuthors()));
 			temp.add(keyNormalize(b.getDescription()));
 			temp.add(keyNormalize(b.getPublisher()));
+		
 		}
 		this.tags = temp.toArray(new String[temp.size()]);
 	}
