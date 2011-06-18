@@ -13,6 +13,8 @@ import Classes.User;
 import Exceptions.InvalidArgumentException;
 import Interfaces.IBusinessObject;
 import Interfaces.IDataBase;
+import Interfaces.INotifyU;
+import Interfaces.ISearchEngine;
 import anima.annotation.Component;
 import anima.component.IRequires;
 import anima.component.base.ComponentBase;
@@ -26,8 +28,9 @@ import anima.component.base.ComponentBase;
 @Component(id = "<http://purl.org/dcc/DataBase.BusinessObject>", 
 		provides = { "<http://purl.org/dcc/Interfaces.IBusinessObject>"},
 		requires= { "<http://purl.org/dcc/Interfaces.IDataBase>" })
-public class BusinessObject extends ComponentBase implements IBusinessObject, IRequires<IDataBase> {
+public class BusinessObject extends ComponentBase implements IBusinessObject, IRequires<IDataBase>, INotifyU {
 	private IDataBase db;
+	private ISearchEngine se;
 	
 	private enum RatingType {
 		BOOK, REVIEW
@@ -63,8 +66,9 @@ public class BusinessObject extends ComponentBase implements IBusinessObject, IR
 				
 		Vector<String> where = new Vector<String>();
 		where.add("isbn = '" + isbn + "'");
-
-		return db.deleteDataBook(where);
+		boolean success = db.deleteDataBook(where);
+		se.update();
+		return success;
 	}
 
 	@Override
@@ -238,8 +242,9 @@ public class BusinessObject extends ComponentBase implements IBusinessObject, IR
 				insertReview(review);
 			}
 		}
-		
-		return db.insertData(book);
+		boolean success = db.insertData(book);
+		se.update();
+		return success;
 	}
 
 	@Override
@@ -718,8 +723,10 @@ public class BusinessObject extends ComponentBase implements IBusinessObject, IR
 		
 		Vector<String> where = new Vector<String>();
 		where.add("isbn = '" + book.getISBN() + "'");
-
-		return db.updateData(book, where);
+		
+		boolean success = db.updateData(book, where);
+		se.update();
+		return success;
 	}
 
 	@Override
@@ -831,6 +838,10 @@ public class BusinessObject extends ComponentBase implements IBusinessObject, IR
 		}
 				
 		return 0;
+	}
+
+	public void sign(ISearchEngine se) {
+		this.se = se;		
 	}
 
 }
