@@ -520,7 +520,7 @@ public class DataBase extends ComponentBase implements IDataBase, IRequires<ISQL
 	
 	public Vector<Object> getVectorComment(Comment c){
 		Vector<Object> v = new Vector<Object>();
-		v.add(c.getID());
+		//v.add(c.getID());
 		v.add(c.getUsername());
 		v.add(c.getBookISBN());  
 		v.add(c.getContent());
@@ -530,7 +530,7 @@ public class DataBase extends ComponentBase implements IDataBase, IRequires<ISQL
 
 	public Vector<Object> getVectorSetComment(Comment c){
 		Vector<Object> v = new Vector<Object>();
-		v.add("id = '" + c.getID() + "'");
+		//v.add("id = '" + c.getID() + "'");
 		v.add("username = '" + c.getUsername() + "'");
 		v.add("bookISBN = '" + c.getBookISBN() + "'"); 
 		v.add("content = '" + c.getContent() + "'");
@@ -646,7 +646,7 @@ public class DataBase extends ComponentBase implements IDataBase, IRequires<ISQL
 	
 	public Vector<Object> getVectorReview(Review r){
 		Vector<Object> v = new Vector<Object>();
-		v.add(r.getID());
+		//v.add(r.getID());
 		v.add(r.getUsername());
 		v.add(r.getBookISBN());
 		v.add(r.getBookName());
@@ -658,7 +658,7 @@ public class DataBase extends ComponentBase implements IDataBase, IRequires<ISQL
 
 	public Vector<Object> getVectorSetReview(Review r){
 		Vector<Object> v = new Vector<Object>();
-		v.add("id = '" + r.getID() + "'");
+		//v.add("id = '" + r.getID() + "'");
 		v.add("username = '" + r.getUsername() + "'");
 		v.add("bookISBN = '" + r.getBookISBN() + "'");
 		v.add("bookName = '" + r.getBookName() + "'");
@@ -768,7 +768,7 @@ public class DataBase extends ComponentBase implements IDataBase, IRequires<ISQL
 
 	public Vector<Object> getVectorRating(Rating r){
 		Vector<Object> v = new Vector<Object>();
-		v.add(r.getID() + "'");
+		//v.add(r.getID() + "'");
 		v.add(r.getUsername());
 		v.add(r.getBookISBN());
 		v.add(r.getBookReview());
@@ -779,7 +779,7 @@ public class DataBase extends ComponentBase implements IDataBase, IRequires<ISQL
 
 	public Vector<Object> getVectorSetRating(Rating r){
 		Vector<Object> v = new Vector<Object>();
-		v.add("id = '" + r.getID() + "'");
+		//v.add("id = '" + r.getID() + "'");
 		v.add("username = '" + r.getUsername() + "'");
 		v.add("bookISBN = '" + r.getBookISBN() + "'");
 		v.add("bookReview = '" + r.getBookReview() + "'");

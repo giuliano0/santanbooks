@@ -33,8 +33,7 @@ public interface ISQLStatements extends ISupports{
 	public void update(String table, String set, String where)
 			throws SQLException;
 
-	@SuppressWarnings("unchecked")
-	public String mountValuesStatement(Vector v);
+	public String mountValuesStatement(Vector<Object> v);
 
 	public String mountSelectStatement(Vector<String> select);
 
@@ -42,7 +41,6 @@ public interface ISQLStatements extends ISupports{
 
 	public String mountOrderStatement(Vector<String> order);
 
-	@SuppressWarnings("unchecked")
-	public String mountSetStatement(Vector v);
+	public String mountSetStatement(Vector<Object> v);
 
 }

@@ -7,10 +7,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Vector;
 
+import Interfaces.ISQLStatements;
 import anima.annotation.Component;
 import anima.component.base.ComponentBase;
-
-import Interfaces.ISQLStatements;
 
 /**
  * Metodos auxiliares e de sintaxe de comandos SQL.
@@ -27,37 +26,22 @@ public class SQLStatements extends ComponentBase implements ISQLStatements {
 		bd = "jdbc:derby:db;create=true";
 	}
 
-	/* (non-Javadoc)
-	 * @see JavaDB.ISQLStatements#getDriver()
-	 */
 	public String getDriver() {
 		return driver;
 	}
 
-	/* (non-Javadoc)
-	 * @see JavaDB.ISQLStatements#setDriver(java.lang.String)
-	 */
 	public void setDriver(String driver) {
 		this.driver = driver;
 	}
 
-	/* (non-Javadoc)
-	 * @see JavaDB.ISQLStatements#getBd()
-	 */
 	public String getBd() {
 		return bd;
 	}
 
-	/* (non-Javadoc)
-	 * @see JavaDB.ISQLStatements#setBd(java.lang.String)
-	 */
 	public void setBd(String bd) {
 		this.bd = bd;
 	}
 
-	/* (non-Javadoc)
-	 * @see JavaDB.ISQLStatements#executeStatement(java.lang.String)
-	 */
 	public void executeStatement(String statement) throws SQLException{
 		try{
 			Class.forName(driver);
@@ -75,9 +59,6 @@ public class SQLStatements extends ComponentBase implements ISQLStatements {
 		}
 	}
 	
-	/* (non-Javadoc)
-	 * @see JavaDB.ISQLStatements#querryStatement(java.lang.String)
-	 */
 	public ResultSet querryStatement(String statement) throws SQLException{
 		ResultSet r = null;
 		try{
@@ -97,20 +78,27 @@ public class SQLStatements extends ComponentBase implements ISQLStatements {
 		return r;
 	}
 
-	/* (non-Javadoc)
-	 * @see JavaDB.ISQLStatements#insert(java.lang.String, java.lang.String)
-	 */
 	public void insert(String table, String values) throws SQLException{
 		try {
-			executeStatement("INSERT INTO " + table + " VALUES (" + values + ")");
+			String columns = getColumns(table);
+			//executeStatement("INSERT INTO " + table + " VALUES (" + values + ")");
+			executeStatement("INSERT INTO " + table + columns + " VALUES (" + values + ")");
 		} catch (SQLException erro) {
 			throw new SQLException("Erro na insercao em " + table + ": " + erro.getMessage());
 		}
 	}
-
-	/* (non-Javadoc)
-	 * @see JavaDB.ISQLStatements#delete(java.lang.String, java.lang.String)
-	 */
+	
+	private String getColumns(String table){
+		String s = "";
+		if(table.equals("comment"))
+			s = " (username, bookISBN, content, publishingDate) ";
+		else if(table.equals("review"))
+			s = " (username, bookISBN, bookName, content, publishingDate, title) ";
+		else if(table.equals("rating"))
+			s = " (username, bookISBN, bookReview, value, type) ";
+		return s;
+	}
+	
 	public void delete(String table, String where) throws SQLException{
 		try {
 			executeStatement("DELETE FROM " + table + " " + where);
@@ -119,9 +107,6 @@ public class SQLStatements extends ComponentBase implements ISQLStatements {
 		}
 	}
 	
-	/* (non-Javadoc)
-	 * @see JavaDB.ISQLStatements#update(java.lang.String, java.lang.String, java.lang.String)
-	 */
 	public void update(String table, String set, String where) throws SQLException{
 		try {
 			executeStatement("UPDATE " + table + " SET " + set + where);
@@ -130,11 +115,7 @@ public class SQLStatements extends ComponentBase implements ISQLStatements {
 		}
 	}
 
-	/* (non-Javadoc)
-	 * @see JavaDB.ISQLStatements#mountValuesStatement(java.util.Vector)
-	 */
-	@SuppressWarnings("unchecked")
-	public String mountValuesStatement(Vector v) {
+	public String mountValuesStatement(Vector<Object> v) {
 		String values = new String();
 		for(int i = 0; i < v.size(); i++){
 			if(i != v.size() - 1)
@@ -151,9 +132,6 @@ public class SQLStatements extends ComponentBase implements ISQLStatements {
 		return values;
 	}
 
-	/* (non-Javadoc)
-	 * @see JavaDB.ISQLStatements#mountSelectStatement(java.util.Vector)
-	 */
 	public String mountSelectStatement(Vector<String> select) {
 		String s = "SELECT ";
 		if(select != null){
@@ -170,9 +148,6 @@ public class SQLStatements extends ComponentBase implements ISQLStatements {
 		return s;
 	}
 
-	/* (non-Javadoc)
-	 * @see JavaDB.ISQLStatements#mountWhereStatement(java.util.Vector)
-	 */
 	public String mountWhereStatement(Vector<String> where) {
 		String w = "";
 		if(where != null){
@@ -187,9 +162,6 @@ public class SQLStatements extends ComponentBase implements ISQLStatements {
 		return w;
 	}
 
-	/* (non-Javadoc)
-	 * @see JavaDB.ISQLStatements#mountOrderStatement(java.util.Vector)
-	 */
 	public String mountOrderStatement(Vector<String> order) {
 		String o = "";
 		if(order != null){
@@ -204,11 +176,7 @@ public class SQLStatements extends ComponentBase implements ISQLStatements {
 		return o;
 	}
 
-	/* (non-Javadoc)
-	 * @see JavaDB.ISQLStatements#mountSetStatement(java.util.Vector)
-	 */
-	@SuppressWarnings("unchecked")
-	public String mountSetStatement(Vector v) {
+	public String mountSetStatement(Vector<Object> v) {
 		String set = new String();
 		for(int i = 0; i < v.size(); i++){
 			if(i != v.size() - 1)

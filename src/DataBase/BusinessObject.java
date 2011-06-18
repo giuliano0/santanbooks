@@ -812,6 +812,6 @@ public class BusinessObject extends ComponentBase implements IBusinessObject, IR
 		}
 		comment.setUsername(username);
 		comment.setVisibility(true);
-		return false;
+		return insertComment(comment);
 	}	
 }
