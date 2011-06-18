@@ -159,28 +159,27 @@ public class SearchEngine extends ComponentBase implements ISearchEngine, IRecep
 		    }
 		}
 		
-		/*		Arrays.sort(livros, 
-		new Comparator<Book>() {  
-			public int compare(Book b1, Book b2) { 
-				Vector<String> select = new Vector<String>();
-				select.add("value");
-
-				Vector<String> where = new Vector<String>();
-				where.add("bookISBN = '" + b1.getISBN() + "'");
-
-				Vector<String> order = new Vector<String>();
-				order.add("value");
-				float bb1 = b1.getRating()*b1.getRating()*dataBase.queryRating(select, where, order).length;
-				
-				where.clear();
-				where.add("bookISBN = '" + b2.getISBN() + "'");
-				float bb2 = b2.getRating()*b2.getRating()*dataBase.queryRating(select, where, order).length;
-			    return bb1 < bb2 ? 1 : (bb1 > bb2 ? -1 : 0);
-			}
-		} 
-	);
-*/		
-
+/*		Arrays.sort(myBooks, 
+			new Comparator<Book>() {  
+				public int compare(Book b1, Book b2) { 
+					Vector<String> select = new Vector<String>();
+					select.add("value");
+	
+					Vector<String> where = new Vector<String>();
+					where.add("bookISBN = '" + b1.getISBN() + "'");
+	
+					Vector<String> order = new Vector<String>();
+					order.add("value");
+					float bb1 = b1.getRating()*b1.getRating()*dataBase.queryRating(select, where, order).length;
+					
+					where.clear();
+					where.add("bookISBN = '" + b2.getISBN() + "'");
+					float bb2 = b2.getRating()*b2.getRating()*dataBase.queryRating(select, where, order).length;
+				    return bb1 < bb2 ? 1 : (bb1 > bb2 ? -1 : 0);
+				}
+			} 
+		);
+*/
 		return myBooks;
 	}
 
