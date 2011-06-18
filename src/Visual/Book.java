@@ -18,6 +18,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 
+import Classes.Comment;
 import Exceptions.InvalidArgumentException;
 
 /**
@@ -56,7 +57,14 @@ public class Book extends javax.swing.JPanel {
 
         //publisher5.setText(livroAtual.getAllReviews().toString());
         
-        //publisher6.setText(livroAtual.getAllComments().toString());
+        Comment[] comments = parent.getBusinessObject().selectCommentsBookByIsbn(livroAtual.getISBN());
+        String comment = "<html><body>";
+        if(comments != null ) {
+        	for(int i = 0; i < comments.length; i++)
+        		comment += comments[i].getUsername() + " - " + comments[i].getContent() + "<br>";        
+        }
+        comment += "</body></html>";
+        publisher6.setText(comment);
     }
     
     /** This method is called from within the constructor to
@@ -347,7 +355,16 @@ public class Book extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {
-    	
+    	try{
+    		if (parent.getBusinessObject().insertComment(livroAtual.getISBN(),
+    				 jTextField1.getText(), parent.getUser().getUsername()))
+    			JOptionPane.showMessageDialog(null, "Comentário inserido com sucesso!");
+    		else
+    			JOptionPane.showMessageDialog(null, "Erro ao inserir um comentário!");
+    	}
+    	catch (Exception e){
+    		JOptionPane.showMessageDialog(null, e.getMessage());
+    	}
     }
  
     // Variables declaration - do not modify//GEN-BEGIN:variables
