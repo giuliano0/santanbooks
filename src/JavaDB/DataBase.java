@@ -38,7 +38,7 @@ public class DataBase extends ComponentBase implements IDataBase, IRequires<ISQL
 	@Override
 	public void connect(ISQLStatements stt) {
 		this.stt = stt;
-		stt.setBd("jdbc:derby:db;create=true;collation=Collation Latin1_General_CI_AI");
+		stt.setBd("jdbc:derby:db;create=true;collation=TERRITORY_BASED:PRIMARY");
 		stt.setDriver("org.apache.derby.jdbc.EmbeddedDriver");
 	}
 	
