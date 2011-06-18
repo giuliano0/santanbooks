@@ -55,17 +55,6 @@ public class SearchEngine implements ISearchEngine, IRequires<IDataBase> { // TO
 		return resultadoFinal;
 	}
 
-	@Override
-	public Book[] searchByAuthor(String key) {
-		return searchByParameter(key, "authors");
-	}
-
-	@Override
-	public Book searchByISBN(String key) {
-		//String nKey = keyNormalize(key);
-		return null;
-	}
-
 	private Book[] mergeByBooks(Book[] b1, Book[] b2) {
 		ArrayList<Book> books = new ArrayList<Book>();
 		for (Book b : b1) 
