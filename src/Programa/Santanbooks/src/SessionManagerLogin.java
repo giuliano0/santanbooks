@@ -45,12 +45,12 @@ public class SessionManagerLogin extends javax.swing.JPanel {
         setPreferredSize(new java.awt.Dimension(800, 50));
         setLayout(null);
 
-        loginTitle.setFont(new java.awt.Font("Tahoma", 1, 16));
+        loginTitle.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
         loginTitle.setText("Login");
         add(loginTitle);
         loginTitle.setBounds(470, 10, 50, 20);
 
-        userLabel.setFont(new java.awt.Font("Tahoma", 0, 10));
+        userLabel.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         userLabel.setText("Usuário");
         add(userLabel);
         userLabel.setBounds(530, 0, 70, 14);
@@ -71,7 +71,7 @@ public class SessionManagerLogin extends javax.swing.JPanel {
         add(pwordText);
         pwordText.setBounds(640, 15, 90, 15);
 
-        pwordLabel.setFont(new java.awt.Font("Tahoma", 0, 10));
+        pwordLabel.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         pwordLabel.setText("Password");
         add(pwordLabel);
         pwordLabel.setBounds(640, 0, 43, 13);
@@ -127,7 +127,7 @@ public class SessionManagerLogin extends javax.swing.JPanel {
 }//GEN-LAST:event_pwordTextActionPerformed
 
     private void signInButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signInButtonActionPerformed
-        // TODO add your handling code here:
+
 }//GEN-LAST:event_signInButtonActionPerformed
 
     private void logoPanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoPanelMouseClicked

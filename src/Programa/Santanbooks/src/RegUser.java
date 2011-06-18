@@ -91,10 +91,10 @@ public class RegUser extends javax.swing.JPanel {
         add(collegeLabel1);
         collegeLabel1.setBounds(188, 337, 62, 14);
 
-        personalTitle1.setFont(new java.awt.Font("DejaVu Sans 13 13", 1, 13));
+        personalTitle1.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         personalTitle1.setText("Informações pessoais:");
         add(personalTitle1);
-        personalTitle1.setBounds(189, 55, 140, 16);
+        personalTitle1.setBounds(189, 55, 180, 16);
 
         nameLabel1.setText("Nome");
         add(nameLabel1);
@@ -156,10 +156,10 @@ public class RegUser extends javax.swing.JPanel {
         add(yearLabel1);
         yearLabel1.setBounds(513, 368, 19, 14);
 
-        loginTitle1.setFont(new java.awt.Font("DejaVu Sans 13 13", 1, 13));
+        loginTitle1.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         loginTitle1.setText("Informações de login :");
         add(loginTitle1);
-        loginTitle1.setBounds(189, 400, 142, 18);
+        loginTitle1.setBounds(189, 400, 180, 16);
 
         yearText1.setText("YYYY");
         yearText1.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -173,10 +173,10 @@ public class RegUser extends javax.swing.JPanel {
         add(yearText1);
         yearText1.setBounds(538, 365, 50, 20);
 
-        academicTitle1.setFont(new java.awt.Font("DejaVu Sans 13 13", 1, 13)); // NOI18N
+        academicTitle1.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         academicTitle1.setText("Informações acadêmicas :");
         add(academicTitle1);
-        academicTitle1.setBounds(189, 304, 166, 18);
+        academicTitle1.setBounds(189, 304, 200, 16);
 
         descriptionText1.setColumns(20);
         descriptionText1.setLineWrap(true);
@@ -186,10 +186,10 @@ public class RegUser extends javax.swing.JPanel {
         add(jScrollPane2);
         jScrollPane2.setBounds(188, 197, 400, 96);
 
-        title1.setFont(new java.awt.Font("SansSerif 24 24", 1, 24));
+        title1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         title1.setText("Registre sua conta");
         add(title1);
-        title1.setBounds(282, 11, 214, 32);
+        title1.setBounds(282, 11, 250, 29);
         add(userText1);
         userText1.setBounds(315, 432, 217, 20);
 

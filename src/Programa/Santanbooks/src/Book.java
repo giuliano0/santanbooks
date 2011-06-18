@@ -59,58 +59,56 @@ public class Book extends javax.swing.JPanel {
         jButton2 = new javax.swing.JButton();
         pageTitle = new javax.swing.JLabel();
 
-        setBackground(new java.awt.Color(240, 240, 240));
         setMaximumSize(new java.awt.Dimension(800, 600));
         setMinimumSize(new java.awt.Dimension(800, 600));
 
-        jPanel1.setBackground(new java.awt.Color(240, 240, 240));
         jPanel1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
-        year.setFont(new java.awt.Font("Lucida Grande 13 Negrito 13 Negrito", 1, 13)); // NOI18N
+        year.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         year.setText("Ano:");
 
-        authors.setFont(new java.awt.Font("Lucida Grande 13 Negrito 13 Negrito", 1, 13)); // NOI18N
+        authors.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         authors.setText("Autores:");
 
-        edition.setFont(new java.awt.Font("Lucida Grande 13 Negrito 13 Negrito", 1, 13)); // NOI18N
+        edition.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         edition.setText("Edição:");
 
-        isbn.setFont(new java.awt.Font("Lucida Grande 13 Negrito 13 Negrito", 1, 13)); // NOI18N
+        isbn.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         isbn.setText("ISBN:");
 
-        publisher.setFont(new java.awt.Font("Lucida Grande 13 Negrito 13 Negrito", 1, 13)); // NOI18N
+        publisher.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         publisher.setText("Editora:");
 
-        description.setFont(new java.awt.Font("Lucida Grande 13 Negrito 13 Negrito", 1, 13)); // NOI18N
+        description.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         description.setText("Resumo:");
 
         jLabel1.setText("<EDIÇÃO>");
 
         jLabel2.setText("<ANO>");
 
-        publisher1.setFont(new java.awt.Font("Lucida Grande 13 Negrito 13 Negrito", 0, 12)); // NOI18N
+        publisher1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         publisher1.setText("<EDITORA>");
 
-        publisher3.setFont(new java.awt.Font("Lucida Grande 13 Negrito 13 Negrito", 0, 12)); // NOI18N
+        publisher3.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         publisher3.setText("<AUTORES>");
 
-        publisher4.setFont(new java.awt.Font("Lucida Grande 13 Negrito 13 Negrito", 0, 12)); // NOI18N
+        publisher4.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         publisher4.setText("<RESUMO>");
 
         jLabel4.setText("<ISBN>");
 
         jLabel3.setText("<IMAGEM DO LIVRO>");
 
-        description1.setFont(new java.awt.Font("Lucida Grande 13 Negrito 13 Negrito", 1, 13)); // NOI18N
+        description1.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         description1.setText("Avaliações");
 
-        publisher5.setFont(new java.awt.Font("Lucida Grande 13 Negrito 13 Negrito", 0, 12)); // NOI18N
+        publisher5.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         publisher5.setText("<AVALIAÇÕES>");
 
-        description2.setFont(new java.awt.Font("Lucida Grande 13 Negrito 13 Negrito", 1, 13));
+        description2.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         description2.setText("Comentários");
 
-        publisher6.setFont(new java.awt.Font("Lucida Grande 13 Negrito 13 Negrito", 0, 12));
+        publisher6.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         publisher6.setText("<COMENTÁRIOS>");
 
         jButton1.setText("Adicionar avaliação");
@@ -132,7 +130,7 @@ public class Book extends javax.swing.JPanel {
             }
         });
 
-        pageTitle.setFont(new java.awt.Font("SansSerif 24 Plano", 1, 24)); // NOI18N
+        pageTitle.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         pageTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         pageTitle.setText("<NOME DO LIVRO>");
 
@@ -170,13 +168,11 @@ public class Book extends javax.swing.JPanel {
                                                     .addComponent(description1)
                                                     .addGap(18, 18, 18)
                                                     .addComponent(jButton1))))
-                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                                 .addComponent(publisher6)
-                                                .addGap(154, 154, 154))
-                                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                                .addComponent(description2)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                                .addComponent(description2))
+                                            .addGap(154, 154, 154)))
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addComponent(jLabel3)
                                         .addGap(46, 46, 46)
@@ -184,8 +180,7 @@ public class Book extends javax.swing.JPanel {
                                             .addGroup(jPanel1Layout.createSequentialGroup()
                                                 .addComponent(description)
                                                 .addGap(18, 18, 18)
-                                                .addComponent(publisher4)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 5, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addComponent(publisher4))
                                             .addGroup(jPanel1Layout.createSequentialGroup()
                                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                                     .addComponent(authors)
@@ -203,7 +198,7 @@ public class Book extends javax.swing.JPanel {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(285, 285, 285)
                         .addComponent(pageTitle)))
-                .addContainerGap(101, Short.MAX_VALUE))
+                .addContainerGap(103, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -250,7 +245,7 @@ public class Book extends javax.swing.JPanel {
                         .addComponent(publisher6)
                         .addGap(26, 26, 26)
                         .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(130, Short.MAX_VALUE))
+                .addContainerGap(147, Short.MAX_VALUE))
         );
 
         jScrollPane2.setViewportView(jPanel1);

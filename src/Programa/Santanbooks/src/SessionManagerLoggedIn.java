@@ -65,7 +65,7 @@ public class SessionManagerLoggedIn extends javax.swing.JPanel {
             }
         });
         add(addBookLabel);
-        addBookLabel.setBounds(670, 30, 90, 14);
+        addBookLabel.setBounds(660, 30, 90, 14);
 
         logoPanel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Santanbooks_Small.png"))); // NOI18N
         logoPanel.setText("jLabel1");
@@ -83,8 +83,14 @@ public class SessionManagerLoggedIn extends javax.swing.JPanel {
 
         exitLabel.setForeground(new java.awt.Color(0, 0, 255));
         exitLabel.setText("Sair");
+        exitLabel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        exitLabel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                exitLabelMouseClicked(evt);
+            }
+        });
         add(exitLabel);
-        exitLabel.setBounds(760, 30, 18, 14);
+        exitLabel.setBounds(760, 30, 40, 14);
     }// </editor-fold>//GEN-END:initComponents
 
     private void logoPanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoPanelMouseClicked
@@ -98,6 +104,10 @@ public class SessionManagerLoggedIn extends javax.swing.JPanel {
     private void addBookLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addBookLabelMouseClicked
         parent.changePanel(Santanbooks.PANEL_ADD_BOOK);
     }//GEN-LAST:event_addBookLabelMouseClicked
+
+    private void exitLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_exitLabelMouseClicked
+        parent.setLoginPanel(Santanbooks.SESSION_NOT_LOGGED);
+    }//GEN-LAST:event_exitLabelMouseClicked
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel addBookLabel;
