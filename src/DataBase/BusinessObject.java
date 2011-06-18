@@ -813,5 +813,24 @@ public class BusinessObject extends ComponentBase implements IBusinessObject, IR
 		comment.setUsername(username);
 		comment.setVisibility(true);
 		return insertComment(comment);
-	}	
+	}
+
+	@Override
+	public int sessionCountRows() {
+		Vector<String> select = new Vector<String>();
+		select.add("username");
+		
+		Vector<String> where = null;
+		Vector<String> order = null;
+
+		// realizando a consulta
+		SessionData[] result = db.querySessionData(select, where, order);
+
+		if (result != null) {
+			return result.length;
+		}
+				
+		return 0;
+	}
+
 }

@@ -127,6 +127,8 @@ public interface IBusinessObject extends ISupports {
 	//select
 	public SessionData selectSession(String user);
 	
+	public int sessionCountRows();
+	
 	//insert
 	public boolean insertSession(SessionData session);
 	
