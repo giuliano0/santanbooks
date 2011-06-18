@@ -116,6 +116,8 @@ public class GUIReview extends JFrame{
 	 * @param arg0
 	 */
 	public void setReview(Review arg0) {
+		if (arg0 == null) return;
+		
 		review=arg0;
 		user.setText("by "+arg0.getUsername());
 		date.setText(arg0.getPublishingDate().toString());

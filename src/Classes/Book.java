@@ -166,8 +166,9 @@ public class Book implements ICommentable, IRateable, IReviewable {
 		if (commentID == 0)
 			throw new InvalidArgumentException();
 
-		if (reviews == null)
-			throw new NullPointerException("O liro não contém comentários.");
+		/*if (reviews == null)
+			throw new NullPointerException("O liro não contém comentários.");*/
+		if (reviews == null) return null;
 		
 		for(int i = 0; i < reviews.length; i++)
 			if(reviews[i].ID == commentID)
@@ -190,7 +191,8 @@ public class Book implements ICommentable, IRateable, IReviewable {
 	 * @throws InvalidArgumentException, NullPointerException 
 	 */
 	public Review getReview(int id) throws InvalidArgumentException, NullPointerException {
-		if (reviews == null) throw new NullPointerException("Nenhuma review encontrada.");
+		//if (reviews == null) throw new NullPointerException("Nenhuma review encontrada.");
+		if (reviews == null) return null;
 		
 		for(int i = 0; i < reviews.length; i++) {
 			if(reviews[i].ID == id)
