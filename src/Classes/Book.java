@@ -70,8 +70,7 @@ public class Book implements ICommentable, IRateable, IReviewable {
 	
 	// ESPERA um caminho válido, senão joga o lixo no... lixo, e seta como null
 	public void setImagePath(String value) {
-		if(!new File(value).exists()) imagePath = "";
-		else imagePath = value;
+		imagePath = value;
 	}
 	
 	/* 

@@ -15,6 +15,8 @@ import java.awt.event.MouseListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
 
 import Exceptions.InvalidArgumentException;
 
@@ -49,12 +51,12 @@ public class Book extends javax.swing.JPanel {
         publisher4.setText(livroAtual.getDescription());
 
         jLabel4.setText(livroAtual.getISBN());
-
-        jLabel3 = new JLabel(new ImageIcon(livroAtual.getImagePath()));
+        
+        jLabel3.setIcon(new ImageIcon(livroAtual.getImagePath()));
 
         //publisher5.setText(livroAtual.getAllReviews().toString());
-
-         //publisher6.setText(livroAtual.getAllComments().toString());
+        
+        //publisher6.setText(livroAtual.getAllComments().toString());
     }
     
     /** This method is called from within the constructor to
@@ -131,7 +133,7 @@ public class Book extends javax.swing.JPanel {
 
         jLabel4.setText("<ISBN>");
 
-        jLabel3.setText("<IMAGEM DO LIVRO>");
+        //jLabel3.setText("<IMAGEM DO LIVRO>");
 
         description1.setFont(new java.awt.Font("Lucida Grande 13 Negrito 13 Negrito", 1, 13)); // NOI18N
         description1.setText("Avaliacoes");
