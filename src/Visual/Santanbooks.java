@@ -1,15 +1,24 @@
 package Visual;
 
-import javax.swing.*;
-import java.awt.*;
+import java.awt.CardLayout;
 
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.UIManager;
+
+import Classes.User;
+import Interfaces.IBusinessObject;
+import Interfaces.IDataBase;
+import Interfaces.ISQLStatements;
+import Interfaces.ISearchEngine;
+import Interfaces.ISessionManager;
+import SearchEngine.IReceptacleBussinessObject;
+import SearchEngine.IReceptacleDataBase;
 import anima.component.IRequires;
 import anima.component.InterfaceType;
 import anima.factory.IGlobalFactory;
 import anima.factory.context.componentContext.ComponentContextFactory;
-import Interfaces.*;
-import SearchEngine.IReceptacleBussinessObject;
-import SearchEngine.IReceptacleDataBase;
 
 public class Santanbooks extends JFrame {
     public static final String PANEL_HOME = "home";
@@ -30,6 +39,7 @@ public class Santanbooks extends JFrame {
 	private ISearchEngine se;
 	private ISessionManager sm;
 	private IDataBase db;
+	private User usuarioLogado;
 
     public Santanbooks() {
         super("Santanbooks");
@@ -140,6 +150,10 @@ public class Santanbooks extends JFrame {
 					"<http://purl.org/dcc/Interfaces.IBusinessObject>",
 					InterfaceType.REQUIRED);
 			
+			
+			
+			
+			
 			IReceptacleDataBase connectStatements4 = se.queryInterface(
 					"<http://purl.org/dcc/Interfaces.IDataBase>",
 					InterfaceType.REQUIRED);
@@ -178,7 +192,18 @@ public class Santanbooks extends JFrame {
 	public IDataBase getDatabase() {
 		return this.db;
 	}
-
+	
+	public void setUser(User u) {
+		this.usuarioLogado = u;
+	}
+	public User getUser() {
+		return this.usuarioLogado;
+	}
+	
+	public JPanel getSM() {
+		return this.sessionManager;
+	}
+	
     public static void main(String args[]) {
         Santanbooks novo = new Santanbooks();
     }

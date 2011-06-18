@@ -10,7 +10,10 @@ package Visual;
  * Created on 14/06/2011, 16:13:26
  */
 
+import java.sql.Date;
+
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -266,9 +269,26 @@ public class AddBook extends javax.swing.JPanel {
         descriptionField.setText(null);
         imageField.setText(null);    }//GEN-LAST:event_clearButtonActionPerformed
 
-    private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_saveButtonActionPerformed
+    private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {
+        Classes.Book novo = new Classes.Book();
+        
+        novo.setAuthors(authorsField.getText());
+        novo.setDescription(descriptionField.getText());
+        novo.setEdition(editionField.getText());
+        novo.setImagePath(imageField.getText());
+        novo.setISBN(isbnField.getText());
+        novo.setName(titleField.getText());
+        novo.setPublisher(publisherField.getText());
+        novo.setPublishingDate(new Date(Integer.parseInt(yearField.getText()), 1,1));
+        
+        if (this.parent.getBusinessObject().insertBook(novo)) {
+        	JOptionPane.showMessageDialog(null, "Livro inserido com sucesso!");
+        	this.parent.lastPanel();
+        }
+        else
+        	JOptionPane.showMessageDialog(null, "Erro ao inserir um livro!");
+        
+    }
 
     private void isbnFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_isbnFieldActionPerformed
         // TODO add your handling code here:

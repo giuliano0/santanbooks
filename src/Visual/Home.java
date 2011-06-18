@@ -64,6 +64,8 @@ public class Home extends javax.swing.JPanel implements ActionListener, KeyListe
 		if (!this.searchField.getText().equals("")) {
 			((Results)parent.getPanel(Santanbooks.PANEL_RESULTS)).setBooks(
 					parent.getSearchEngine().search(searchField.getText()));
+			
+			((Results)parent.getPanel(Santanbooks.PANEL_RESULTS)).updateForm();
 			this.parent.changePanel(Santanbooks.PANEL_RESULTS);
 		}
 	}

@@ -1,6 +1,9 @@
 package Visual;
 
-public class Results extends javax.swing.JPanel {
+import java.awt.event.*;
+import javax.swing.*;
+
+public class Results extends javax.swing.JPanel implements ActionListener {
     private Santanbooks parent;
     private Classes.Book[] resultados;
 
@@ -38,6 +41,7 @@ public class Results extends javax.swing.JPanel {
         jButton1.setMargin(new java.awt.Insets(2, 7, 2, 7));
         jPanel1.add(jButton1);
         jButton1.setBounds(680, 50, 100, 30);
+        jButton1.addActionListener(this);
 
         jLabel1.setFont(new java.awt.Font("Book Antiqua", 0, 18));
         jLabel1.setText("Pesquisar novamente:");
@@ -68,9 +72,11 @@ public class Results extends javax.swing.JPanel {
         jButton3.setMargin(new java.awt.Insets(2, 7, 2, 7));
         jPanel1.add(jButton3);
         jButton3.setBounds(640, 540, 140, 25);
+        jButton3.addActionListener(this);
 
         jButton4.setFont(new java.awt.Font("Book Antiqua", 0, 12));
         jButton4.setText("Voltar");
+        jButton4.addActionListener(this);
         jPanel1.add(jButton4);
         jButton4.setBounds(20, 540, 63, 25);
 
@@ -80,6 +86,13 @@ public class Results extends javax.swing.JPanel {
     
     public void setBooks(Classes.Book[] search) {
     	this.resultados = search;
+    }
+    
+    public void updateForm() {
+    	jList1.setModel(new javax.swing.AbstractListModel() {
+    		public int getSize() { return resultados.length; }
+            public Object getElementAt(int i) { return resultados[i].getName(); }
+        });
     }
 
     private javax.swing.JButton jButton1;
@@ -91,4 +104,28 @@ public class Results extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField jTextField1;
+
+	public void actionPerformed(ActionEvent e) {
+		if (((JButton)e.getSource()).getText().equals("Pesquisar")) {
+			if (!this.jTextField1.getText().equals("")) {
+				((Results)parent.getPanel(Santanbooks.PANEL_RESULTS)).setBooks(
+						parent.getSearchEngine().search(jTextField1.getText()));
+				
+				((Results)parent.getPanel(Santanbooks.PANEL_RESULTS)).updateForm();
+				this.parent.changePanel(Santanbooks.PANEL_RESULTS);
+			}
+		}
+		
+		if (((JButton)e.getSource()).getText().equals("Adicionar novo livro")) {
+			if (this.jList1.getSelectedIndex() != 0) {
+				this.parent.changePanel(Santanbooks.PANEL_ADD_BOOK);
+			}
+		}
+		
+		if (((JButton)e.getSource()).getText().equals("Voltar")) {
+			this.parent.lastPanel();
+		}
+			
+		
+	}
 }

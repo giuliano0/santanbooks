@@ -206,9 +206,59 @@ public class ShowUser extends javax.swing.JPanel {
                 .addGap(36, 36, 36)
                 .addComponent(jButton1))
         );
-    }// </editor-fold>//GEN-END:initComponents
+    }
+    
+    public void updateForm() {
+        jLabel1.setFont(new java.awt.Font("SansSerif", 1, 24)); // NOI18N
+        jLabel1.setText(this.parent.getUser().getName());
 
-    // Variables declaration - do not modify//GEN-BEGIN:variables
+        descriptionLabel1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        descriptionLabel1.setText("Sobre " + this.parent.getUser().getName() + ":");
+
+        nameLabel2.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        nameLabel2.setText("Nome:");
+
+        personalTitle2.setFont(new java.awt.Font("DejaVu Sans 13 13", 1, 13)); // NOI18N
+        personalTitle2.setText("Informações pessoais:");
+
+        academicTitle1.setFont(new java.awt.Font("DejaVu Sans 13 13", 1, 13)); // NOI18N
+        academicTitle1.setText("Informações acadêmicas :");
+
+        bdayLabel1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        bdayLabel1.setText("Nascimento:");
+
+        emailLabel1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        emailLabel1.setText("E-mail:");
+
+        courseLabel1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        courseLabel1.setText("Curso:");
+
+        collegeLabel1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        collegeLabel1.setText("Universidade:");
+
+        genderLabel1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        genderLabel1.setText("Sexo:");
+
+        yearLabel1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        yearLabel1.setText("Ano:");
+
+        jLabel2.setText(this.parent.getUser().getUsername());
+
+        jLabel3.setText(this.parent.getUser().getGender() ? "M" : "F");
+
+        jLabel4.setText(this.parent.getUser().getBirthday().toString());
+
+        jLabel5.setText(this.parent.getUser().getEmail());
+
+        jLabel6.setText(this.parent.getUser().getSelfDescription());
+
+        jLabel7.setText(this.parent.getUser().getCollege());
+
+        jLabel8.setText(this.parent.getUser().getCourse());
+
+        jLabel9.setText(this.parent.getUser().getIngressYear().toString());
+    }
+
     private javax.swing.JLabel academicTitle1;
     private javax.swing.JLabel bdayLabel1;
     private javax.swing.JLabel collegeLabel1;

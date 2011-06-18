@@ -1,20 +1,11 @@
 package Visual;
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 
-/*
- * LoggedIn.java
- *
- * Created on 18/06/2011, 01:15:58
- */
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import javax.swing.*;
 
-/**
- *
- * @author Renato
- */
-public class SessionManagerLoggedIn extends javax.swing.JPanel {
+
+public class SessionManagerLoggedIn extends javax.swing.JPanel implements MouseListener {
     private Santanbooks parent;
     /** Creates new form LoggedIn */
     public SessionManagerLoggedIn(Santanbooks p) {
@@ -41,7 +32,7 @@ public class SessionManagerLoggedIn extends javax.swing.JPanel {
         setPreferredSize(new java.awt.Dimension(800, 50));
         setLayout(null);
 
-        helloLabel.setText("Olá, <USERNAME>!");
+        helloLabel.setText("Olá, ");
         add(helloLabel);
         helloLabel.setBounds(620, 10, 100, 14);
 
@@ -50,12 +41,14 @@ public class SessionManagerLoggedIn extends javax.swing.JPanel {
         editProfileLabel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         add(editProfileLabel);
         editProfileLabel.setBounds(620, 30, 80, 14);
+        editProfileLabel.addMouseListener(this);
 
         addBookLabel.setForeground(new java.awt.Color(0, 0, 255));
         addBookLabel.setText("Adicionar livro");
         addBookLabel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         add(addBookLabel);
         addBookLabel.setBounds(720, 30, 70, 14);
+        addBookLabel.addMouseListener(this);
 
         logoPanel.setIcon(new javax.swing.ImageIcon(getClass().getResource("Santanbooks_Small.png"))); // NOI18N
         logoPanel.setText("jLabel1");
@@ -82,4 +75,41 @@ public class SessionManagerLoggedIn extends javax.swing.JPanel {
     private javax.swing.JLabel helloLabel;
     private javax.swing.JLabel logoPanel;
     // End of variables declaration//GEN-END:variables
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		if (((JLabel)e.getSource()).getText().equals("Adicionar livro"))
+			this.parent.changePanel(Santanbooks.PANEL_ADD_BOOK);
+		else {
+			((ShowUser)this.parent.getPanel(Santanbooks.PANEL_PROFILE)).updateForm();
+			this.parent.changePanel(Santanbooks.PANEL_PROFILE);
+		}
+	}
+	
+	public void updateForm() {
+		helloLabel.setText("Olá, " + this.parent.getUser().getName());
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
 }
