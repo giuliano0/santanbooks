@@ -1,4 +1,7 @@
 package Visual;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
@@ -14,7 +17,7 @@ package Visual;
  *
  * @author Renato
  */
-public class ShowUser extends javax.swing.JPanel {
+public class ShowUser extends javax.swing.JPanel implements ActionListener {
     private Santanbooks parent;
     /** Creates new form ShowUser */
     public ShowUser(Santanbooks p) {
@@ -106,6 +109,7 @@ public class ShowUser extends javax.swing.JPanel {
         jLabel9.setText("<ANO>");
 
         jButton1.setText("Voltar");
+        jButton1.addActionListener(this);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -280,4 +284,8 @@ public class ShowUser extends javax.swing.JPanel {
     private javax.swing.JLabel personalTitle2;
     private javax.swing.JLabel yearLabel1;
     // End of variables declaration//GEN-END:variables
+	@Override
+	public void actionPerformed(ActionEvent arg0) {
+		this.parent.changePanel(Santanbooks.PANEL_HOME);
+	}
 }
