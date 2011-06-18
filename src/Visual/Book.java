@@ -13,7 +13,10 @@ package Visual;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-import javax.swing.JFileChooser;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+
+import Exceptions.InvalidArgumentException;
 
 /**
  *
@@ -47,7 +50,7 @@ public class Book extends javax.swing.JPanel {
 
         jLabel4.setText(livroAtual.getISBN());
 
-        jLabel3.setText(livroAtual.getImagePath());
+        jLabel3 = new JLabel(new ImageIcon(livroAtual.getImagePath()));
 
         //publisher5.setText(livroAtual.getAllReviews().toString());
 
@@ -150,6 +153,18 @@ public class Book extends javax.swing.JPanel {
 				GUIReview guiReview = new GUIReview();
 				
 				
+				
+				try {
+					guiReview.setReview(livroAtual.getReview(0));
+				} catch (NullPointerException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (InvalidArgumentException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+				guiReview.setVisible(true);
 				
 			}
 
