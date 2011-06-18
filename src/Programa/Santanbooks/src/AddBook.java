@@ -32,7 +32,6 @@ public class AddBook extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        saveButton = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         publisherField = new javax.swing.JFormattedTextField();
         year = new javax.swing.JLabel();
@@ -50,25 +49,21 @@ public class AddBook extends javax.swing.JPanel {
         descriptionField = new javax.swing.JTextArea();
         titleField = new javax.swing.JFormattedTextField();
         authorsField = new javax.swing.JFormattedTextField();
-        image = new javax.swing.JLabel();
         imageField = new javax.swing.JFormattedTextField();
+        saveButton = new javax.swing.JButton();
         clearButton = new javax.swing.JButton();
+        imageField1 = new javax.swing.JFormattedTextField();
+        image = new javax.swing.JLabel();
+        image1 = new javax.swing.JLabel();
         pageTitle = new javax.swing.JLabel();
 
+        setBackground(new java.awt.Color(240, 240, 240));
         setMaximumSize(new java.awt.Dimension(800, 600));
         setMinimumSize(new java.awt.Dimension(800, 600));
         setPreferredSize(new java.awt.Dimension(800, 600));
         setLayout(null);
 
-        saveButton.setText("Salvar");
-        saveButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                saveButtonActionPerformed(evt);
-            }
-        });
-        add(saveButton);
-        saveButton.setBounds(386, 464, 63, 23);
-
+        jPanel1.setBackground(new java.awt.Color(240, 240, 240));
         jPanel1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jPanel1.setPreferredSize(new java.awt.Dimension(600, 330));
 
@@ -82,19 +77,19 @@ public class AddBook extends javax.swing.JPanel {
             }
         });
 
-        authors.setFont(new java.awt.Font("Lucida Grande 13 Negrito", 0, 12));
+        authors.setFont(new java.awt.Font("Lucida Grande 13 Negrito", 0, 12)); // NOI18N
         authors.setText("Autores");
 
         edition.setFont(new java.awt.Font("Lucida Grande 13 Negrito 13 Negrito", 0, 12));
         edition.setText("Edição");
 
-        title.setFont(new java.awt.Font("Lucida Grande 13 Negrito", 0, 12));
+        title.setFont(new java.awt.Font("Lucida Grande 13 Negrito", 0, 12)); // NOI18N
         title.setText("Título");
 
-        isbn.setFont(new java.awt.Font("Lucida Grande 13 Negrito", 0, 12));
+        isbn.setFont(new java.awt.Font("Lucida Grande 13 Negrito", 0, 12)); // NOI18N
         isbn.setText("ISBN");
 
-        publisher.setFont(new java.awt.Font("Lucida Grande 13 Negrito 13 Negrito", 0, 12));
+        publisher.setFont(new java.awt.Font("Lucida Grande 13 Negrito 13 Negrito", 0, 12)); // NOI18N
         publisher.setText("Editora");
 
         yearField.setText("YYYY");
@@ -107,7 +102,7 @@ public class AddBook extends javax.swing.JPanel {
             }
         });
 
-        description.setFont(new java.awt.Font("Lucida Grande 13 Negrito 13 Negrito 13 Negrito", 0, 12));
+        description.setFont(new java.awt.Font("Lucida Grande 13 Negrito 13 Negrito 13 Negrito", 0, 12)); // NOI18N
         description.setText("Resumo");
 
         isbnField.setText("xxx-x-xxx-xxxxx-x");
@@ -130,46 +125,69 @@ public class AddBook extends javax.swing.JPanel {
         descriptionField.setRows(5);
         jScrollPane1.setViewportView(descriptionField);
 
-        image.setFont(new java.awt.Font("Lucida Grande 13 Negrito 13 Negrito 13 Negrito 13 Negrito", 0, 12));
+        saveButton.setText("Salvar");
+        saveButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                saveButtonActionPerformed(evt);
+            }
+        });
+
+        clearButton.setText("Limpar");
+        clearButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                clearButtonActionPerformed(evt);
+            }
+        });
+
+        image.setFont(new java.awt.Font("Lucida Grande 13 Negrito 13 Negrito 13 Negrito 13 Negrito", 0, 12)); // NOI18N
         image.setText("Imagem");
+
+        image1.setFont(new java.awt.Font("Lucida Grande 13 Negrito 13 Negrito 13 Negrito 13 Negrito", 0, 12)); // NOI18N
+        image1.setText("Categorias");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(195, 195, 195)
+                .addComponent(clearButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(saveButton)
+                .addContainerGap(237, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(image)
-                            .addComponent(title))
-                        .addComponent(authors)
-                        .addComponent(description))
+                    .addComponent(image1)
+                    .addComponent(image)
+                    .addComponent(description)
                     .addComponent(publisher)
-                    .addComponent(isbn))
+                    .addComponent(isbn)
+                    .addComponent(authors)
+                    .addComponent(title))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(imageField, javax.swing.GroupLayout.DEFAULT_SIZE, 409, Short.MAX_VALUE)
+                        .addComponent(imageField, javax.swing.GroupLayout.DEFAULT_SIZE, 363, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(imageButton))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 492, Short.MAX_VALUE)
-                    .addComponent(authorsField, javax.swing.GroupLayout.DEFAULT_SIZE, 492, Short.MAX_VALUE)
-                    .addComponent(titleField, javax.swing.GroupLayout.DEFAULT_SIZE, 492, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 476, Short.MAX_VALUE)
+                    .addComponent(authorsField, javax.swing.GroupLayout.DEFAULT_SIZE, 476, Short.MAX_VALUE)
+                    .addComponent(titleField, javax.swing.GroupLayout.DEFAULT_SIZE, 476, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(isbnField, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(publisherField, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 150, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 130, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(edition)
                             .addComponent(year))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(yearField)
-                            .addComponent(editionField, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(32, 32, 32))
+                            .addComponent(editionField, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(imageField1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 476, Short.MAX_VALUE))
+                .addGap(35, 35, 35))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -185,9 +203,9 @@ public class AddBook extends javax.swing.JPanel {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(isbnField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(isbn)
                     .addComponent(editionField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(edition))
+                    .addComponent(edition)
+                    .addComponent(isbn))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(publisherField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -196,33 +214,32 @@ public class AddBook extends javax.swing.JPanel {
                     .addComponent(publisher))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(description)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(24, 24, 24)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(description))
+                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(image)
                     .addComponent(imageButton)
-                    .addComponent(imageField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
+                    .addComponent(imageField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(image))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(imageField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(image1))
+                .addGap(25, 25, 25)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(clearButton)
+                    .addComponent(saveButton))
+                .addGap(12, 12, 12))
         );
 
         add(jPanel1);
-        jPanel1.setBounds(100, 100, 600, 330);
-
-        clearButton.setText("Limpar");
-        clearButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                clearButtonActionPerformed(evt);
-            }
-        });
-        add(clearButton);
-        clearButton.setBounds(313, 464, 63, 23);
+        jPanel1.setBounds(100, 100, 600, 470);
 
         pageTitle.setFont(new java.awt.Font("SansSerif 24 Plano", 1, 24)); // NOI18N
         pageTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         pageTitle.setText("Adicionar novo livro");
         add(pageTitle);
-        pageTitle.setBounds(300, 50, 234, 32);
+        pageTitle.setBounds(270, 50, 251, 30);
     }// </editor-fold>//GEN-END:initComponents
 
     private void yearFieldFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_yearFieldFocusGained
@@ -285,8 +302,10 @@ public class AddBook extends javax.swing.JPanel {
     private javax.swing.JLabel edition;
     private javax.swing.JFormattedTextField editionField;
     private javax.swing.JLabel image;
+    private javax.swing.JLabel image1;
     private javax.swing.JButton imageButton;
     private javax.swing.JFormattedTextField imageField;
+    private javax.swing.JFormattedTextField imageField1;
     private javax.swing.JLabel isbn;
     private javax.swing.JFormattedTextField isbnField;
     private javax.swing.JPanel jPanel1;
