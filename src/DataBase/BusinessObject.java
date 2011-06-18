@@ -13,7 +13,6 @@ import Classes.User;
 import Exceptions.InvalidArgumentException;
 import Interfaces.IBusinessObject;
 import Interfaces.IDataBase;
-import Interfaces.INotifyU;
 import Interfaces.ISearchEngine;
 import anima.annotation.Component;
 import anima.component.IRequires;
@@ -22,6 +21,7 @@ import anima.component.base.ComponentBase;
 /**
  * Esse componente disponibilza metodos principais para consulta no banco de dados,
  * fazendo com que a consulta, insercao, delecao, e atualizacao seja mais simples de se fazer
+ * 
  * @author Mauricio Bertanha and Rodrigo Elizeu Goncalves
  */
 
@@ -35,9 +35,11 @@ public class BusinessObject extends ComponentBase implements IBusinessObject, IR
 	private enum RatingType {
 		BOOK, REVIEW
 	}
-	
 
-	@Override
+    /**
+     * Conecta com o banco de dados 
+     * @param dataBase IDataBase
+     */
 	public void connect(IDataBase dataBase) {
 		db = dataBase;
 		try {
@@ -50,12 +52,20 @@ public class BusinessObject extends ComponentBase implements IBusinessObject, IR
 		
 	}
 
-	@Override
+    /**
+     * Deleta um livro pela entidade
+     * @param book Book
+     * @return boolean 
+     */
 	public boolean deleteBook(Book book) {
 		return deleteBook(book.getISBN());
 	}
 
-	@Override
+    /**
+     * Deleta um livro pelo isbn 
+     * @param isbn String
+     * @return boolean 
+     */
 	public boolean deleteBook(String isbn) {	
 		deleteCommentsByIsbn(isbn);
 		deleteRatings(isbn);
@@ -70,12 +80,20 @@ public class BusinessObject extends ComponentBase implements IBusinessObject, IR
 		return success;
 	}
 
-	@Override
+	/**
+     * Deleta um comentario pela entidade 
+     * @param comment Comment
+     * @return boolean
+     */
 	public boolean deleteComment(Comment comment) {
 		return deleteComment(comment.getID());
 	}
 
-	@Override
+	/**
+     * Deleta um comentario pelo ID 
+     * @param commentID int
+     * @return boolean 
+     */
 	public boolean deleteComment(int commentID) {
 		Vector<String> where = new Vector<String>();
 		where.add("id = " + commentID);
@@ -83,12 +101,20 @@ public class BusinessObject extends ComponentBase implements IBusinessObject, IR
 		return db.deleteDataComment(where);
 	}
 
-	@Override
+	/**
+     * Deleta um comentario pela entidade de um livro 
+     * @param book Book
+     * @return boolean 
+     */
 	public boolean deleteComments(Book book) {
 		return deleteCommentsByIsbn(book.getISBN());
 	}
 
-	@Override
+	/**
+     * Deleta um comentario pelo isbn de um livro 
+     * @param isbn String
+     * @return boolean 
+     */
 	public boolean deleteCommentsByIsbn(String isbn) {
 		Vector<String> where = new Vector<String>();
 		where.add("bookISBN = '" + isbn + "'");
@@ -96,7 +122,11 @@ public class BusinessObject extends ComponentBase implements IBusinessObject, IR
 		return db.deleteDataComment(where);
 	}
 
-	@Override
+	/**
+     * Deleta um comentario pelo nome do usuario 
+     * @param username String
+     * @return boolean 
+     */
 	public boolean deleteCommentsByUser(String username) {
 		Vector<String> where = new Vector<String>();
 		where.add("username = '" + username + "'");
@@ -104,12 +134,20 @@ public class BusinessObject extends ComponentBase implements IBusinessObject, IR
 		return db.deleteDataComment(where);
 	}
 
-	@Override
+	/**
+     * Deleta um comentario pela entidade de um usuario
+     * @param user User
+     * @return boolean 
+     */
 	public boolean deleteCommentsByUser(User user) {
 		return deleteCommentsByUser(user.getUsername());
 	}
 
-	@Override
+	/**
+     * Deleta uma avaliacao pelo ID 
+     * @param ratingID int
+     * @return boolean 
+     */
 	public boolean deleteRating(int ratingID) {
 		Vector<String> where = new Vector<String>();
 		where.add("id = " + ratingID);
@@ -117,17 +155,29 @@ public class BusinessObject extends ComponentBase implements IBusinessObject, IR
 		return db.deleteDataRating(where);
 	}
 
-	@Override
+	/**
+     * Deleta uma avaliacao pela entidade 
+     * @param rating Rating
+     * @return boolean 
+     */
 	public boolean deleteRating(Rating rating) {
 		return deleteRating(rating.getID());
 	}
 
-	@Override
+	/**
+     * Deleta uma avaliacao pela entidade do livro 
+     * @param book Book
+     * @return boolean 
+     */
 	public boolean deleteRatings(Book book) {
 		return deleteRatings(book.getISBN());
 	}
 
-	@Override
+	/**
+     * Deleta uma avaliacao pelo isbn do livro
+     * @param isbn String
+     * @return boolean 
+     */
 	public boolean deleteRatings(String isbn) {
 		Vector<String> where = new Vector<String>();
 		where.add("bookISBN = '" + isbn + "'");
@@ -135,7 +185,11 @@ public class BusinessObject extends ComponentBase implements IBusinessObject, IR
 		return db.deleteDataRating(where);
 	}
 
-	@Override
+	/**
+     * Deleta uma avaliacao pelo nome do usuario 
+     * @param username String
+     * @return boolean 
+     */
 	public boolean deleteRatingsByUser(String username) {
 		Vector<String> where = new Vector<String>();
 		where.add("username = '" + username + "'");
@@ -143,12 +197,20 @@ public class BusinessObject extends ComponentBase implements IBusinessObject, IR
 		return db.deleteDataRating(where);
 	}
 
-	@Override
+	/**
+     * Deleta uma avaliacao pela entidade do usuario 
+     * @param user User
+     * @return boolean 
+     */
 	public boolean deleteRatingsByUser(User user) {
 		return deleteRatingsByUser(user.getUsername());
 	}
 
-	@Override
+	/**
+     * Deleta uma avaliacao pelo id da review 
+     * @param reviewID int
+     * @return boolean 
+     */
 	public boolean deleteRatingsForReview(int reviewID) {
 		Vector<String> where = new Vector<String>();
 		where.add("bookReview = " + reviewID);
@@ -156,12 +218,20 @@ public class BusinessObject extends ComponentBase implements IBusinessObject, IR
 		return db.deleteDataRating(where);
 	}
 
-	@Override
+	/**
+     * Deleta uma avaliacao pela entidade da review 
+     * @param review Review
+     * @return boolean 
+     */
 	public boolean deleteRatingsForReview(Review review) {
 		return deleteRatingsForReview(review.getID());
 	}
 
-	@Override
+	/**
+     * Deleta uma review pelo ID 
+     * @param reviewID int
+     * @return boolean 
+     */
 	public boolean deleteReview(int reviewID) {
 		Vector<String> where = new Vector<String>();
 		where.add("reviewID = '" + reviewID + "'");
@@ -169,17 +239,29 @@ public class BusinessObject extends ComponentBase implements IBusinessObject, IR
 		return db.deleteDataReview(where);
 	}
 
-	@Override
+	/**
+     * Deleta uma review pela entidade 
+     * @param review Review
+     * @return boolean 
+     */
 	public boolean deleteReview(Review review) {
 		return deleteReview(review.getID());
 	}
 
-	@Override
+	/**
+     * Deleta uma review pela entidade do livro 
+     * @param book Book
+     * @return boolean 
+     */
 	public boolean deleteReviews(Book book) {
 		return deleteReviews(book.getISBN());
 	}
 
-	@Override
+	/**
+     * Deleta uma review pelo isbn do livro 
+     * @param isbn String
+     * @return boolean 
+     */
 	public boolean deleteReviews(String isbn) {
 		Vector<String> where = new Vector<String>();
 		where.add("bookISBN = '" + isbn + "'");
@@ -187,7 +269,11 @@ public class BusinessObject extends ComponentBase implements IBusinessObject, IR
 		return db.deleteDataReview(where);
 	}
 
-	@Override
+	/**
+     * Deleta uma review pelo nome do usuario 
+     * @param username String
+     * @return boolean 
+     */
 	public boolean deleteReviewsByUser(String username) {
 		Vector<String> where = new Vector<String>();
 		where.add("username = '" + username + "'");
@@ -195,17 +281,29 @@ public class BusinessObject extends ComponentBase implements IBusinessObject, IR
 		return db.deleteDataReview(where);
 	}
 
-	@Override
+	/**
+     * Deleta uma review pela entidade do usuario 
+     * @param user User
+     * @return boolean 
+     */
 	public boolean deleteReviewsByUser(User user) {
 		return deleteReviewsByUser(user.getUsername());
 	}
 
-	@Override
+	/**
+     * Deleta uma sessao pela entidade 
+     * @param session SessionData
+     * @return boolean 
+     */
 	public boolean deleteSession(SessionData session) {
 		return deleteSession(session.getUsername());
 	}
 
-	@Override
+	/**
+     * Deleta uma sessao pelo nome do usuario 
+     * @param userName String
+     * @return boolean 
+     */
 	public boolean deleteSession(String username) {
 		Vector<String> where = new Vector<String>();
 		where.add("username = '" + username + "'");
@@ -213,7 +311,11 @@ public class BusinessObject extends ComponentBase implements IBusinessObject, IR
 		return db.deleteDataSessionData(where);
 	}
 
-	@Override
+	/**
+     * Deleta um usuario pelo nome 
+     * @param username String
+     * @return boolean 
+     */
 	public boolean deleteUser(String username) {
 		Vector<String> where = new Vector<String>();
 		where.add("username = '" + username + "'");
@@ -221,12 +323,20 @@ public class BusinessObject extends ComponentBase implements IBusinessObject, IR
 		return db.deleteDataUser(where);
 	}
 
-	@Override
+	/**
+     * Deleta um usuario pela entidade 
+     * @param user User
+     * @return boolean 
+     */
 	public boolean deleteUser(User user) {
 		return deleteUser(user.getUsername());
 	}
 
-	@Override
+	/**
+     * Insere um livro 
+     * @param book Book
+     * @return boolean 
+     */
 	public boolean insertBook(Book book) {
 		Comment[] comments = book.getAllComments();
 		if (comments != null) {
@@ -248,57 +358,96 @@ public class BusinessObject extends ComponentBase implements IBusinessObject, IR
 		return success;
 	}
 
-	@Override
+	/**
+     * Insere um comentario 
+     * @param comment Comment
+     * @return boolean 
+     */
 	public boolean insertComment(Comment comment) {
 		return db.insertData(comment);
 	}
 
-	@Override
+	/**
+     * Insere uma avaliacao 
+     * @param rating Rating
+     * @return boolean 
+     */
 	public boolean insertRating(Rating rating) {
 		return db.insertData(rating);
 	}
 
-	@Override
+	/**
+     * Insere uma review 
+     * @param review Review
+     * @return boolean 
+     */
 	public boolean insertReview(Review review) {
 		return db.insertData(review);
 	}
 
-	@Override
+	/**
+     * Insere uma sessao 
+     * @param session SessionData
+     * @return boolean 
+     */
 	public boolean insertSession(SessionData session) {
 		return db.insertData(session);
 	}
 
-	@Override
+	/**
+     * Insere um usuario 
+     * @param user User
+     * @return boolean 
+     */
 	public boolean insertUser(User user) {
 		return db.insertData(user);
 	}
 
-	@Override
+	/**
+     * Obtem todos os livros 
+     * @return Book[]
+     */
 	public Book[] selectAllBooks() {
 		return selectBooks(null, null, null);
 	}
 
-	@Override
+	/**
+     * Obtem todos os comentarios 
+     * @return Comment[]
+     */
 	public Comment[] selectAllComments() {
 		return selectComments(null, null, null);
 	}
 
-	@Override
+	/**
+     * Obtem todas avaliacoes 
+     * @return Rating[]
+     */
 	public Rating[] selectAllRatings() {
 		return selectRatings(null, null, null, null);
 	}
 
-	@Override
+	/**
+     * Obtem todas as reviews 
+     * @return Review[]
+     */
 	public Review[] selectAllReviews() {
 		return selectReviews(null, null, null);
 	}
 
-	@Override
+	/**
+     * Obtem todos os usuarios 
+     * @return User[]
+     */
 	public User[] selectAllUsers() {
 		return selectUsers(null, null, null);
 	}
 
-	@Override
+	/**
+     * Obtem o livro pelo isbn
+     * @param isbn String 
+     * @return Book[]
+     */
 	public Book selectBook(String isbn) {
 		Book[] books = selectBooks("isbn", isbn, "isbn");
 
@@ -309,6 +458,13 @@ public class BusinessObject extends ComponentBase implements IBusinessObject, IR
 		return null;
 	}
 
+	/**
+     * Obtem os livros pela coluna, pelo valor e ordenacao
+     * @param colunnName String
+     * @param value String
+     * @param orderBy String
+     * @return Book[]
+     */
 	private Book[] selectBooks(String colunnName, String value, String orderBy) {
 		Vector<String> select = new Vector<String>();
 		select.add("isbn");
@@ -350,17 +506,29 @@ public class BusinessObject extends ComponentBase implements IBusinessObject, IR
 		return result;
 	}
 
-	@Override
+	/**
+     * Obtem os livros pelos autores
+     * @param authors String
+     * @return Book[]
+     */
 	public Book[] selectBooksByAuthors(String authors) {
 		return selectBooks("authors", authors, "authors");
 	}
 
-	@Override
+	/**
+     * Obtem os livros pelos nomes
+     * @param name String
+     * @return Book[]
+     */
 	public Book[] selectBooksByName(String name) {
 		return selectBooks("name", name, "name");
 	}
 
-	@Override
+	/**
+     * Obtem o comentario pelo ID
+     * @param commentID int
+     * @return Comment
+     */
 	public Comment selectComment(int commentID) {
 		Comment[] comments = selectComments("id", commentID, "id");
 
@@ -371,6 +539,13 @@ public class BusinessObject extends ComponentBase implements IBusinessObject, IR
 		return null;
 	}
 
+	/**
+     * Obtem os comentarios pela coluna, pelo valor e ordenacao
+     * @param colunnName String
+     * @param value Object
+     * @param orderBy String
+     * @return Comment[]
+     */
 	private Comment[] selectComments(String colunnName, Object value,
 			String orderBy) {
 		Vector<String> select = new Vector<String>();
@@ -406,27 +581,47 @@ public class BusinessObject extends ComponentBase implements IBusinessObject, IR
 		return result;
 	}
 
-	@Override
+	/**
+     * Obtem os comentarios pela entidade do livro
+     * @param book Book
+     * @return Comment[]
+     */
 	public Comment[] selectCommentsBook(Book book) {
 		return selectCommentsBookByIsbn(book.getISBN());
 	}
 
-	@Override
+	/**
+     * Obtem os comentarios pelo isbn do livro
+     * @param isbn String
+     * @return Comment[]
+     */
 	public Comment[] selectCommentsBookByIsbn(String isbn) {
 		return selectComments("bookISBN", isbn, "bookISBN");
 	}
 
-	@Override
+	/**
+     * Obtem os comentarios pelo nome do usuario
+     * @param username String
+     * @return Comment[]
+     */
 	public Comment[] selectCommentsBookFromUser(String username) {
 		return selectComments("username", username, "username");
 	}
 
-	@Override
+	/**
+     * Obtem os comentarios pela entidade do usuario
+     * @param user User
+     * @return Comment[]
+     */
 	public Comment[] selectCommentsBookFromUser(User user) {
 		return selectCommentsBookFromUser(user.getUsername());
 	}
 
-	@Override
+	/**
+     * Obtem a avaliacao pelo ID
+     * @param ratingID int
+     * @return Rating
+     */
 	public Rating selectRating(int ratingID) {
 		Rating[] ratings = selectRatings("id", ratingID, "id", null);
 
@@ -437,12 +632,20 @@ public class BusinessObject extends ComponentBase implements IBusinessObject, IR
 		return null;
 	}
 
-	@Override
+	/**
+     * Obtem a avaliacao calculada pela entidade do livro
+     * @param book Book
+     * @return float
+     */
 	public float selectRatingCalculed(Book book) {
 		return selectRatingCalculed(book.getISBN());
 	}
 
-	@Override
+	/**
+     * Obtem a avaliacao calculada pelo ID da review
+     * @param reviewID int
+     * @return float
+     */
 	public float selectRatingCalculed(int reviewID) {
 
 		if (selectRatingsForReview(reviewID).length > 0) {
@@ -468,12 +671,20 @@ public class BusinessObject extends ComponentBase implements IBusinessObject, IR
 		return 0;
 	}
 
-	@Override
+	/**
+     * Obtem a avaliacao calculada pela entidade do review
+     * @param review Review
+     * @return float
+     */
 	public float selectRatingCalculed(Review review) {
 		return selectRatingCalculed(review.getID());
 	}
 
-	@Override
+	/**
+     * Obtem a avaliacao calculada pelo isbn do livro
+     * @param isbn String
+     * @return float
+     */
 	public float selectRatingCalculed(String isbn) {
 
 		if (selectRatings(isbn).length > 0) {
@@ -500,16 +711,31 @@ public class BusinessObject extends ComponentBase implements IBusinessObject, IR
 		return 0;
 	}
 
-	@Override
+	/**
+     * Obtem todas as avaliacao
+     * @return Rating[]
+     */
 	public Rating[] selectRatings(Book book) {
 		return selectRatings(book.getISBN());
 	}
 
-	@Override
+	/**
+     * Obtem as avaliacaos pelo isbn do livro
+     * @param isbn String
+     * @return Rating[]
+     */
 	public Rating[] selectRatings(String isbn) {
 		return selectRatings("bookISBN", isbn, "bookISBN", RatingType.BOOK);
 	}
 
+	/**
+     * Obtem as avaliacaos pela coluna, pelo valor, pela ordenacao e pelo tipo
+     * @param colunnName String
+     * @param value Object
+     * @param orderBy String
+     * @param type RatingType
+     * @return Rating[]
+     */
 	private Rating[] selectRatings(String colunnName, Object value,
 			String orderBy, RatingType type) {
 		Vector<String> select = new Vector<String>();
@@ -549,27 +775,47 @@ public class BusinessObject extends ComponentBase implements IBusinessObject, IR
 		return result;
 	}
 
-	@Override
+	/**
+     * Obtem as avaliacaos pelo nome do usuario
+     * @param username String
+     * @return Rating[]
+     */
 	public Rating[] selectRatingsByUser(String username) {
 		return selectRatings("username", username, "username", null);
 	}
 
-	@Override
+	/**
+     * Obtem as avaliacaos pela entidade do usuario
+     * @param user User
+     * @return Rating[]
+     */
 	public Rating[] selectRatingsByUser(User user) {
 		return selectRatingsByUser(user.getUsername());
 	}
 
-	@Override
+	/**
+     * Obtem as avaliacaos pelo id da review
+     * @param reviewID int
+     * @return Rating[]
+     */
 	public Rating[] selectRatingsForReview(int reviewID) {
 		return selectRatings("id", reviewID, "id", RatingType.REVIEW);
 	}
 
-	@Override
+	/**
+     * Obtem as avaliacaos pela entidade da review
+     * @param review Review
+     * @return Rating[]
+     */
 	public Rating[] selectRatingsForReview(Review review) {
 		return selectRatingsForReview(review.getID());
 	}
 
-	@Override
+	/**
+     * Obtem a review pelo ID
+     * @param reviewID int
+     * @return Review
+     */
 	public Review selectReview(int reviewID) {
 		Review[] reviews = selectReviews("id", reviewID, "id");
 
@@ -580,16 +826,31 @@ public class BusinessObject extends ComponentBase implements IBusinessObject, IR
 		return null;
 	}
 
-	@Override
+	/**
+     * Obtem as reviews pela entidade do livro
+     * @param book Book
+     * @return Review[]
+     */
 	public Review[] selectReviews(Book book) {
 		return selectReviews(book.getISBN());
 	}
 
-	@Override
+	/**
+     * Obtem as reviews pelo isbn do livro
+     * @param isbn String
+     * @return Review[]
+     */
 	public Review[] selectReviews(String isbn) {
 		return selectReviews("bookISBN", isbn, "bookISBN");
 	}
 
+	/**
+     * Obtem as reviews pela coluna, pelo valor e ordenacao
+     * @param colunnName String
+     * @param value Object
+     * @param orderBy String
+     * @return Review[]
+     */
 	private Review[] selectReviews(String colunnName, Object value,
 			String orderBy) {
 		Vector<String> select = new Vector<String>();
@@ -638,17 +899,29 @@ public class BusinessObject extends ComponentBase implements IBusinessObject, IR
 		return result;
 	}
 
-	@Override
+	/**
+     * Obtem as reviews pelo nome do usuario
+     * @param username String
+     * @return Review[]
+     */
 	public Review[] selectReviewsByUser(String username) {
 		return selectReviews("username", username, "username");
 	}
 
-	@Override
+	/**
+     * Obtem as reviews pela entidade do usuario
+     * @param user User
+     * @return Review[]
+     */
 	public Review[] selectReviewsByUser(User user) {
 		return selectReviewsByUser(user.getUsername());
 	}
 
-	@Override
+	/**
+     * Obtem a sessao do usuario
+     * @param username String
+     * @return SessionData
+     */
 	public SessionData selectSession(String username) {
 		Vector<String> select = new Vector<String>();
 		select.add("username");
@@ -673,7 +946,11 @@ public class BusinessObject extends ComponentBase implements IBusinessObject, IR
 		return null;
 	}
 
-	@Override
+	/**
+     * Obtem o usuario pelo nome
+     * @param username String
+     * @return User
+     */
 	public User selectUser(String username) {
 		User[] users = selectUsers("username", username, "username");
 
@@ -684,6 +961,13 @@ public class BusinessObject extends ComponentBase implements IBusinessObject, IR
 		return null;
 	}
 
+	/**
+     * Obtem os usuario pela coluna, pelo valor e pela ordenacao
+     * @param colunnName String
+     * @param value String
+     * @param orderBy String
+     * @return User[]
+     */
 	private User[] selectUsers(String colunnName, String value, String orderBy) {
 		Vector<String> select = new Vector<String>();
 		select.add("username");
@@ -718,7 +1002,11 @@ public class BusinessObject extends ComponentBase implements IBusinessObject, IR
 		return result;
 	}
 
-	@Override
+	/**
+     * Atualiza um livro
+     * @param book Book
+     * @return boolean
+     */
 	public boolean updateBook(Book book) {
 						
 		Comment[] comments = book.getAllComments();
@@ -746,7 +1034,11 @@ public class BusinessObject extends ComponentBase implements IBusinessObject, IR
 		return success;
 	}
 
-	@Override
+	/**
+     * Atualiza um comentario
+     * @param comment Comment
+     * @return boolean
+     */
 	public boolean updateComment(Comment comment) {
 		Vector<String> where = new Vector<String>();
 		where.add("id = " + comment.getID());
@@ -754,7 +1046,11 @@ public class BusinessObject extends ComponentBase implements IBusinessObject, IR
 		return db.updateData(comment, where);
 	}
 
-	@Override
+	/**
+     * Atualiza uma avaliacao
+     * @param rating Rating
+     * @return boolean
+     */
 	public boolean updateRating(Rating rating) {
 		Vector<String> where = new Vector<String>();
 		where.add("id = " + rating.getID());
@@ -762,7 +1058,11 @@ public class BusinessObject extends ComponentBase implements IBusinessObject, IR
 		return db.updateData(rating, where);
 	}
 
-	@Override
+	/**
+     * Atualiza uma review
+     * @param review Review
+     * @return boolean
+     */
 	public boolean updateReview(Review review) {
 		Vector<String> where = new Vector<String>();
 		where.add("id = " + review.getID());
@@ -770,7 +1070,11 @@ public class BusinessObject extends ComponentBase implements IBusinessObject, IR
 		return db.updateData(review, where);
 	}
 
-	@Override
+	/**
+     * Atualiza uma sessao
+     * @param session SessionData
+     * @return boolean
+     */
 	public boolean updateSession(SessionData session) {
 		Vector<String> where = new Vector<String>();
 		where.add("username = '" + session.getUsername() + "'");
@@ -778,7 +1082,11 @@ public class BusinessObject extends ComponentBase implements IBusinessObject, IR
 		return db.updateData(session, where);
 	}
 
-	@Override
+	/**
+     * Atualiza um usuario
+     * @param user User
+     * @return boolean
+     */
 	public boolean updateUser(User user) {
 		Vector<String> where = new Vector<String>();
 		where.add("id = '" + user.getUsername());
@@ -786,7 +1094,14 @@ public class BusinessObject extends ComponentBase implements IBusinessObject, IR
 		return db.updateData(user, where);
 	}
 
-	@Override
+	/**
+     * Insere uma review pelos campos
+     * @param isbn String
+     * @param title String
+     * @param content String
+     * @param username String
+     * @return boolean
+     */
 	public boolean insertReview(String isbn, String title, String content, String username) {
 		Date dataAtual = new Date(System.currentTimeMillis());
 		
@@ -800,7 +1115,13 @@ public class BusinessObject extends ComponentBase implements IBusinessObject, IR
 		return insertReview(review);
 	}
 
-	@Override
+	/**
+     * Insere uma avaliacao do livro pelos campos
+     * @param isbn String
+     * @param value int
+     * @param username String
+     * @return boolean
+     */
 	public boolean insertRating(String isbn, int value, String username) {
 		Rating rating = new Rating();
 		rating.setType(false);
@@ -810,7 +1131,13 @@ public class BusinessObject extends ComponentBase implements IBusinessObject, IR
 		return insertRating(rating);
 	}
 
-	@Override
+	/**
+     * Insere uma avaliacao do review pelos campos
+     * @param reviewID int
+     * @param value int
+     * @param username String
+     * @return boolean
+     */
 	public boolean insertRating(int reviewID, int value, String username) {
 		Rating rating = new Rating();
 		rating.setType(true);
@@ -820,7 +1147,13 @@ public class BusinessObject extends ComponentBase implements IBusinessObject, IR
 		return insertRating(rating);
 	}
 
-	@Override
+	/**
+     * Insere um comentario pelos campos
+     * @param isbn String
+     * @param content String
+     * @param username String
+     * @return boolean
+     */
 	public boolean insertComment(String isbn, String content, String username) {
 
 		Date dataAtual = new Date(System.currentTimeMillis());
@@ -839,7 +1172,10 @@ public class BusinessObject extends ComponentBase implements IBusinessObject, IR
 		return insertComment(comment);
 	}
 
-	@Override
+	/**
+     * Obtem numero de sessoes
+     * @return int
+     */
 	public int sessionCountRows() {
 		Vector<String> select = new Vector<String>();
 		select.add("username");
@@ -857,6 +1193,10 @@ public class BusinessObject extends ComponentBase implements IBusinessObject, IR
 		return 0;
 	}
 
+	/**
+     * Loga
+     * @param se ISearchEngine
+     */
 	public void sign(ISearchEngine se) {
 		this.se = se;		
 	}
