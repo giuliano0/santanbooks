@@ -9,6 +9,7 @@ import anima.factory.IGlobalFactory;
 import anima.factory.context.componentContext.ComponentContextFactory;
 import anima.factory.exception.FactoryException;
 import Classes.Book;
+import Classes.Comment;
 import Classes.User;
 import Interfaces.IBusinessObject;
 import Interfaces.IDataBase;
@@ -158,7 +159,20 @@ public class AppBusinessObjectExample {
 	}
 
 	public static void exemploComents(IBusinessObject businessObjectComponent) {
-		// TODO
+		businessObjectComponent.insertComment("978-85-233-0143-2", "livro bomm", "testuser");		
+		businessObjectComponent.insertComment("978-85-233-0143-2", "livro bomm2342", "testuser");
+		businessObjectComponent.insertComment("978-85-233-0143-2", "livro bomm2342234", "testuser");
+		
+		Comment[] result = businessObjectComponent.selectCommentsBookByIsbn("978-85-233-0143-2");
+		System.out.println("Comments");
+		
+		for (int j = 0; j < result.length; j++) {			
+			System.out.println("usename: " + result[j].getUsername() + ", content: "
+					+ result[j].getContent());
+		}		
+		
+		businessObjectComponent.deleteCommentsByUser("testuser");		
+		
 	}
 
 	public static void exemploUsers(IBusinessObject businessObjectComponent) {
