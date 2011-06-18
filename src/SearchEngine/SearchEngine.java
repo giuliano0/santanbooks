@@ -306,10 +306,10 @@ public class SearchEngine extends ComponentBase implements ISearchEngine, IRecep
 	public void update() {
 		ArrayList<String> temp = new ArrayList<String>();
 		for (Book b : bO.selectAllBooks()) {
-			temp.add(b.getName());
-			temp.add(b.getAuthors());
-			temp.add(b.getDescription());
-			temp.add(b.getPublisher());
+			temp.add(keyNormalize(b.getName()));
+			temp.add(keyNormalize(b.getAuthors()));
+			temp.add(keyNormalize(b.getDescription()));
+			temp.add(keyNormalize(b.getPublisher()));
 		}
 		this.tags = temp.toArray(new String[temp.size()]);
 	}
