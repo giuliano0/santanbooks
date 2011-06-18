@@ -104,7 +104,7 @@ public class AppBusinessObjectExample02 {
 		
 		u.setCollege("Unip");
 		u.setCourse("Moda");
-		u.setPassowrd("432432");
+		u.setPassword("432432");
 		businessObjectComponent.updateUser(u);
 		
 		System.out.println("ATUALIZACAO");
