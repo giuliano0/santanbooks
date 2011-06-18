@@ -252,9 +252,9 @@ public class AppBusinessObjectExample {
 					+ " invalido ou ja existente!");
 
 		System.out.println("USUARIOS:");
-		for (User usuario : businessObjectComponent.selectAllUsers()) {
-			System.out.println(usuario.getUsername());
-		}
+		User[] usuario1 = businessObjectComponent.selectAllUsers();
+		for(int i = 0; i < usuario1.length; i++)
+			System.out.println("Username:" + usuario1[i].getUsername());
 
 		u.setCollege("Unip");
 		u.setCourse("Moda");
@@ -271,9 +271,9 @@ public class AppBusinessObjectExample {
 		System.out.println("DELECAO");
 		businessObjectComponent.deleteUser(u.getUsername());
 		System.out.println("USUARIOS:");
-		for (User usuario : businessObjectComponent.selectAllUsers()) {
-			System.out.println(usuario.getUsername());
-		}
+		User[] usuario2 = businessObjectComponent.selectAllUsers();
+		for(int i = 0; i < usuario2.length; i++)
+			System.out.println("Username:" + usuario2[i].getUsername());
 	}
 
 	public static void exemploReviews(IBusinessObject businessObjectComponent) {
