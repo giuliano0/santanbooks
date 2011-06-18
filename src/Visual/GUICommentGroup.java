@@ -12,6 +12,7 @@ public class GUICommentGroup extends JScrollPane{
 	
 	public GUICommentGroup(Classes.Book l){
 		Comment[] c = l.getAllComments();
+		if(c==null) return;
 		comments = c;
 		GUIComment[] guiC = new GUIComment[c.length];
 		GridLayout layout = new GridLayout(c.length, 1, 0, 5);
