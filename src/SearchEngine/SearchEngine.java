@@ -8,6 +8,7 @@ import java.util.Vector;
 import Classes.Book;
 import Interfaces.IDataBase;
 import Interfaces.ISearchEngine;
+import Interfaces.IBusinessObject;
 import anima.annotation.Component;
 import anima.component.IRequires;
 import anima.component.ISupports;
@@ -23,7 +24,7 @@ import anima.component.InterfaceType;
 @Component(id="<http://purl.org/dcc/SearchEngine.SearchEngine>",
         provides={"<http://purl.org/dcc/Interfaces.ISearchEngine>"}, 
         requires= { "<http://purl.org/dcc/Interfaces.IBusinessObject>" })
-public class SearchEngine implements ISearchEngine, IRequires<IDataBase> { // TODO: colocar o IRequires<IDataBase>, ajuda aqui please =)
+public class SearchEngine implements ISearchEngine, IReceptacleDataBase, IReceptacleBussinessObject { // TODO: colocar o IRequires<IDataBase>, ajuda aqui please =)
 
 	// Preposições, artigos, conjunções, e tudo mais (pontuação, sinais gráficos). 42!
 	// Bithces, ajudem a popular o array abaixo, kkthxbye ;)
@@ -37,6 +38,8 @@ public class SearchEngine implements ISearchEngine, IRequires<IDataBase> { // TO
 	private static final String[] punctuation = {",", "\\.", ":", "\\-", ";", "\\?", "!", "\\(", "\\)", "\\n"};
 	
 	private IDataBase dataBase;
+	private IBusinessObject bO;
+	private String[] tags;
 	
 	// TODO: Declarar a database e a factory, e instanciá-la no construtor.
 
@@ -283,6 +286,49 @@ public class SearchEngine implements ISearchEngine, IRequires<IDataBase> { // TO
 	public int release() {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+	
+	public String[] autoComplete(String arg) {
+		ArrayList<String> cands = new ArrayList<String>();
+		for (String s : extractTags(arg)) {
+			ArrayList<String> temp = new ArrayList<String>();
+			for (String str : tags)
+				if (str.toLowerCase().contains(s.toLowerCase()))
+					temp.add(str);
+			cands = mergeString(cands, temp);
+		}
+		String[] res = cands.toArray(new String[cands.size()]);
+		Arrays.sort(res,
+			new Comparator<String>() {
+				public int compare(String s1, String s2) {
+					return s1.compareTo(s2);
+				}
+			}
+		);
+		return res;
+	}
+	
+	private ArrayList<String> mergeString(ArrayList<String> s1, ArrayList<String> s2) {
+		ArrayList<String> strings = new ArrayList<String>();
+		for (String s : s1) strings.add(s);
+		for (String s : s2) if (!strings.contains(s)) strings.add(s);
+		return strings;
+	}
+
+	@Override
+	public void connect(IBusinessObject bussinessobject) {
+		this.bO = bussinessobject;
+	}
+	
+	public void update() {
+		ArrayList<String> temp = new ArrayList<String>();
+		for (Book b : bO.selectAllBooks()) {
+			temp.add(b.getName());
+			temp.add(b.getAuthors());
+			temp.add(b.getDescription());
+			temp.add(b.getPublisher());
+		}
+		this.tags = temp.toArray(new String[temp.size()]);
 	}
 
 }

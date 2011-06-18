@@ -9,8 +9,8 @@ import Classes.Book;
  * @author Giuliano
  *
  */
-@ComponentInterface("<http://purl.org/dcc/Interfaces.ISearchEngine>")
-public interface ISearchEngine extends ISupports {
+@ComponentInterface("<http://purl.org/dcc/santanbooks.Interfaces.ISearchEngine>")
+public interface ISearchEngine extends ISupports, ISeeU {
 	public Book[] search(String key);			// Busca a database por match exata de nome e tags do nome (usa extractTags).
 	Book[] searchByParameter(String key, String campo);
 }
