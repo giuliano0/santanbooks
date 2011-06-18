@@ -65,53 +65,101 @@ public class EditProfile extends javax.swing.JPanel {
         setMaximumSize(new java.awt.Dimension(800, 600));
         setMinimumSize(new java.awt.Dimension(800, 600));
         setPreferredSize(new java.awt.Dimension(800, 600));
+        setLayout(null);
 
         userLabel1.setText("Senha atual");
+        add(userLabel1);
+        userLabel1.setBounds(247, 449, 57, 14);
 
         bdayLabel1.setText("Nascimento");
+        add(bdayLabel1);
+        bdayLabel1.setBounds(444, 149, 55, 14);
 
         title1.setFont(new java.awt.Font("SansSerif 24 24", 1, 24)); // NOI18N
         title1.setText("Edite sua conta");
+        add(title1);
+        title1.setBounds(300, 45, 178, 32);
 
-        academicTitle1.setFont(new java.awt.Font("DejaVu Sans 13 13", 1, 13));
+        academicTitle1.setFont(new java.awt.Font("DejaVu Sans 13 13", 1, 13)); // NOI18N
         academicTitle1.setText("Informações acadêmicas :");
+        add(academicTitle1);
+        academicTitle1.setBounds(210, 310, 166, 18);
 
         collegeLabel1.setText("Universidade");
+        add(collegeLabel1);
+        collegeLabel1.setBounds(195, 345, 62, 14);
 
         descriptionText1.setColumns(20);
         descriptionText1.setLineWrap(true);
         descriptionText1.setRows(5);
         jScrollPane2.setViewportView(descriptionText1);
 
+        add(jScrollPane2);
+        jScrollPane2.setBounds(195, 230, 416, 67);
+
         buttonGroup1.add(maleButton1);
         maleButton1.setText("Masc.");
+        add(maleButton1);
+        maleButton1.setBounds(290, 145, 53, 23);
 
-        loginTitle1.setFont(new java.awt.Font("DejaVu Sans 13 13", 1, 13));
+        loginTitle1.setFont(new java.awt.Font("DejaVu Sans 13 13", 1, 13)); // NOI18N
         loginTitle1.setText("Altere sua senha:");
+        add(loginTitle1);
+        loginTitle1.setBounds(205, 415, 110, 18);
 
         pwordLabel1.setText("Nova Senha");
+        add(pwordLabel1);
+        pwordLabel1.setBounds(246, 481, 58, 14);
+        add(yearText1);
+        yearText1.setBounds(500, 378, 113, 20);
+        add(pwordText1);
+        pwordText1.setBounds(308, 478, 199, 20);
 
         genderLabel1.setText("Sexo");
+        add(genderLabel1);
+        genderLabel1.setBounds(190, 150, 24, 14);
 
         yearLabel1.setText("Ano");
+        add(yearLabel1);
+        yearLabel1.setBounds(475, 380, 19, 14);
 
         buttonGroup1.add(femaleButton1);
         femaleButton1.setText("Fem.");
+        add(femaleButton1);
+        femaleButton1.setBounds(235, 145, 49, 23);
+        add(courseText1);
+        courseText1.setBounds(265, 380, 204, 20);
+        add(oldpwText1);
+        oldpwText1.setBounds(308, 446, 199, 20);
 
         personalTitle1.setFont(new java.awt.Font("DejaVu Sans 13 13", 1, 13)); // NOI18N
         personalTitle1.setText("Informações pessoais:");
+        add(personalTitle1);
+        personalTitle1.setBounds(207, 87, 140, 16);
 
         nameLabel1.setText("Nome");
+        add(nameLabel1);
+        nameLabel1.setBounds(190, 120, 27, 14);
 
         descriptionLabel1.setText("Descreva-se em poucas linhas:");
+        add(descriptionLabel1);
+        descriptionLabel1.setBounds(190, 210, 148, 14);
 
         emailLabel1.setText("E-mail");
+        add(emailLabel1);
+        emailLabel1.setBounds(190, 180, 28, 14);
+        add(collegeText1);
+        collegeText1.setBounds(260, 340, 350, 20);
+        add(bdayText1);
+        bdayText1.setBounds(503, 146, 110, 20);
 
         nameText1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 nameText1ActionPerformed(evt);
             }
         });
+        add(nameText1);
+        nameText1.setBounds(229, 115, 384, 20);
 
         cancelButton1.setText("Cancelar");
         cancelButton1.setMaximumSize(new java.awt.Dimension(45, 30));
@@ -121,165 +169,26 @@ public class EditProfile extends javax.swing.JPanel {
                 cancelButton1ActionPerformed(evt);
             }
         });
+        add(cancelButton1);
+        cancelButton1.setBounds(308, 540, 94, 23);
+        add(emailText1);
+        emailText1.setBounds(229, 179, 384, 20);
 
         saveButton1.setText("Salvar");
         saveButton1.setMaximumSize(new java.awt.Dimension(45, 30));
         saveButton1.setMinimumSize(new java.awt.Dimension(45, 30));
+        add(saveButton1);
+        saveButton1.setBounds(408, 540, 82, 23);
 
         repeatpwordLabel1.setText("Confirmar senha");
+        add(repeatpwordLabel1);
+        repeatpwordLabel1.setBounds(225, 512, 79, 14);
+        add(repeatpwordText1);
+        repeatpwordText1.setBounds(308, 509, 199, 20);
 
         courseLabel1.setText("Curso");
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(197, 197, 197)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(111, 111, 111)
-                        .addComponent(title1))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addComponent(personalTitle1))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(1, 1, 1)
-                        .addComponent(nameLabel1)
-                        .addGap(4, 4, 4)
-                        .addComponent(nameText1, javax.swing.GroupLayout.PREFERRED_SIZE, 384, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(4, 4, 4)
-                        .addComponent(genderLabel1)
-                        .addGap(10, 10, 10)
-                        .addComponent(femaleButton1)
-                        .addGap(12, 12, 12)
-                        .addComponent(maleButton1)
-                        .addGap(95, 95, 95)
-                        .addComponent(bdayLabel1)
-                        .addGap(4, 4, 4)
-                        .addComponent(bdayText1, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(emailLabel1)
-                        .addGap(4, 4, 4)
-                        .addComponent(emailText1, javax.swing.GroupLayout.PREFERRED_SIZE, 384, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(descriptionLabel1)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 416, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(12, 12, 12)
-                        .addComponent(academicTitle1))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(collegeLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(collegeText1))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(34, 34, 34)
-                        .addComponent(courseLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(courseText1, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(yearLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(yearText1, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(8, 8, 8)
-                        .addComponent(loginTitle1))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(50, 50, 50)
-                        .addComponent(userLabel1)
-                        .addGap(4, 4, 4)
-                        .addComponent(oldpwText1, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(49, 49, 49)
-                        .addComponent(pwordLabel1)
-                        .addGap(4, 4, 4)
-                        .addComponent(pwordText1, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(28, 28, 28)
-                        .addComponent(repeatpwordLabel1)
-                        .addGap(4, 4, 4)
-                        .addComponent(repeatpwordText1, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(111, 111, 111)
-                        .addComponent(cancelButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(6, 6, 6)
-                        .addComponent(saveButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(198, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(44, 44, 44)
-                .addComponent(title1)
-                .addGap(11, 11, 11)
-                .addComponent(personalTitle1, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(12, 12, 12)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(3, 3, 3)
-                        .addComponent(nameLabel1))
-                    .addComponent(nameText1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(10, 10, 10)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(4, 4, 4)
-                        .addComponent(genderLabel1))
-                    .addComponent(femaleButton1)
-                    .addComponent(maleButton1)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(4, 4, 4)
-                        .addComponent(bdayLabel1))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(1, 1, 1)
-                        .addComponent(bdayText1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(11, 11, 11)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(3, 3, 3)
-                        .addComponent(emailLabel1))
-                    .addComponent(emailText1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(11, 11, 11)
-                .addComponent(descriptionLabel1)
-                .addGap(6, 6, 6)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(11, 11, 11)
-                .addComponent(academicTitle1)
-                .addGap(15, 15, 15)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(collegeLabel1)
-                    .addComponent(collegeText1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(17, 17, 17)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(courseLabel1)
-                    .addComponent(courseText1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(yearText1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(yearLabel1))
-                .addGap(18, 18, 18)
-                .addComponent(loginTitle1)
-                .addGap(12, 12, 12)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(3, 3, 3)
-                        .addComponent(userLabel1))
-                    .addComponent(oldpwText1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(12, 12, 12)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(3, 3, 3)
-                        .addComponent(pwordLabel1))
-                    .addComponent(pwordText1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(11, 11, 11)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(3, 3, 3)
-                        .addComponent(repeatpwordLabel1))
-                    .addComponent(repeatpwordText1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(11, 11, 11)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(cancelButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(saveButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(37, Short.MAX_VALUE))
-        );
+        add(courseLabel1);
+        courseLabel1.setBounds(230, 380, 28, 14);
     }// </editor-fold>//GEN-END:initComponents
 
     private void cancelButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButton1ActionPerformed
