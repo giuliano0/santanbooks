@@ -1,20 +1,21 @@
-package Visual;
+package visual;
 
 import java.awt.event.MouseEvent;
 
 /**
  * Opens a frame that requests the user an
  *  URL that a selected link will lead to
- * @author José Américo Nabuco Leva Ferreira de Freitas
+ * @author Josï¿½ Amï¿½rico Nabuco Leva Ferreira de Freitas
  */
 public class GUIURLRequest extends javax.swing.JFrame {
-
+    private GUIReviewEditor parent;
 	private static final long serialVersionUID = 1L;
 	/**
 	 * Constructor
 	 * Sets the window properties
 	 */
-    public GUIURLRequest() {
+    public GUIURLRequest(GUIReviewEditor p) {
+        this.parent = p;
         initComponents();
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     }
@@ -43,10 +44,9 @@ public class GUIURLRequest extends javax.swing.JFrame {
         jButton2.addMouseListener(new java.awt.event.MouseListener() {
 			public void mouseClicked(MouseEvent e) {
 				URL = jTextField1.getText();
-				System.out.println(URL);
-				dispose();
-				
-			}
+                                parent.atualizaLink();
+                                dispose();
+			}                        
 			public void mouseEntered(MouseEvent e) {}
 			public void mouseExited(MouseEvent e) {}
 			public void mousePressed(MouseEvent e) {}
@@ -94,20 +94,12 @@ public class GUIURLRequest extends javax.swing.JFrame {
     public String getURL(){
     	return URL;
     }
-
+    
+    
     /**
      * Main - testing
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        java.awt.EventQueue.invokeLater(new Runnable() {
-
-            public void run() {
-                new GUIURLRequest().setVisible(true);
-            }
-        });
-    }
-    
     private String URL;
     // Variables declaration - do not modify
     private javax.swing.JButton jButton1;
