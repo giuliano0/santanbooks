@@ -47,17 +47,18 @@ public interface IBusinessObject extends ISupports {
 	//Comments
 	//select
 	public Comment[] selectAllComments();
-	public Comment selectComment(int comment_id);
+	public Comment selectComment(int commentID);
 	public Comment[] selectCommentsBook(Book book);
 	public Comment[] selectCommentsBookByIsbn(String isbn);
 	public Comment[] selectCommentsBookFromUser(User user);
 	public Comment[] selectCommentsBookFromUser(String username);
 	//insert
-	public boolean insertComment(Comment comment);	
+	public boolean insertComment(Comment comment);
+	public boolean insertComment(String isbn, String content, String username);
 	//update
 	public boolean updateComment(Comment comment);	
 	//delete
-	public boolean deleteComment(int comment_id);
+	public boolean deleteComment(int commentID);
 	public boolean deleteComment(Comment comment);
 	public boolean deleteComments(Book book);
 	public boolean deleteCommentsByIsbn(String isbn);	
@@ -67,20 +68,21 @@ public interface IBusinessObject extends ISupports {
 	//Reviews
 	//select
 	public Review[] selectAllReviews();
-	public Review selectReview(int review_id);
+	public Review selectReview(int reviewID);
 	public Review[] selectReviews(Book book);
 	public Review[] selectReviews(String isbn);
 	public Review[] selectReviewsByUser(String username);
 	public Review[] selectReviewsByUser(User user);
 	
 	//insert
-	public boolean insertReview(Review review);	
+	public boolean insertReview(Review review);
+	public boolean insertReview(String isbn, String title, String content, String username);
 	//update
 	public boolean updateReview(Review review);
 	
 	//delete
 	public boolean deleteReview(Review review);
-	public boolean deleteReview(int review_id);
+	public boolean deleteReview(int reviewID);
 	public boolean deleteReviews(Book book);
 	public boolean deleteReviews(String isbn);
 	public boolean deleteReviewsByUser(String username);
@@ -89,34 +91,36 @@ public interface IBusinessObject extends ISupports {
 	//Ratings
 	//select
 	public Rating[] selectAllRatings();
-	public Rating selectRating(int rating_id);
+	public Rating selectRating(int ratingID);
 	public Rating[] selectRatings(Book book);
 	public Rating[] selectRatings(String isbn);	
 	public Rating[] selectRatingsByUser(String username);
 	public Rating[] selectRatingsByUser(User user);	
-	public Rating[] selectRatingsForReview(Review review);
-	public Rating[] selectRatingsForReview(int review_id);
+	public Rating[] selectRatingsForReview(Review reviewID);
+	public Rating[] selectRatingsForReview(int reviewID);
 	
 	//this methods calculates the rating
 	public float selectRatingCalculed(Book book);
 	public float selectRatingCalculed(String isbn);	
 	public float selectRatingCalculed(Review review);
-	public float selectRatingCalculed(int review_id);
+	public float selectRatingCalculed(int reviewID);
 	
 	//insert
-	public boolean insertRating(Rating rating);	
+	public boolean insertRating(Rating rating);
+	public boolean insertRating(String isbn, int value);
+	public boolean insertRating(int reviewID, int value);
 	//update
 	public boolean updateRating(Rating rating);
 	
 	//delete
 	public boolean deleteRating(Rating rating);
-	public boolean deleteRating(int rating_id);
+	public boolean deleteRating(int ratingID);
 	public boolean deleteRatings(Book book);
 	public boolean deleteRatings(String isbn);	
 	public boolean deleteRatingsByUser(String username);
 	public boolean deleteRatingsByUser(User user);	
 	public boolean deleteRatingsForReview(Review review);
-	public boolean deleteRatingsForReview(int review_id);
+	public boolean deleteRatingsForReview(int reviewID);
 	
 	
 	//Session

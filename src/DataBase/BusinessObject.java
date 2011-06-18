@@ -21,11 +21,17 @@ import anima.component.base.ComponentBase;
  * fazendo com que a consulta, insercao, delecao, e atualizacao seja mais simples de se fazer
  * @author Mauricio Bertanha and Rodrigo Elizeu Goncalves
  */
+
 @Component(id = "<http://purl.org/dcc/DataBase.BusinessObject>", 
 		provides = { "<http://purl.org/dcc/Interfaces.IBusinessObject>"},
 		requires= { "<http://purl.org/dcc/Interfaces.IDataBase>" })
 public class BusinessObject extends ComponentBase implements IBusinessObject, IRequires<IDataBase> {
 	private IDataBase db;
+
+	private enum RatingType {
+		BOOK, REVIEW
+	}
+	
 
 	// TODO quando fazer um insert update tb tem que atualizar os ratings, comments e reviews associados
 	
@@ -67,9 +73,9 @@ public class BusinessObject extends ComponentBase implements IBusinessObject, IR
 	}
 
 	@Override
-	public boolean deleteComment(int comment_id) {
+	public boolean deleteComment(int commentID) {
 		Vector<String> where = new Vector<String>();
-		where.add("id = " + comment_id);
+		where.add("id = " + commentID);
 
 		return db.deleteDataComment(where);
 	}
@@ -101,9 +107,9 @@ public class BusinessObject extends ComponentBase implements IBusinessObject, IR
 	}
 
 	@Override
-	public boolean deleteRating(int rating_id) {
+	public boolean deleteRating(int ratingID) {
 		Vector<String> where = new Vector<String>();
-		where.add("id = " + rating_id);
+		where.add("id = " + ratingID);
 
 		return db.deleteDataRating(where);
 	}
@@ -140,9 +146,9 @@ public class BusinessObject extends ComponentBase implements IBusinessObject, IR
 	}
 
 	@Override
-	public boolean deleteRatingsForReview(int review_id) {
+	public boolean deleteRatingsForReview(int reviewID) {
 		Vector<String> where = new Vector<String>();
-		where.add("bookReview = " + review_id);
+		where.add("bookReview = " + reviewID);
 
 		return db.deleteDataRating(where);
 	}
@@ -153,9 +159,9 @@ public class BusinessObject extends ComponentBase implements IBusinessObject, IR
 	}
 
 	@Override
-	public boolean deleteReview(int review_id) {
+	public boolean deleteReview(int reviewID) {
 		Vector<String> where = new Vector<String>();
-		where.add("review_id = '" + review_id + "'");
+		where.add("reviewID = '" + reviewID + "'");
 
 		return db.deleteDataReview(where);
 	}
@@ -273,7 +279,7 @@ public class BusinessObject extends ComponentBase implements IBusinessObject, IR
 
 	@Override
 	public Rating[] selectAllRatings() {
-		return selectRatings(null, null, null);
+		return selectRatings(null, null, null, null);
 	}
 
 	@Override
@@ -313,7 +319,8 @@ public class BusinessObject extends ComponentBase implements IBusinessObject, IR
 		// criando where
 		if (colunnName != null && value != null) {
 			where = new Vector<String>();
-			where.add(colunnName + " = '" + value + "'");
+			where.add(colunnName + " = '" + value + "'");			
+			
 		}
 
 		// criando order
@@ -352,8 +359,8 @@ public class BusinessObject extends ComponentBase implements IBusinessObject, IR
 	}
 
 	@Override
-	public Comment selectComment(int comment_id) {
-		Comment[] comments = selectComments("id", comment_id, "id");
+	public Comment selectComment(int commentID) {
+		Comment[] comments = selectComments("id", commentID, "id");
 
 		if (comments != null) {
 			return comments[0];
@@ -412,8 +419,8 @@ public class BusinessObject extends ComponentBase implements IBusinessObject, IR
 	}
 
 	@Override
-	public Rating selectRating(int rating_id) {
-		Rating[] ratings = selectRatings("id", rating_id, "id");
+	public Rating selectRating(int ratingID) {
+		Rating[] ratings = selectRatings("id", ratingID, "id", null);
 
 		if (ratings != null) {
 			return ratings[0];
@@ -428,15 +435,15 @@ public class BusinessObject extends ComponentBase implements IBusinessObject, IR
 	}
 
 	@Override
-	public float selectRatingCalculed(int review_id) {
+	public float selectRatingCalculed(int reviewID) {
 
-		if (selectRatingsForReview(review_id).length > 0) {
+		if (selectRatingsForReview(reviewID).length > 0) {
 			Vector<String> select = new Vector<String>();
 			select.add("value/count(value) as value");
 
 			// criando where
 			Vector<String> where = new Vector<String>();
-			where.add("bookReview = " + review_id);
+			where.add("bookReview = " + reviewID);
 
 			// criando order
 			Vector<String> order = new Vector<String>();
@@ -492,11 +499,11 @@ public class BusinessObject extends ComponentBase implements IBusinessObject, IR
 
 	@Override
 	public Rating[] selectRatings(String isbn) {
-		return selectRatings("bookISBN", isbn, "bookISBN");
+		return selectRatings("bookISBN", isbn, "bookISBN", RatingType.BOOK);
 	}
 
 	private Rating[] selectRatings(String colunnName, Object value,
-			String orderBy) {
+			String orderBy, RatingType type) {
 		Vector<String> select = new Vector<String>();
 		select.add("id");
 		select.add("username");
@@ -511,6 +518,10 @@ public class BusinessObject extends ComponentBase implements IBusinessObject, IR
 		if (colunnName != null && value != null) {
 			where = new Vector<String>();
 			where.add(colunnName + " = '" + value + "'");
+		}
+		
+		if (type != null) {
+			where.add("type = " + ((type == RatingType.BOOK)?1:0));				
 		}
 
 		// criando order
@@ -527,7 +538,7 @@ public class BusinessObject extends ComponentBase implements IBusinessObject, IR
 
 	@Override
 	public Rating[] selectRatingsByUser(String username) {
-		return selectRatings("username", username, "username");
+		return selectRatings("username", username, "username", null);
 	}
 
 	@Override
@@ -536,8 +547,8 @@ public class BusinessObject extends ComponentBase implements IBusinessObject, IR
 	}
 
 	@Override
-	public Rating[] selectRatingsForReview(int rating_id) {
-		return selectRatings("id", rating_id, "id");
+	public Rating[] selectRatingsForReview(int reviewID) {
+		return selectRatings("id", reviewID, "id", RatingType.REVIEW);
 	}
 
 	@Override
@@ -546,8 +557,8 @@ public class BusinessObject extends ComponentBase implements IBusinessObject, IR
 	}
 
 	@Override
-	public Review selectReview(int review_id) {
-		Review[] reviews = selectReviews("id", review_id, "id");
+	public Review selectReview(int reviewID) {
+		Review[] reviews = selectReviews("id", reviewID, "id");
 
 		if (reviews != null) {
 			return reviews[0];
@@ -753,6 +764,30 @@ public class BusinessObject extends ComponentBase implements IBusinessObject, IR
 		where.add("id = '" + user.getUsername());
 
 		return db.updateData(user, where);
+	}
+
+	@Override
+	public boolean insertReview(String isbn, String title, String content, String username) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean insertRating(String isbn, int value) {
+		
+		return false;
+	}
+
+	@Override
+	public boolean insertRating(int reviewID, int value) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean insertComment(String isbn, String content, String username) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 }
