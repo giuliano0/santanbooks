@@ -67,7 +67,9 @@ public class BusinessObject extends ComponentBase implements IBusinessObject, IR
 		Vector<String> where = new Vector<String>();
 		where.add("isbn = '" + isbn + "'");
 		boolean success = db.deleteDataBook(where);
-		se.update();
+		if(se != null) {
+			se.update();
+		}
 		return success;
 	}
 
@@ -243,7 +245,9 @@ public class BusinessObject extends ComponentBase implements IBusinessObject, IR
 			}
 		}
 		boolean success = db.insertData(book);
-		se.update();
+		if(se != null) {
+			se.update();
+		}
 		return success;
 	}
 
@@ -631,9 +635,6 @@ public class BusinessObject extends ComponentBase implements IBusinessObject, IR
 					e.printStackTrace();
 				}
 
-				// por enquanto o banco de dados nao permite um review ser
-				// comentado
-				// result[i].setComments(selectCommentsBook(result[i]));
 			}
 		}
 
@@ -742,7 +743,9 @@ public class BusinessObject extends ComponentBase implements IBusinessObject, IR
 		where.add("isbn = '" + book.getISBN() + "'");
 		
 		boolean success = db.updateData(book, where);
-		se.update();
+		if(se != null) {
+			se.update();
+		}
 		return success;
 	}
 

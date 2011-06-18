@@ -150,7 +150,6 @@ public class DataBase extends ComponentBase implements IDataBase, IRequires<ISQL
 		try {
 			stt.insert("users", values);
 		} catch (SQLException erro) {
-			System.out.println(erro.getMessage());
 			sucesso = false;
 		}
 		return sucesso;
@@ -215,10 +214,10 @@ public class DataBase extends ComponentBase implements IDataBase, IRequires<ISQL
 			return u;
 
 		} catch (ClassNotFoundException erro) {
-			System.out.println(erro.getMessage());
+			//System.out.println(erro.getMessage());
 			return null;
 		} catch (SQLException erro) {
-			System.out.println("Erro na consulta Users: " + erro.getMessage());
+			//System.out.println("Erro na consulta Users: " + erro.getMessage());
 			return null;
 		}
 	}
@@ -358,10 +357,10 @@ public class DataBase extends ComponentBase implements IDataBase, IRequires<ISQL
 			return b;
 
 		} catch (ClassNotFoundException erro) {
-			System.out.println(erro.getMessage());
+			//System.out.println(erro.getMessage());
 			return null;
 		} catch (SQLException erro) {
-			System.out.println("Erro na consulta Book: " + erro.getMessage());
+			//System.out.println("Erro na consulta Book: " + erro.getMessage());
 			return null;
 		}
 	}
@@ -385,7 +384,7 @@ public class DataBase extends ComponentBase implements IDataBase, IRequires<ISQL
 		try {
 			stt.delete("book", w);
 		} catch (SQLException erro) {
-			System.out.println(erro.getMessage()); 
+			//System.out.println(erro.getMessage()); 
 			sucesso = false;
 		}
 		return sucesso;
@@ -486,10 +485,10 @@ public class DataBase extends ComponentBase implements IDataBase, IRequires<ISQL
 			return c;
 
 		} catch (ClassNotFoundException erro) {
-			System.out.println(erro.getMessage());
+			//System.out.println(erro.getMessage());
 			return null;
 		} catch (SQLException erro) {
-			System.out.println("Erro na consulta Comment: " + erro.getMessage());
+			//System.out.println("Erro na consulta Comment: " + erro.getMessage());
 			return null;
 		}
 	}
@@ -610,10 +609,10 @@ public class DataBase extends ComponentBase implements IDataBase, IRequires<ISQL
 			return rv;
 
 		} catch (ClassNotFoundException erro) {
-			System.out.println(erro.getMessage());
+			//System.out.println(erro.getMessage());
 			return null;
 		} catch (SQLException erro) {
-			System.out.println("Erro na consulta Review: " + erro.getMessage());
+			//System.out.println("Erro na consulta Review: " + erro.getMessage());
 			return null;
 		}
 	}
@@ -730,10 +729,10 @@ public class DataBase extends ComponentBase implements IDataBase, IRequires<ISQL
 			return rt;
 
 		} catch (ClassNotFoundException erro) {
-			System.out.println(erro.getMessage());
+			//System.out.println(erro.getMessage());
 			return null;
 		} catch (SQLException erro) {
-			System.out.println("Erro na consulta Rating: " + erro.getMessage());
+			//System.out.println("Erro na consulta Rating: " + erro.getMessage());
 			return null;
 		}
 	}
@@ -845,10 +844,10 @@ public class DataBase extends ComponentBase implements IDataBase, IRequires<ISQL
 			return sn;
 
 		} catch (ClassNotFoundException erro) {
-			System.out.println(erro.getMessage());
+			//System.out.println(erro.getMessage());
 			return null;
 		} catch (SQLException erro) {
-			System.out.println("Erro na consulta SessionData: " + erro.getMessage());
+			//System.out.println("Erro na consulta SessionData: " + erro.getMessage());
 			return null;
 		}
 	}
