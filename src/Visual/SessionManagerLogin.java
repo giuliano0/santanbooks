@@ -115,7 +115,7 @@ public class SessionManagerLogin extends javax.swing.JPanel {
     	
     	if (u != null) {
     		this.parent.setUser(u);
-    		((SessionManagerLoggedIn)this.parent.getSM()).updateForm();
+    		((SessionManagerLoggedIn)this.parent.getSM().getComponent(0)).updateForm();
     		((CardLayout)this.parent.getSM().getLayout()).show(this.parent.getSM(), Santanbooks.SESSION_LOGGED);
     	}
     	else

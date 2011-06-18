@@ -939,7 +939,7 @@ public class BusinessObject extends ComponentBase implements IBusinessObject, IR
 		// realizando a consulta
 		SessionData[] result = db.querySessionData(select, where, order);
 
-		if (result != null) {
+		if (result != null && result.length > 0) {
 			return result[0];
 		}
 
