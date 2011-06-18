@@ -9,6 +9,7 @@ import anima.factory.IGlobalFactory;
 import anima.factory.context.componentContext.ComponentContextFactory;
 import anima.factory.exception.FactoryException;
 import Classes.Book;
+import Classes.User;
 import Interfaces.IBusinessObject;
 import Interfaces.IDataBase;
 import Interfaces.ISQLStatements;
@@ -43,9 +44,10 @@ public class AppBusinessObjectExample {
 					"<http://purl.org/dcc/Interfaces.IBusinessObject>");
 
 			/* DataBase requer SQLStatements */
-			IRequires<IDataBase> connectStatements2 = businessObjectComponent.queryInterface(
-					"<http://purl.org/dcc/Interfaces.IDataBase>",
-					InterfaceType.REQUIRED);
+			IRequires<IDataBase> connectStatements2 = businessObjectComponent
+					.queryInterface(
+							"<http://purl.org/dcc/Interfaces.IDataBase>",
+							InterfaceType.REQUIRED);
 
 			/* Conecta o Database no BusinessObject */
 			connectStatements2.connect(db);
@@ -63,6 +65,8 @@ public class AppBusinessObjectExample {
 		} catch (FactoryException e) {
 			System.err.println(e.getMessage());
 		}
+		
+		System.exit(0);
 	}
 
 	public static void exemploBooks(IBusinessObject businessObjectComponent) {
@@ -105,7 +109,7 @@ public class AppBusinessObjectExample {
 					+ b1.getISBN() + " já existe!");
 		}
 
-		// realizando a consulta
+		// realizando a consulta por autor
 		Book result[] = businessObjectComponent
 				.selectBooksByAuthors("Eu mesmo");
 		for (int j = 0; j < result.length; j++) {
@@ -114,7 +118,7 @@ public class AppBusinessObjectExample {
 		}
 
 		// faz um update
-		b2.setName("CÃ¡lculo 3");
+		b2.setName("Calculo 3");
 		if (businessObjectComponent.updateBook(b2))
 			System.out.println("Dados de book atualizados com sucesso");
 
@@ -122,8 +126,8 @@ public class AppBusinessObjectExample {
 		Book result2[] = businessObjectComponent
 				.selectBooksByAuthors("Eu mesmo");
 		for (int j = 0; j < result2.length; j++) {
-			System.out.println("ISBN: " + result[j].getISBN() + ", Name: "
-					+ result[j].getName());
+			System.out.println("ISBN: " + result2[j].getISBN() + ", Name: "
+					+ result2[j].getName());
 		}
 
 		// deletando dados
@@ -134,9 +138,19 @@ public class AppBusinessObjectExample {
 		Book result3[] = businessObjectComponent
 				.selectBooksByAuthors("Eu mesmo");
 		for (int j = 0; j < result3.length; j++) {
-			System.out.println("ISBN: " + result[j].getISBN() + ", Name: "
-					+ result[j].getName());
+			System.out.println("ISBN: " + result3[j].getISBN() + ", Name: "
+					+ result3[j].getName());
 		}
+
+		// obtendo a lista de todos os books
+		Book result4[] = businessObjectComponent.selectAllBooks();
+		System.out.println("todos os livros");
+		for (int j = 0; j < result4.length; j++) {
+			
+			System.out.println("ISBN: " + result4[j].getISBN() + ", Name: "
+					+ result4[j].getName());
+		}
+
 	}
 
 	public static void exemploRatings(IBusinessObject businessObjectComponent) {
@@ -148,7 +162,21 @@ public class AppBusinessObjectExample {
 	}
 
 	public static void exemploUsers(IBusinessObject businessObjectComponent) {
-		// TODO
+//		Date dataAtual = new Date(System.currentTimeMillis());
+//		
+//		User user = new User();
+//		user.setAccessLevel(false);
+//		
+//		try {
+//			user.setBirthday(dataAtual);
+//		} catch (Exception e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		
+//		user.setCollege("Unicamp");
+//		user.setCourse("CC");				
+		
 	}
 
 	public static void exemploReviews(IBusinessObject businessObjectComponent) {

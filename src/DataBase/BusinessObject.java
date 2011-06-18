@@ -31,6 +31,19 @@ public class BusinessObject extends ComponentBase implements IBusinessObject, IR
 	
 
 	@Override
+	public void connect(IDataBase dataBase) {
+		db = dataBase;
+		try {
+			db.connectDataBase(); // deve sempre ser feito com try/catch
+		} catch (SQLException e) {
+			// na verdade nao deve fazer nada, pois essa excecao acontecera se o
+			// banco ja existir
+			System.out.println(e.getMessage());
+		}		
+		
+	}
+
+	@Override
 	public boolean deleteBook(Book book) {
 		return deleteBook(book.getISBN());
 	}
@@ -249,6 +262,31 @@ public class BusinessObject extends ComponentBase implements IBusinessObject, IR
 	}
 
 	@Override
+	public Book[] selectAllBooks() {
+		return selectBooks(null, null, null);
+	}
+
+	@Override
+	public Comment[] selectAllComments() {
+		return selectComments(null, null, null);
+	}
+
+	@Override
+	public Rating[] selectAllRatings() {
+		return selectRatings(null, null, null);
+	}
+
+	@Override
+	public Review[] selectAllReviews() {
+		return selectReviews(null, null, null);
+	}
+
+	@Override
+	public User[] selectAllUsers() {
+		return selectUsers(null, null, null);
+	}
+
+	@Override
 	public Book selectBook(String isbn) {
 		Book[] books = selectBooks("isbn", isbn, "isbn");
 
@@ -270,13 +308,19 @@ public class BusinessObject extends ComponentBase implements IBusinessObject, IR
 		select.add("publisher");
 		select.add("publishingDate");
 
+		Vector<String> where = null;
+		Vector<String> order = null;
 		// criando where
-		Vector<String> where = new Vector<String>();
-		where.add(colunnName + " = '" + value + "'");
+		if (colunnName != null && value != null) {
+			where = new Vector<String>();
+			where.add(colunnName + " = '" + value + "'");
+		}
 
 		// criando order
-		Vector<String> order = new Vector<String>();
-		order.add(orderBy);
+		if (orderBy != null) {
+			order = new Vector<String>();
+			order.add(orderBy);
+		}
 
 		// realizando a consulta
 		Book[] result = db.queryBook(select, where, order);
@@ -327,13 +371,19 @@ public class BusinessObject extends ComponentBase implements IBusinessObject, IR
 		select.add("content");
 		select.add("publishingDate");
 
+		Vector<String> where = null;
+		Vector<String> order = null;
 		// criando where
-		Vector<String> where = new Vector<String>();
-		where.add(colunnName + " = '" + value + "'");
+		if (colunnName != null && value != null) {
+			where = new Vector<String>();
+			where.add(colunnName + " = '" + value + "'");
+		}
 
 		// criando order
-		Vector<String> order = new Vector<String>();
-		order.add(orderBy);
+		if (orderBy != null) {
+			order = new Vector<String>();
+			order.add(orderBy);
+		}
 
 		// realizando a consulta
 		Comment[] result = db.queryComment(select, where, order);
@@ -373,6 +423,69 @@ public class BusinessObject extends ComponentBase implements IBusinessObject, IR
 	}
 
 	@Override
+	public float selectRatingCalculed(Book book) {
+		return selectRatingCalculed(book.getISBN());
+	}
+
+	@Override
+	public float selectRatingCalculed(int review_id) {
+
+		if (selectRatingsForReview(review_id).length > 0) {
+			Vector<String> select = new Vector<String>();
+			select.add("value/count(value) as value");
+
+			// criando where
+			Vector<String> where = new Vector<String>();
+			where.add("bookReview = " + review_id);
+
+			// criando order
+			Vector<String> order = new Vector<String>();
+			order.add("value");
+
+			// realizando a consulta
+			Rating[] result = db.queryRating(select, where, order);
+
+			if (result != null) {
+				return result[0].getValue();
+			}
+		}
+
+		return 0;
+	}
+
+	@Override
+	public float selectRatingCalculed(Review review) {
+		return selectRatingCalculed(review.getID());
+	}
+
+	@Override
+	public float selectRatingCalculed(String isbn) {
+
+		if (selectRatings(isbn).length > 0) {
+			System.out.println("test");
+			Vector<String> select = new Vector<String>();
+			select.add("value/count(value) as value");
+
+			// criando where
+			Vector<String> where = new Vector<String>();
+			where.add("bookISBN = '" + isbn + "'");
+
+			// criando order
+			Vector<String> order = new Vector<String>();
+			order.add("value");
+
+			// realizando a consulta
+			Rating[] result = db.queryRating(select, where, order);
+
+			if (result != null) {
+				return result[0].getValue();
+			}
+		}
+
+		return 0;
+	}
+
+	@Override
 	public Rating[] selectRatings(Book book) {
 		return selectRatings(book.getISBN());
 	}
@@ -392,13 +505,19 @@ public class BusinessObject extends ComponentBase implements IBusinessObject, IR
 		select.add("value");
 		select.add("type");
 
+		Vector<String> where = null;
+		Vector<String> order = null;
 		// criando where
-		Vector<String> where = new Vector<String>();
-		where.add(colunnName + " = '" + value + "'");
+		if (colunnName != null && value != null) {
+			where = new Vector<String>();
+			where.add(colunnName + " = '" + value + "'");
+		}
 
 		// criando order
-		Vector<String> order = new Vector<String>();
-		order.add(orderBy);
+		if (orderBy != null) {
+			order = new Vector<String>();
+			order.add(orderBy);
+		}
 
 		// realizando a consulta
 		Rating[] result = db.queryRating(select, where, order);
@@ -457,13 +576,19 @@ public class BusinessObject extends ComponentBase implements IBusinessObject, IR
 		select.add("publishingDate");
 		select.add("title");
 
+		Vector<String> where = null;
+		Vector<String> order = null;
 		// criando where
-		Vector<String> where = new Vector<String>();
-		where.add(colunnName + " = '" + value + "'");
+		if (colunnName != null && value != null) {
+			where = new Vector<String>();
+			where.add(colunnName + " = '" + value + "'");
+		}
 
 		// criando order
-		Vector<String> order = new Vector<String>();
-		order.add(orderBy);
+		if (orderBy != null) {
+			order = new Vector<String>();
+			order.add(orderBy);
+		}
 
 		// realizando a consulta
 		Review[] result = db.queryReview(select, where, order);
@@ -546,13 +671,19 @@ public class BusinessObject extends ComponentBase implements IBusinessObject, IR
 		select.add("selfDescription");
 		select.add("ingressYear");
 
+		Vector<String> where = null;
+		Vector<String> order = null;
 		// criando where
-		Vector<String> where = new Vector<String>();
-		where.add(colunnName + " = '" + value + "'");
+		if (colunnName != null && value != null) {
+			where = new Vector<String>();
+			where.add(colunnName + " = '" + value + "'");
+		}
 
 		// criando order
-		Vector<String> order = new Vector<String>();
-		order.add(orderBy);
+		if (orderBy != null) {
+			order = new Vector<String>();
+			order.add(orderBy);
+		}
 
 		// realizando a consulta
 		User[] result = db.queryUser(select, where, order);
@@ -622,107 +753,6 @@ public class BusinessObject extends ComponentBase implements IBusinessObject, IR
 		where.add("id = '" + user.getUsername());
 
 		return db.updateData(user, where);
-	}
-
-	@Override
-	public float selectRatingCalculed(Book book) {
-		return selectRatingCalculed(book.getISBN());
-	}
-
-	@Override
-	public float selectRatingCalculed(String isbn) {
-
-		if (selectRatings(isbn).length > 0) {
-			System.out.println("test");
-			Vector<String> select = new Vector<String>();
-			select.add("value/count(value) as value");
-
-			// criando where
-			Vector<String> where = new Vector<String>();
-			where.add("bookISBN = '" + isbn + "'");
-
-			// criando order
-			Vector<String> order = new Vector<String>();
-			order.add("value");
-
-			// realizando a consulta
-			Rating[] result = db.queryRating(select, where, order);
-
-			if (result != null) {
-				return result[0].getValue();
-			}
-		}
-
-		return 0;
-	}
-
-	@Override
-	public float selectRatingCalculed(Review review) {
-		return selectRatingCalculed(review.getID());
-	}
-
-	@Override
-	public float selectRatingCalculed(int review_id) {
-
-		if (selectRatingsForReview(review_id).length > 0) {
-			Vector<String> select = new Vector<String>();
-			select.add("value/count(value) as value");
-
-			// criando where
-			Vector<String> where = new Vector<String>();
-			where.add("bookReview = " + review_id);
-
-			// criando order
-			Vector<String> order = new Vector<String>();
-			order.add("value");
-
-			// realizando a consulta
-			Rating[] result = db.queryRating(select, where, order);
-
-			if (result != null) {
-				return result[0].getValue();
-			}
-		}
-
-		return 0;
-	}
-
-	@Override
-	public Book[] selectAllBooks() {
-		return selectBooks("1", "1", "1");
-	}
-
-	@Override
-	public User[] selectAllUsers() {
-		return selectUsers("1", "1", "1");
-	}
-
-	@Override
-	public Comment[] selectAllComments() {
-		return selectComments("1", "1", "1");
-	}
-
-	@Override
-	public Review[] selectAllReviews() {
-		return selectReviews("1", "1", "1");
-	}
-
-	@Override
-	public Rating[] selectAllRatings() {
-		return selectRatings("1", "1", "1");
-	}
-
-	@Override
-	public void connect(IDataBase dataBase) {
-		db = dataBase;
-		try {
-			db.connectDataBase(); // deve sempre ser feito com try/catch
-		} catch (SQLException e) {
-			// na verdade nao deve fazer nada, pois essa excecao acontecera se o
-			// banco ja existir
-			System.out.println(e.getMessage());
-		}		
-		
 	}
 
 }
