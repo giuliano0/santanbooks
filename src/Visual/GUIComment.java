@@ -6,10 +6,8 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JEditorPane;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -41,10 +39,6 @@ public class GUIComment extends JPanel{
 	private JScrollPane scrollText;
 	private JTextArea user;
 	private JTextArea date;
-	private JComboBox toRate;
-	private JLabel avaliacao;
-	private JLabel rating;
-	private JButton rateButton;
 	private JButton edit;
 	private JToggleButton visible;
 	private SpringLayout layout;
@@ -68,24 +62,7 @@ public class GUIComment extends JPanel{
 
 		setDate();
 		layout.putConstraint(SpringLayout.WEST, date, 5, SpringLayout.EAST, user);
-		layout.putConstraint(SpringLayout.SOUTH, date, 0, SpringLayout.SOUTH, user);
-		
-		setRateLabel();
-		layout.putConstraint(SpringLayout.VERTICAL_CENTER, rating, 0, SpringLayout.VERTICAL_CENTER, user);
-		layout.putConstraint(SpringLayout.VERTICAL_CENTER, avaliacao, 0, SpringLayout.VERTICAL_CENTER, rating);
-
-		setRateButton();
-		layout.putConstraint(SpringLayout.EAST, rateButton, -10, SpringLayout.EAST, this);
-		layout.putConstraint(SpringLayout.NORTH, rateButton, 10, SpringLayout.SOUTH, avaliacao);
-		
-		setRateBox();
-		layout.putConstraint(SpringLayout.EAST, toRate, -10, SpringLayout.WEST, rateButton);
-		layout.putConstraint(SpringLayout.VERTICAL_CENTER, toRate, 0, SpringLayout.VERTICAL_CENTER, rateButton);
-		
-		/*rateLabel - eixo X*/
-		layout.putConstraint(SpringLayout.HORIZONTAL_CENTER, rating, 0, SpringLayout.HORIZONTAL_CENTER, rateButton);
-		layout.putConstraint(SpringLayout.EAST, avaliacao, 0, SpringLayout.WEST, rating);
-		
+		layout.putConstraint(SpringLayout.SOUTH, date, 0, SpringLayout.SOUTH, user);	
 		setEditButton();
 		layout.putConstraint(SpringLayout.EAST, edit, -10, SpringLayout.EAST, this);
 		layout.putConstraint(SpringLayout.SOUTH, edit, -10, SpringLayout.SOUTH, this);
@@ -99,7 +76,7 @@ public class GUIComment extends JPanel{
 		layout.putConstraint(SpringLayout.WEST, scrollText, 10, SpringLayout.WEST, this);
 		layout.putConstraint(SpringLayout.SOUTH, scrollText, -10, SpringLayout.NORTH, edit);
 		layout.putConstraint(SpringLayout.EAST, scrollText, -10, SpringLayout.EAST, this);
-		layout.putConstraint(SpringLayout.NORTH, scrollText, 10, SpringLayout.SOUTH, rateButton);
+		layout.putConstraint(SpringLayout.NORTH, scrollText, 10, SpringLayout.SOUTH, user);
 		
 		setSize(500, 250);
 	}
@@ -113,8 +90,6 @@ public class GUIComment extends JPanel{
 		user.setText("by "+arg0.getUsername());
 		date.setText(arg0.getPublishingDate().toString());
 		text.setText(arg0.getContent());
-		Integer x = new Integer(arg0.getRating());
-		rating.setText(x.toString());
 		visible.setText(arg0.getVisibility()?"Visivel":"Invisivel");
 	}
 	
@@ -141,70 +116,6 @@ public class GUIComment extends JPanel{
 		date.setBackground(new Color(238,238,238));
 		date.setEditable(false);
 		add(date);
-	}
-	
-	private void setRateLabel(){
-		avaliacao = new JLabel("Avaliacao: ");
-		add(avaliacao);
-		
-		rating = new JLabel();
-		rating.setBackground(new Color(238, 238, 238));
-		rating.setFont(new Font(null, Font.BOLD, 28));
-		add(rating);
-	}
-	
-	private void setRateButton(){
-		rateButton = new JButton("Avaliar");
-		rateButton.setSize(20, 10);
-		rateButton.addMouseListener(new MouseListener(){
-
-			public void mouseClicked(MouseEvent arg0) {
-				IGlobalFactory factory;
-				try {
-					factory = ComponentContextFactory.createGlobalFactory();
-				
-				 factory.registerPrototype(IBusinessObject.class);
-				 IBusinessObject bo = factory.createInstance(
-						 "<http://purl.org/dcc/DataBase.BusinessObject>");
-				 
-				 factory.registerPrototype(ISQLStatements.class);
-				 ISQLStatements sqlst = factory.createInstance(
-						 "<http://purl.org/dcc/JavaDB.SQLStatements>");
-				 
-				 factory.registerPrototype(IDataBase.class);
-				 IDataBase db = factory.createInstance(
-						 "<http://purl.org/dcc/JavaDB.DataBase>");
-				 
-				 ((DataBase)db).connect(sqlst);
-				 ((BusinessObject)bo).connect(db);
-				 
-				 /*Refreshes the rating in the database and in the screen*/
-				try {
-					// TODO bo.insertRating(review.getID(), toRate.getSelectedItem(), username);
-					comment.setRating(bo.selectRatingCalculed(comment.getID()));
-					Integer x = comment.getRating();
-					rating.setText(x.toString());
-				} catch (InvalidArgumentException e) {
-					e.printStackTrace();
-				}
-				} catch (ContextException e) {
-					e.printStackTrace();
-				} catch (FactoryException e) {
-					e.printStackTrace();
-				}
-			}
-			public void mouseEntered(MouseEvent arg0) {}
-			public void mouseExited(MouseEvent arg0) {}
-			public void mousePressed(MouseEvent arg0) {}
-			public void mouseReleased(MouseEvent arg0) {}});
-		
-		add(rateButton);
-	}
-	
-	private void setRateBox(){
-		toRate = new JComboBox(new javax.swing.DefaultComboBoxModel(new String[] { "1", "2", "3", "4", "5" }));
-		toRate.setSize(20, 10);
-		add(toRate);
 	}
 	
 	private void setEditButton(){

@@ -134,7 +134,7 @@ public class Results extends javax.swing.JPanel implements ActionListener, Mouse
 	@Override
 	public void mouseClicked(MouseEvent arg0) {
 		((Book)this.parent.getPanel(Santanbooks.PANEL_BOOK)).setBook(this.resultados[jList1.getSelectedIndex()]);
-		// update form
+		((Book)this.parent.getPanel(Santanbooks.PANEL_BOOK)).updateForm();
 		this.parent.changePanel(Santanbooks.PANEL_BOOK);
 	}
 

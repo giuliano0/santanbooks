@@ -49,13 +49,15 @@ public class GUIReview extends JFrame{
 	private JButton back;
 	private Container contentPane;
 	private GUIReview me;
+	private Santanbooks parent;
 	
 	private Review review;
 	
 	/**
 	 * Configura o painel
 	 */
-	public GUIReview(){
+	public GUIReview(Santanbooks p){
+		parent = p;
 		me = this;
 		SpringLayout layout = new SpringLayout();
 		contentPane = getContentPane();
@@ -191,7 +193,7 @@ public class GUIReview extends JFrame{
 				 
 				 /*Refreshes the rating in the database and in the screen*/
 				try {
-					// TODObo.insertRating(review.getID(), toRate.getSelectedItem(), username);
+					// TODO bo.insertRating(review.getID(), toRate.getSelectedItem(), username);
 					review.setRating(bo.selectRatingCalculed(review.getID()));
 					Integer x = review.getRating();
 					rating.setText(x.toString());
@@ -308,7 +310,7 @@ public class GUIReview extends JFrame{
 	/**
 	 * Main (para testes).
 	 */
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		Review rev = new Review();
 		
 		rev.setUsername("username");
@@ -329,5 +331,5 @@ public class GUIReview extends JFrame{
 		guirev.setReview(rev);
 		guirev.setVisible(true);
 
-	}	
+	}	*/
 }

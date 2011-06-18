@@ -29,6 +29,26 @@ public class Book extends javax.swing.JPanel {
     	this.livroAtual = novo;    	
     }
     
+    public void updateForm(){
+    	jLabel1.setText(livroAtual.getEdition());
+
+        jLabel2.setText(livroAtual.getPublishingDate().toString());
+
+        publisher1.setText(livroAtual.getPublisher());
+
+        publisher3.setText(livroAtual.getAuthors());
+
+        publisher4.setText(livroAtual.getDescription());
+
+        jLabel4.setText(livroAtual.getISBN());
+
+        jLabel3.setText(livroAtual.getImagePath());
+
+        publisher5.setText(livroAtual.getAllReviews().toString());
+
+         publisher6.setText(livroAtual.getAllComments().toString());
+    }
+    
     /** This method is called from within the constructor to
      * initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is
