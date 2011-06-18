@@ -152,6 +152,19 @@ public class SearchEngine implements ISearchEngine, IRequires<IDataBase> { // TO
 		
 		return null;
 	}
+	
+	public Vector<String> returnSelect() {
+		Vector<String> select = new Vector<String>();
+		select.add("name"); // Falta ver um jeito de selecionar todos os campo
+		select.add("isbn");
+		select.add("authors");
+		select.add("description");
+		select.add("edition");
+		select.add("imagePath");
+		select.add("publisher");
+		select.add("publishingDate");
+		return select;
+	}
 
 	// Métodos auxiliares
 	
