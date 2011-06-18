@@ -137,20 +137,6 @@ public class SQLStatements extends ComponentBase implements ISQLStatements {
 				else
 					values += "''";
 		}
-		
-		Object o1;
-		o1 = 1;
-		Object o2;
-		o2 = "teste";
-		if(o1 instanceof Integer)
-			System.out.println("o1 inteiro");
-		if(o1 instanceof String)
-			System.out.println("o1 String");
-		if(o2 instanceof Integer)
-			System.out.println("o2 inteiro");
-		if(o2 instanceof String)
-			System.out.println("o2 String");
-		
 		return values;
 	}
 

@@ -48,7 +48,7 @@ public class DataBase extends ComponentBase implements IDataBase, IRequires<ISQL
 			stt.executeStatement(
 					"CREATE TABLE users " +
 					"(username VARCHAR(100) NOT NULL, " +
-					"accesLevel INT NOT NULL, " +
+					"accessLevel INT NOT NULL, " +
 					"birthday DATE NOT NULL, " +
 					"college VARCHAR(100), " +
 					"course VARCHAR(100), " +
@@ -151,6 +151,7 @@ public class DataBase extends ComponentBase implements IDataBase, IRequires<ISQL
 		try {
 			stt.insert("users", values);
 		} catch (SQLException erro) {
+			System.out.println(erro.getMessage());
 			sucesso = false;
 		}
 		return sucesso;
@@ -187,7 +188,7 @@ public class DataBase extends ComponentBase implements IDataBase, IRequires<ISQL
 					if(select.get(i).equalsIgnoreCase("username")) 
 						temp.setUsername(result.getString("username"));
 					if(select.get(i).equalsIgnoreCase("accessLevel"))
-						temp.setAccessLevel(result.getInt("accessLevel") == 1 ? true : false);
+						temp.setAccessLevel(result.getInt("accessLevel") == 1);
 					if(select.get(i).equalsIgnoreCase("birthday"))
 						temp.setBirthday(result.getDate("birthday"));
 					if(select.get(i).equalsIgnoreCase("college"))
@@ -266,12 +267,12 @@ public class DataBase extends ComponentBase implements IDataBase, IRequires<ISQL
 	public Vector<Object> getVectorSetUser(User u){
 		Vector<Object> v = new Vector<Object>();
 		v.add("username = '" + u.getUsername() + "'");
-		v.add("accessLevel = '" + (u.getAccessLevel() ? 1 : 0) + "'"); //como o banco não suporta boolean, deve ser 0 ou 1
+		v.add("accessLevel = " + (u.getAccessLevel() ? 1 : 0)); //como o banco não suporta boolean, deve ser 0 ou 1
 		v.add("birthday = '" + u.getBirthday() + "'");
 		v.add("college = '" + u.getCollege() + "'");
 		v.add("course = '" + u.getCourse() + "'");
 		v.add("email = '" + u.getEmail() + "'");
-		v.add("gender = '" + (u.getGender() ? 1 : 0)+ "'"); //como o banco não suporta boolean, deve ser 0 ou 1
+		v.add("gender = " + (u.getGender() ? 1 : 0)); //como o banco não suporta boolean, deve ser 0 ou 1
 		v.add("name = '" + u.getName() + "'");
 		v.add("password = '" + u.getPassword() + "'");
 		v.add("selfDescription = '" + u.getSelfDescription() + "'");
