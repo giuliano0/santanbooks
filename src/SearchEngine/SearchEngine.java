@@ -208,7 +208,6 @@ public class SearchEngine extends ComponentBase implements ISearchEngine, IRecep
 	 * @author Giuliano
 	 */
 	private String keyNormalize(String value) {
-		long start = System.currentTimeMillis();
 		String ret = "";
 		
 		value.trim();
@@ -231,7 +230,6 @@ public class SearchEngine extends ComponentBase implements ISearchEngine, IRecep
 		for (int i = 0; i < punctuation.length; i++)
 			ret = ret.replaceAll(punctuation[i], ""); 
 		
-		System.out.println("Running time (keyNormalize): " + (System.currentTimeMillis() - start) + "ms.");
 		return ret;
 	}
 	
@@ -242,7 +240,6 @@ public class SearchEngine extends ComponentBase implements ISearchEngine, IRecep
 	 * @return Retorna um array de strings com as tags encontradas.
 	 */
 	private String[] extractTags(String value) {
-		long start = System.currentTimeMillis();
 		String tags[];
 		
 		// remove, além de acentos, pontuação
@@ -260,8 +257,6 @@ public class SearchEngine extends ComponentBase implements ISearchEngine, IRecep
 		
 		tags = value.split(" ");
 		Arrays.sort(tags);
-		
-		System.out.println("Running time (extractTags): " + (System.currentTimeMillis() - start) + "ms.");
 		
 		return tags;
 	}
