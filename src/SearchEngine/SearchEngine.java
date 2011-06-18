@@ -119,10 +119,31 @@ public class SearchEngine implements ISearchEngine, IRequires<IDataBase> { // TO
 	
 	@Override
 	public Book[] searchByAuthor(String key) {
-		//String nKey = keyNormalize(key);
-		//Book[] books = mgrBusinessObject.selectBooksByAuthors(authors);
+	Vector<String> select = new Vector<String>();
+	Vector<String> where = new Vector<String>();
+	select.add("authors");
 
-		return null;
+	Book[] myBooks, books2;
+
+	// 1º - Procura pela nome exato do autor
+	where.add("authors LIKE '%" + key + "%'");
+	myBooks = dataBase.queryBook(select, where, null);
+
+	// 2º - Procura por cada um dos termos no nome do autor passado
+	String words[] = key.split(" ");
+	for(int i =0; i < words.length ; i++){
+	books2 = null;
+	where.add("authors LIKE '%" + words[i] + "%'");
+	//pega todos os livros contendo o trecho do nome do autor nessa iteracao
+	books2 = dataBase.queryBook(select, where, null);
+	myBooks = this.mergeBooks(myBooks, books2);
+	}
+
+	/*TODO:
+	* cada vez q um livro eh encontrado ele sobe no "ranking" da resposta
+	*/
+
+	return myBooks;
 	}
 
 	@Override
