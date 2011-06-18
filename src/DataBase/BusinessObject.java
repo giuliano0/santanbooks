@@ -1,13 +1,15 @@
 package DataBase;
 
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.Vector;
 
 import Classes.Book;
 import Classes.Comment;
 import Classes.Rating;
 import Classes.Review;
-import Classes.Session;
+import Classes.SessionData;
+import Classes.SessionManager;
 import Classes.User;
 import Exceptions.InvalidArgumentException;
 import Interfaces.IBusinessObject;
@@ -27,7 +29,7 @@ import anima.component.base.ComponentBase;
 		requires= { "<http://purl.org/dcc/Interfaces.IDataBase>" })
 public class BusinessObject extends ComponentBase implements IBusinessObject, IRequires<IDataBase> {
 	private IDataBase db;
-
+	
 	private enum RatingType {
 		BOOK, REVIEW
 	}
@@ -55,8 +57,7 @@ public class BusinessObject extends ComponentBase implements IBusinessObject, IR
 	}
 
 	@Override
-	public boolean deleteBook(String isbn) {
-		
+	public boolean deleteBook(String isbn) {	
 		deleteCommentsByIsbn(isbn);
 		deleteRatings(isbn);
 		deleteReviews(isbn);
@@ -198,7 +199,7 @@ public class BusinessObject extends ComponentBase implements IBusinessObject, IR
 	}
 
 	@Override
-	public boolean deleteSession(Session session) {
+	public boolean deleteSession(SessionData session) {
 		return deleteSession(session.getUsername());
 	}
 
@@ -207,7 +208,7 @@ public class BusinessObject extends ComponentBase implements IBusinessObject, IR
 		Vector<String> where = new Vector<String>();
 		where.add("username = '" + username + "'");
 
-		return db.deleteDataSession(where);
+		return db.deleteDataSessionData(where);
 	}
 
 	@Override
@@ -258,7 +259,7 @@ public class BusinessObject extends ComponentBase implements IBusinessObject, IR
 	}
 
 	@Override
-	public boolean insertSession(Session session) {
+	public boolean insertSession(SessionData session) {
 		return db.insertData(session);
 	}
 
@@ -335,11 +336,7 @@ public class BusinessObject extends ComponentBase implements IBusinessObject, IR
 		// coloca os valores no book correspondente a outras tabelas
 		if (result != null) {
 			for (int i = 0; i < result.length; i++) {
-				try {
-					result[i].setRating(selectRatingCalculed(result[i]));
-				} catch (InvalidArgumentException e) {
-					e.printStackTrace();
-				}
+				result[i].setRating(selectRatingCalculed(result[i]));
 				result[i].setComments(selectCommentsBook(result[i]));
 				result[i].setReviews(selectReviews(result[i]));
 			}
@@ -633,7 +630,7 @@ public class BusinessObject extends ComponentBase implements IBusinessObject, IR
 	}
 
 	@Override
-	public Session selectSession(String username) {
+	public SessionData selectSession(String username) {
 		Vector<String> select = new Vector<String>();
 		select.add("username");
 		select.add("status");
@@ -648,7 +645,7 @@ public class BusinessObject extends ComponentBase implements IBusinessObject, IR
 		order.add("username");
 
 		// realizando a consulta
-		Session[] result = db.querySession(select, where, order);
+		SessionData[] result = db.querySessionData(select, where, order);
 
 		if (result != null) {
 			return result[0];
@@ -751,7 +748,7 @@ public class BusinessObject extends ComponentBase implements IBusinessObject, IR
 	}
 
 	@Override
-	public boolean updateSession(Session session) {
+	public boolean updateSession(SessionData session) {
 		Vector<String> where = new Vector<String>();
 		where.add("username = '" + session.getUsername() + "'");
 
@@ -768,26 +765,53 @@ public class BusinessObject extends ComponentBase implements IBusinessObject, IR
 
 	@Override
 	public boolean insertReview(String isbn, String title, String content, String username) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean insertRating(String isbn, int value) {
+		Date dataAtual = new Date(System.currentTimeMillis());
 		
-		return false;
+		Review review = new Review();
+		review.setBookISBN(isbn);
+		review.setContent(content);		
+		review.setPublishingDate(dataAtual);
+		review.setTitle(title);
+		review.setUsername(username);
+		
+		return insertReview(review);
 	}
 
 	@Override
-	public boolean insertRating(int reviewID, int value) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean insertRating(String isbn, int value, String username) {
+		Rating rating = new Rating();
+		rating.setType(false);
+		rating.setValue(value);
+		rating.setUsername(username);
+		rating.setBookISBN(isbn);
+		return insertRating(rating);
+	}
+
+	@Override
+	public boolean insertRating(int reviewID, int value, String username) {
+		Rating rating = new Rating();
+		rating.setType(true);
+		rating.setValue(value);
+		rating.setUsername(username);
+		rating.setBookReview(reviewID);
+		return insertRating(rating);
 	}
 
 	@Override
 	public boolean insertComment(String isbn, String content, String username) {
-		// TODO Auto-generated method stub
+		Date dataAtual = new Date(System.currentTimeMillis());
+		
+		Comment comment = new Comment();
+		comment.setBookISBN(isbn);
+		comment.setContent(content);
+		try {
+			comment.setPublishingDate(dataAtual);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		comment.setUsername(username);
+		comment.setVisibility(true);
 		return false;
-	}
-
+	}	
 }

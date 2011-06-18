@@ -4,7 +4,7 @@ import Classes.Book;
 import Classes.Comment;
 import Classes.Rating;
 import Classes.Review;
-import Classes.Session;
+import Classes.SessionData;
 import Classes.User;
 import anima.annotation.ComponentInterface;
 import anima.component.ISupports;
@@ -107,8 +107,8 @@ public interface IBusinessObject extends ISupports {
 	
 	//insert
 	public boolean insertRating(Rating rating);
-	public boolean insertRating(String isbn, int value);
-	public boolean insertRating(int reviewID, int value);
+	public boolean insertRating(String isbn, int value, String username);
+	public boolean insertRating(int reviewID, int value, String username);
 	//update
 	public boolean updateRating(Rating rating);
 	
@@ -125,16 +125,16 @@ public interface IBusinessObject extends ISupports {
 	
 	//Session
 	//select
-	public Session selectSession(String username);
+	public SessionData selectSession(String user);
 	
 	//insert
-	public boolean insertSession(Session session);
+	public boolean insertSession(SessionData session);
 	
 	//update
-	public boolean updateSession(Session session);
+	public boolean updateSession(SessionData session);
 	
 	//delete
-	public boolean deleteSession(Session session);
+	public boolean deleteSession(SessionData session);
 	public boolean deleteSession(String username);
 	
 }
