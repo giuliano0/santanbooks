@@ -1,17 +1,13 @@
 package Classes;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.sql.Date;
-import java.util.Calendar;
-
 import Exceptions.InvalidArgumentException;
 import Interfaces.*;
 
 /**
- * 
+ * Classe básica que drscreve o objeto livro.
  * @author Giuliano
- *
  */
 public class Book implements ICommentable, IRateable, IReviewable {
 	String authors;			// "James 'I'm awesome' Stewart"
@@ -71,25 +67,15 @@ public class Book implements ICommentable, IRateable, IReviewable {
 		edition = value.trim();
 	}
 	
-	public void setImagePath(String value) throws FileNotFoundException {
-		/*try {
-			File file = new File(value);
-			
-			if(!file.exists()) throw new FileNotFoundException("Arquivo de imagem não encontrado.");
-		}
-		catch (FileNotFoundException ex){
-			throw ex;
-		}*/
-		
+	// ESPERA um caminho válido, senão joga o lixo no... lixo, e seta como null
+	public void setImagePath(String value) {
 		if(!new File(value).exists()) imagePath = "";
 		else imagePath = value;
-		
-		//imagePath = value;
 	}
 	
 	/* 
 	 * De acordo com a Agência Brasileira do ISBN (http://www.isbn.bn.br/), o ISBN agora terá 
-	 * SEMPRE 13 dígitosm no formato (ex.) 978-85-333-0398-X
+	 * SEMPRE 13 dígitos no formato (ex.) 978-85-333-0398-X
 	 * Todo ISBN anterior à norma, de 10 dígitos, receberá o prefixo 978 e manterá os outros 10 
 	 * dígitos. Novos ISBNs virão com 13 dígitos, os 3 primeiros SEMPRE diferentes de 978.
 	 * O X no final pode existir nos ISBN-10, mas nunca nos ISBN-13. Ele significa que o dígito 
@@ -102,9 +88,8 @@ public class Book implements ICommentable, IRateable, IReviewable {
 		value = value.trim();
 		
 		// Checa se o ISBN é válido (|"8523301432"| = 10, |"85-233-0143-2"| = |"9788523301432"| = 13, |"978-85-233-0143-2"| = 17) 
-		if (value.length() != 10 && value.length() != 13 && value.length() != 17) {
+		if (value.length() != 10 && value.length() != 13 && value.length() != 17)
 			throw new IllegalArgumentException("O ISBN digitado não está num dos formatos permitidos de entrada.");
-		}
 		
 		switch(value.length()) {
 		case 10: //8523301432
@@ -138,28 +123,11 @@ public class Book implements ICommentable, IRateable, IReviewable {
 			throw new_ex;
 		}
 		
-		/* [GIU] VERIFICAÇÃO DE DÍGITO DESABILITADA! */
-		
-		// Finalmente, confere o dígito de verificação do ISBN-13, easy job ;)
-		/*int digit;
-		// 012-45-789-1234-5
-		digit = (int)(isbn.charAt(0) - '0') + (3 * (int)(isbn.charAt(1) - '0')) + 
-				(int)(isbn.charAt(2) - '0') + (3 * (int)(isbn.charAt(4) - '0')) + 
-				(int)(isbn.charAt(5) - '0') + (3 * (int)(isbn.charAt(7) - '0')) + 
-				(int)(isbn.charAt(8) - '0') + (3 * (int)(isbn.charAt(9) - '0')) + 
-				(int)(isbn.charAt(11) - '0') + (3 * (int)(isbn.charAt(12) - '0')) + 
-				(int)(isbn.charAt(13) - '0') + (3 * (int)(isbn.charAt(14) - '0'));
-		
-		digit %= 10;
-		digit  = 10 - digit;
-		digit %= 10;
-		
-		if ((int)(isbn.charAt(16) - '0') != digit) {
-			isbn = null;
-			throw new IllegalArgumentException("O ISBN não é válido! falha no dígito de verificação!");
-		}*/
+		/* [GIU] A VERIFICAÇÃO DE DÍGITO DESABILITADA! */
+		// A verificação foge ao escopo do projeto.
 	}
 	
+	// Admite nome NÃO NULO
 	public void setName(String value) {
 		name = value.trim();
 	}
@@ -168,10 +136,8 @@ public class Book implements ICommentable, IRateable, IReviewable {
 		publisher = value.trim();
 	}
 	
-	public void setPublishingDate(Date value) throws Exception {
-		if (value.after(Calendar.getInstance().getTime()))
-			throw new Exception("A publicação é inválida. O sistema só aceita títulos já lançados.");
-		
+	// Admite data VÁLIDA (no mínimo, anterior à data atual)
+	public void setPublishingDate(Date value) {
 		publishingDate = value;
 	}
 	
@@ -179,22 +145,16 @@ public class Book implements ICommentable, IRateable, IReviewable {
 		return comments;
 	}
 
-	public Comment getComment(int id) throws InvalidArgumentException, NullPointerException {
-		try {
-			if(id == 0) throw new InvalidArgumentException();
-			if(reviews == null) throw new NullPointerException("Nenhuma review encontrada.");
-		}	
-		catch (InvalidArgumentException iaEx) {
-			throw iaEx;
-		}
-		catch (NullPointerException npEx) {
-			throw npEx;
-		}
+	public Comment getComment(int commentID) throws InvalidArgumentException, NullPointerException {
+		if (commentID == 0)
+			throw new InvalidArgumentException();
+
+		if (reviews == null)
+			throw new NullPointerException("O liro não contém comentários.");
 		
-		for(int i = 0; i < reviews.length; i++) {
-			if(reviews[i].ID == id)
+		for(int i = 0; i < reviews.length; i++)
+			if(reviews[i].ID == commentID)
 				return comments[i];
-		}
 		
 		return null;
 	}
@@ -203,28 +163,18 @@ public class Book implements ICommentable, IRateable, IReviewable {
 		return (int)Math.round(rating);
 	}
 
-	/**
-	 * @author Davi
-	 */
 	public Review[] getAllReviews() {
 		return reviews;
 	}
 
 	/**
 	 * @author Davi
+	 * @author Giuliano
 	 * @throws InvalidArgumentException, NullPointerException 
 	 */
 	public Review getReview(int id) throws InvalidArgumentException, NullPointerException {
-		try {
-			if(id == 0) throw new InvalidArgumentException();
-			if(reviews == null) throw new NullPointerException("Nenhuma review encontrada.");
-		}	
-		catch (InvalidArgumentException iaEx) {
-			throw iaEx;
-		}
-		catch (NullPointerException npEx) {
-			throw npEx;
-		}
+		if (id == 0) throw new InvalidArgumentException();
+		if (reviews == null) throw new NullPointerException("Nenhuma review encontrada.");
 		
 		for(int i = 0; i < reviews.length; i++) {
 			if(reviews[i].ID == id)
@@ -234,16 +184,10 @@ public class Book implements ICommentable, IRateable, IReviewable {
 		return null;
 	}
 
-	/**
-	 * @author Davi
-	 */
 	public void setReviews(Review[] reviews) {
 		this.reviews = reviews;
 	}
 
-	/**
-	 * @author Davi
-	 */
 	public void setComments(Comment[] commments) {
 		this.comments = commments;
 	}
@@ -251,16 +195,10 @@ public class Book implements ICommentable, IRateable, IReviewable {
 	/**
 	 * @author Davi
 	 */
-	public void setRating(float value) throws InvalidArgumentException {
+	public void setRating(float value) {
 		if (value < 0) rating = 0; 
 		else if (value > 5) rating = 5;
 		else rating = value;
-	}
-
-	// TODO Consertar
-	public Comment getComment(String username) throws InvalidArgumentException,
-			NullPointerException {
-		return null;
 	}
 
 }

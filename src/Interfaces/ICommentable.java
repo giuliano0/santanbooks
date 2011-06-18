@@ -11,7 +11,5 @@ public interface ICommentable {
 	//void addComment(Comment comment);	// O commentID é ignorado
 	//void editComment();					// O commentID é conferido
 	Comment[] getAllComments();
-	Comment getComment(String username) throws InvalidArgumentException, NullPointerException;
-	//void setComments(Comment[] commments);
-	//void setComment(Comment commment);
+	Comment getComment(int commentID) throws InvalidArgumentException, NullPointerException;
 }

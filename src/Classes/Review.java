@@ -73,13 +73,12 @@ public class Review implements ICommentable, IRateable {
 		content = value;
 	}
 	
-	public void setPublishingDate(Date value) throws Exception {
-		//if (value.after(Calendar.getInstance().getTime()))
-			//throw new Exception("A publicação é inválida. O sistema só aceita títulos já lançados.");
-		
+	// Admite data VÁLIDA (no mínimo, anterior à data atual)
+	public void setPublishingDate(Date value) {
 		publishingDate = value;
 	}
 	
+	// Admite título NÃO NULO
 	public void setTitle(String value) {
 		title = value.trim();
 	}
@@ -87,21 +86,16 @@ public class Review implements ICommentable, IRateable {
 	public Comment[] getAllComments() {
 		return comments;
 	}
-
-	public Comment getComment(String username) throws InvalidArgumentException, NullPointerException {
-		try {
-			if(username.length() == 0) throw new InvalidArgumentException();
-			if(comments == null) throw new NullPointerException("Nenhuma review encontrada.");
-		}	
-		catch (InvalidArgumentException iaEx) {
-			throw iaEx;
-		}
-		catch (NullPointerException npEx) {
-			throw npEx;
-		}
+	
+	public Comment getComment(int commentID) throws InvalidArgumentException, NullPointerException {
+		if (commentID == 0) 
+			throw new InvalidArgumentException();
+		
+		if (comments == null) 
+			throw new NullPointerException("O livro não tem reviews.");
 		
 		for(int i = 0; i < comments.length; i++) {
-			if(comments[i].getUsername().equalsIgnoreCase(username))
+			if(comments[i].getID() == commentID)
 				return comments[i];
 		}
 		
