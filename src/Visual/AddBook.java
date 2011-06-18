@@ -283,7 +283,7 @@ public class AddBook extends javax.swing.JPanel {
         
         if (this.parent.getBusinessObject().insertBook(novo)) {
         	JOptionPane.showMessageDialog(null, "Livro inserido com sucesso!");
-        	this.parent.lastPanel();
+        	this.parent.changePanel(Santanbooks.PANEL_HOME);
         }
         else
         	JOptionPane.showMessageDialog(null, "Erro ao inserir um livro!");

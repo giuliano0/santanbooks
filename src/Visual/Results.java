@@ -125,7 +125,7 @@ public class Results extends javax.swing.JPanel implements ActionListener, Mouse
 		}
 		
 		if (((JButton)e.getSource()).getText().equals("Voltar")) {
-			this.parent.lastPanel();
+			this.parent.changePanel(Santanbooks.PANEL_HOME);
 		}
 			
 		

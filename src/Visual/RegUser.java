@@ -280,6 +280,6 @@ public class RegUser extends javax.swing.JPanel implements ActionListener {
 		if (this.parent.getBusinessObject().insertUser(novo))
 			JOptionPane.showMessageDialog(null, "Usuário salvo com sucesso!");
 		
-		this.parent.lastPanel();
+		this.parent.changePanel(Santanbooks.PANEL_HOME);
 	}
 }

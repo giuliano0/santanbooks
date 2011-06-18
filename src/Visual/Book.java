@@ -44,9 +44,9 @@ public class Book extends javax.swing.JPanel {
 
         jLabel3.setText(livroAtual.getImagePath());
 
-        publisher5.setText(livroAtual.getAllReviews().toString());
+        //publisher5.setText(livroAtual.getAllReviews().toString());
 
-         publisher6.setText(livroAtual.getAllComments().toString());
+         //publisher6.setText(livroAtual.getAllComments().toString());
     }
     
     /** This method is called from within the constructor to
