@@ -54,157 +54,98 @@ public class ShowUser extends javax.swing.JPanel {
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setMaximumSize(new java.awt.Dimension(800, 600));
         setMinimumSize(new java.awt.Dimension(800, 600));
+        setLayout(null);
 
-        jLabel1.setFont(new java.awt.Font("SansSerif", 1, 24)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("SansSerif", 1, 24));
         jLabel1.setText("<USERNAME>");
+        add(jLabel1);
+        jLabel1.setBounds(320, 70, 170, 32);
 
         descriptionLabel1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         descriptionLabel1.setText("Sobre <USERNAME>:");
+        add(descriptionLabel1);
+        descriptionLabel1.setBounds(188, 242, 117, 14);
 
-        nameLabel2.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        nameLabel2.setFont(new java.awt.Font("Tahoma", 1, 11));
         nameLabel2.setText("Nome:");
+        add(nameLabel2);
+        nameLabel2.setBounds(191, 150, 35, 14);
 
-        personalTitle2.setFont(new java.awt.Font("DejaVu Sans 13 13", 1, 13)); // NOI18N
+        personalTitle2.setFont(new java.awt.Font("DejaVu Sans 13 13", 1, 13));
         personalTitle2.setText("Informações pessoais:");
+        add(personalTitle2);
+        personalTitle2.setBounds(188, 123, 140, 16);
 
         academicTitle1.setFont(new java.awt.Font("DejaVu Sans 13 13", 1, 13)); // NOI18N
         academicTitle1.setText("Informações acadêmicas :");
+        add(academicTitle1);
+        academicTitle1.setBounds(188, 338, 166, 18);
 
-        bdayLabel1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        bdayLabel1.setFont(new java.awt.Font("Tahoma", 1, 11));
         bdayLabel1.setText("Nascimento:");
+        add(bdayLabel1);
+        bdayLabel1.setBounds(346, 180, 70, 14);
 
-        emailLabel1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        emailLabel1.setFont(new java.awt.Font("Tahoma", 1, 11));
         emailLabel1.setText("E-mail:");
+        add(emailLabel1);
+        emailLabel1.setBounds(188, 210, 38, 14);
 
-        courseLabel1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        courseLabel1.setFont(new java.awt.Font("Tahoma", 1, 11));
         courseLabel1.setText("Curso:");
+        add(courseLabel1);
+        courseLabel1.setBounds(230, 400, 35, 14);
 
         collegeLabel1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         collegeLabel1.setText("Universidade:");
+        add(collegeLabel1);
+        collegeLabel1.setBounds(188, 370, 77, 14);
 
-        genderLabel1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        genderLabel1.setFont(new java.awt.Font("Tahoma", 1, 11));
         genderLabel1.setText("Sexo:");
+        add(genderLabel1);
+        genderLabel1.setBounds(195, 180, 31, 14);
 
-        yearLabel1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        yearLabel1.setFont(new java.awt.Font("Tahoma", 1, 11));
         yearLabel1.setText("Ano:");
+        add(yearLabel1);
+        yearLabel1.setBounds(240, 430, 25, 14);
 
         jLabel2.setText("<NOME DO USUARIO>");
+        add(jLabel2);
+        jLabel2.setBounds(236, 150, 112, 14);
 
         jLabel3.setText("<SEXO>");
+        add(jLabel3);
+        jLabel3.setBounds(236, 180, 42, 14);
 
         jLabel4.setText("<NASCIMENTO>");
+        add(jLabel4);
+        jLabel4.setBounds(426, 180, 82, 14);
 
         jLabel5.setText("<EMAIL>");
+        add(jLabel5);
+        jLabel5.setBounds(236, 210, 46, 14);
 
         jLabel6.setText("<DESCRIÇAO DO USUARIO>");
+        add(jLabel6);
+        jLabel6.setBounds(188, 260, 142, 72);
 
         jLabel7.setText("<UNIVERSIDADE>");
+        add(jLabel7);
+        jLabel7.setBounds(277, 370, 90, 14);
 
         jLabel8.setText("<CURSO>");
+        add(jLabel8);
+        jLabel8.setBounds(275, 400, 51, 14);
 
         jLabel9.setText("<ANO>");
+        add(jLabel9);
+        jLabel9.setBounds(275, 430, 38, 14);
 
         jButton1.setText("Voltar");
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(320, 320, 320)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(190, 190, 190)
-                        .addComponent(collegeLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel7))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(230, 230, 230)
-                        .addComponent(courseLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel8))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(240, 240, 240)
-                        .addComponent(yearLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel9))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(360, 360, 360)
-                        .addComponent(jButton1))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(190, 190, 190)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(academicTitle1)
-                            .addComponent(jLabel6)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(191, 191, 191)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(nameLabel2)
-                            .addComponent(genderLabel1))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel3)
-                                .addGap(68, 68, 68)
-                                .addComponent(bdayLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jLabel4))
-                            .addComponent(jLabel2)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(188, 188, 188)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(descriptionLabel1)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(emailLabel1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jLabel5))
-                            .addComponent(personalTitle2))))
-                .addGap(205, 205, 205))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(70, 70, 70)
-                .addComponent(jLabel1)
-                .addGap(21, 21, 21)
-                .addComponent(personalTitle2, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(nameLabel2)
-                    .addComponent(jLabel2))
-                .addGap(16, 16, 16)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(genderLabel1)
-                    .addComponent(bdayLabel1)
-                    .addComponent(jLabel4))
-                .addGap(16, 16, 16)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(emailLabel1)
-                    .addComponent(jLabel5))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(descriptionLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(academicTitle1)
-                .addGap(14, 14, 14)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(collegeLabel1)
-                    .addComponent(jLabel7))
-                .addGap(16, 16, 16)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(courseLabel1)
-                    .addComponent(jLabel8))
-                .addGap(16, 16, 16)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(yearLabel1)
-                    .addComponent(jLabel9))
-                .addGap(36, 36, 36)
-                .addComponent(jButton1))
-        );
+        add(jButton1);
+        jButton1.setBounds(360, 480, 61, 23);
     }// </editor-fold>//GEN-END:initComponents
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

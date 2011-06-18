@@ -34,6 +34,7 @@ public class SessionManagerLoggedIn extends javax.swing.JPanel {
         editProfileLabel = new javax.swing.JLabel();
         addBookLabel = new javax.swing.JLabel();
         logoPanel = new javax.swing.JLabel();
+        exitLabel = new javax.swing.JLabel();
 
         setMaximumSize(new java.awt.Dimension(800, 50));
         setMinimumSize(new java.awt.Dimension(800, 50));
@@ -42,19 +43,29 @@ public class SessionManagerLoggedIn extends javax.swing.JPanel {
 
         helloLabel.setText("Olá, <USERNAME>!");
         add(helloLabel);
-        helloLabel.setBounds(620, 10, 100, 14);
+        helloLabel.setBounds(560, 10, 100, 14);
 
         editProfileLabel.setForeground(new java.awt.Color(0, 0, 255));
         editProfileLabel.setText("Edite seu perfil");
         editProfileLabel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        editProfileLabel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                editProfileLabelMouseClicked(evt);
+            }
+        });
         add(editProfileLabel);
-        editProfileLabel.setBounds(620, 30, 80, 14);
+        editProfileLabel.setBounds(560, 30, 100, 14);
 
         addBookLabel.setForeground(new java.awt.Color(0, 0, 255));
         addBookLabel.setText("Adicionar livro");
         addBookLabel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        addBookLabel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                addBookLabelMouseClicked(evt);
+            }
+        });
         add(addBookLabel);
-        addBookLabel.setBounds(720, 30, 70, 14);
+        addBookLabel.setBounds(670, 30, 90, 14);
 
         logoPanel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Santanbooks_Small.png"))); // NOI18N
         logoPanel.setText("jLabel1");
@@ -69,15 +80,29 @@ public class SessionManagerLoggedIn extends javax.swing.JPanel {
         });
         add(logoPanel);
         logoPanel.setBounds(10, 5, 210, 40);
+
+        exitLabel.setForeground(new java.awt.Color(0, 0, 255));
+        exitLabel.setText("Sair");
+        add(exitLabel);
+        exitLabel.setBounds(760, 30, 18, 14);
     }// </editor-fold>//GEN-END:initComponents
 
     private void logoPanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoPanelMouseClicked
         parent.changePanel(Santanbooks.PANEL_HOME);
     }//GEN-LAST:event_logoPanelMouseClicked
 
+    private void editProfileLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editProfileLabelMouseClicked
+        parent.changePanel(Santanbooks.PANEL_EDIT_PROFILE);
+    }//GEN-LAST:event_editProfileLabelMouseClicked
+
+    private void addBookLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addBookLabelMouseClicked
+        parent.changePanel(Santanbooks.PANEL_ADD_BOOK);
+    }//GEN-LAST:event_addBookLabelMouseClicked
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel addBookLabel;
     private javax.swing.JLabel editProfileLabel;
+    private javax.swing.JLabel exitLabel;
     private javax.swing.JLabel helloLabel;
     private javax.swing.JLabel logoPanel;
     // End of variables declaration//GEN-END:variables

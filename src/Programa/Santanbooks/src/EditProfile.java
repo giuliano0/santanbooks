@@ -75,12 +75,12 @@ public class EditProfile extends javax.swing.JPanel {
         add(bdayLabel1);
         bdayLabel1.setBounds(444, 149, 55, 14);
 
-        title1.setFont(new java.awt.Font("SansSerif 24 24", 1, 24)); // NOI18N
+        title1.setFont(new java.awt.Font("SansSerif 24 24", 1, 24));
         title1.setText("Edite sua conta");
         add(title1);
         title1.setBounds(300, 45, 178, 32);
 
-        academicTitle1.setFont(new java.awt.Font("DejaVu Sans 13 13", 1, 13)); // NOI18N
+        academicTitle1.setFont(new java.awt.Font("DejaVu Sans 13 13", 1, 13));
         academicTitle1.setText("Informações acadêmicas :");
         add(academicTitle1);
         academicTitle1.setBounds(210, 310, 166, 18);
@@ -102,7 +102,7 @@ public class EditProfile extends javax.swing.JPanel {
         add(maleButton1);
         maleButton1.setBounds(290, 145, 53, 23);
 
-        loginTitle1.setFont(new java.awt.Font("DejaVu Sans 13 13", 1, 13)); // NOI18N
+        loginTitle1.setFont(new java.awt.Font("DejaVu Sans 13 13", 1, 13));
         loginTitle1.setText("Altere sua senha:");
         add(loginTitle1);
         loginTitle1.setBounds(205, 415, 110, 18);
@@ -111,43 +111,43 @@ public class EditProfile extends javax.swing.JPanel {
         add(pwordLabel1);
         pwordLabel1.setBounds(246, 481, 58, 14);
         add(yearText1);
-        yearText1.setBounds(500, 378, 113, 20);
+        yearText1.setBounds(500, 380, 110, 20);
         add(pwordText1);
         pwordText1.setBounds(308, 478, 199, 20);
 
         genderLabel1.setText("Sexo");
         add(genderLabel1);
-        genderLabel1.setBounds(190, 150, 24, 14);
+        genderLabel1.setBounds(200, 150, 24, 14);
 
         yearLabel1.setText("Ano");
         add(yearLabel1);
-        yearLabel1.setBounds(475, 380, 19, 14);
+        yearLabel1.setBounds(475, 383, 19, 14);
 
         buttonGroup1.add(femaleButton1);
         femaleButton1.setText("Fem.");
         add(femaleButton1);
         femaleButton1.setBounds(235, 145, 49, 23);
         add(courseText1);
-        courseText1.setBounds(265, 380, 204, 20);
+        courseText1.setBounds(260, 380, 204, 20);
         add(oldpwText1);
         oldpwText1.setBounds(308, 446, 199, 20);
 
-        personalTitle1.setFont(new java.awt.Font("DejaVu Sans 13 13", 1, 13)); // NOI18N
+        personalTitle1.setFont(new java.awt.Font("DejaVu Sans 13 13", 1, 13));
         personalTitle1.setText("Informações pessoais:");
         add(personalTitle1);
         personalTitle1.setBounds(207, 87, 140, 16);
 
         nameLabel1.setText("Nome");
         add(nameLabel1);
-        nameLabel1.setBounds(190, 120, 27, 14);
+        nameLabel1.setBounds(198, 119, 27, 14);
 
         descriptionLabel1.setText("Descreva-se em poucas linhas:");
         add(descriptionLabel1);
-        descriptionLabel1.setBounds(190, 210, 148, 14);
+        descriptionLabel1.setBounds(200, 210, 148, 14);
 
         emailLabel1.setText("E-mail");
         add(emailLabel1);
-        emailLabel1.setBounds(190, 180, 28, 14);
+        emailLabel1.setBounds(197, 182, 28, 14);
         add(collegeText1);
         collegeText1.setBounds(260, 340, 350, 20);
         add(bdayText1);
@@ -188,7 +188,7 @@ public class EditProfile extends javax.swing.JPanel {
 
         courseLabel1.setText("Curso");
         add(courseLabel1);
-        courseLabel1.setBounds(230, 380, 28, 14);
+        courseLabel1.setBounds(228, 383, 28, 14);
     }// </editor-fold>//GEN-END:initComponents
 
     private void cancelButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButton1ActionPerformed

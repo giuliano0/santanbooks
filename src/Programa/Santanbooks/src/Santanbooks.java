@@ -5,6 +5,7 @@ import java.awt.event.*;
 public class Santanbooks extends JFrame {
     public static final String PANEL_HOME = "home";
     public static final String PANEL_REG_USER = "reguser";
+    public static final String PANEL_EDIT_PROFILE = "editprofile";
     public static final String PANEL_PROFILE = "profile";
     public static final String PANEL_RESULTS = "results";
     public static final String PANEL_BOOK = "book";
@@ -72,12 +73,13 @@ public class Santanbooks extends JFrame {
         addPanel(new Results(this), PANEL_RESULTS);
         addPanel(new Book(this), PANEL_BOOK);
         addPanel(new AddBook(this), PANEL_ADD_BOOK);
+        addPanel(new EditProfile(this), PANEL_EDIT_PROFILE);
 
         sessionManager.add(new SessionManagerLoggedIn(this), SESSION_LOGGED);
         sessionManager.add(new SessionManagerLogin(this), SESSION_NOT_LOGGED);
 
-        changePanel(PANEL_HOME);
-        ((CardLayout)sessionManager.getLayout()).show(sessionManager, SESSION_NOT_LOGGED);
+        changePanel(PANEL_EDIT_PROFILE);
+        ((CardLayout)sessionManager.getLayout()).show(sessionManager, SESSION_LOGGED);
     }
 
     public static void main(String args[]) {
