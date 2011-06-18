@@ -2,6 +2,7 @@ package Visual;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.LayoutManager;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
@@ -47,6 +48,8 @@ public class GUIComment extends JPanel{
 	private JButton rateButton;
 	private JButton edit;
 	private JToggleButton visible;
+	private SpringLayout layout;
+	private JPanel me;
 	
 	private JButton cancelar, salvar;
 	
@@ -56,8 +59,9 @@ public class GUIComment extends JPanel{
 	 * Configura o painel
 	 */
 	public GUIComment(){
-		SpringLayout layout = new SpringLayout();
+		layout = new SpringLayout();
 		setLayout(layout);
+		me = this;
 
 		setUser();
 		layout.putConstraint(SpringLayout.WEST, user, 10, SpringLayout.WEST, this);
@@ -211,9 +215,17 @@ public class GUIComment extends JPanel{
 		edit.addMouseListener(new MouseListener(){
 
 			public void mouseClicked(MouseEvent arg0) {
-				remove(visible);
-				remove(edit);
-				setEditButtons();
+				text.setEditable(true);
+				me.setVisible(false);
+				setEditionButtons();
+
+				layout.putConstraint(SpringLayout.EAST, cancelar, -10, SpringLayout.WEST, visible);
+				layout.putConstraint(SpringLayout.SOUTH, cancelar, 0, SpringLayout.SOUTH, visible);
+		
+				layout.putConstraint(SpringLayout.EAST, salvar, -10, SpringLayout.WEST, cancelar);
+				layout.putConstraint(SpringLayout.SOUTH, salvar, 0, SpringLayout.SOUTH, visible);
+				
+				me.setVisible(true);
 			}
 			public void mouseEntered(MouseEvent arg0) {}
 			public void mouseExited(MouseEvent arg0) {}
@@ -223,8 +235,72 @@ public class GUIComment extends JPanel{
 		});
 	}
 	
-	public void setEditButtons(){
+	public void setEditionButtons(){
+		salvar = new JButton("Salvar");
+		salvar.setSize(20, 10);
+		add(salvar);
+		salvar.addMouseListener(new MouseListener(){
+
+			public void mouseClicked(MouseEvent arg0) {
+				text.setEditable(false);
+				comment.setContent(text.getText());
+				text.setText(comment.getContent());
+				
+				try {
+					IGlobalFactory factory = ComponentContextFactory.createGlobalFactory();
+
+					 factory.registerPrototype(IBusinessObject.class);
+					 IBusinessObject bo = factory.createInstance(
+							 "<http://purl.org/dcc/DataBase.BusinessObject>");
+					 
+					 factory.registerPrototype(ISQLStatements.class);
+					 ISQLStatements sqlst = factory.createInstance(
+							 "<http://purl.org/dcc/JavaDB.SQLStatements>");
+					 
+					 factory.registerPrototype(IDataBase.class);
+					 IDataBase db = factory.createInstance(
+							 "<http://purl.org/dcc/JavaDB.DataBase>");
+					 
+					 ((DataBase)db).connect(sqlst);
+					 ((BusinessObject)bo).connect(db);
+					 
+					 bo.insertComment(comment);
+				} catch (ContextException e) {
+					e.printStackTrace();
+				} catch (FactoryException e) {
+					e.printStackTrace();
+				}
+				me.setVisible(false);
+				remove(salvar);
+				remove(cancelar);
+				me.setVisible(true);			
+			}
+			public void mouseEntered(MouseEvent arg0) {}
+			public void mouseExited(MouseEvent arg0) {}
+			public void mousePressed(MouseEvent arg0) {}
+			public void mouseReleased(MouseEvent arg0) {}
+			
+		});
 		
+		cancelar = new JButton("Cancelar");
+		cancelar.setSize(20, 10);
+		add(cancelar);
+		cancelar.addMouseListener(new MouseListener(){
+
+			public void mouseClicked(MouseEvent arg0) {
+				text.setEditable(false);
+				text.setText(comment.getContent());
+				me.setVisible(false);
+				remove(salvar);
+				remove(cancelar);
+				me.setVisible(true);
+			}
+			public void mouseEntered(MouseEvent arg0) {}
+			public void mouseExited(MouseEvent arg0) {}
+			public void mousePressed(MouseEvent arg0) {}
+			public void mouseReleased(MouseEvent arg0) {}
+			
+		});
 	}
 	
 	private void setVisibleButton(){
