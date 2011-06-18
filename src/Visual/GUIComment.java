@@ -1,7 +1,6 @@
 package Visual;
 
 import java.awt.Color;
-import java.awt.Container;
 import java.awt.Font;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -11,31 +10,33 @@ import javax.swing.JComboBox;
 import javax.swing.JEditorPane;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.JToggleButton;
 import javax.swing.SpringLayout;
 import javax.swing.text.html.HTMLEditorKit;
 
+import Classes.Comment;
+import DataBase.BusinessObject;
+import Exceptions.InvalidArgumentException;
+import Interfaces.IBusinessObject;
+import Interfaces.IDataBase;
+import Interfaces.ISQLStatements;
+import JavaDB.DataBase;
 import anima.context.exception.ContextException;
 import anima.factory.IGlobalFactory;
 import anima.factory.context.componentContext.ComponentContextFactory;
 import anima.factory.exception.FactoryException;
-import Interfaces.*;
-import JavaDB.*;
-import DataBase.*;
-
-import Classes.Review;
-import Exceptions.InvalidArgumentException;
 
 /**
- * JPanel que exibe um review (o formato também é bom para comentários).
- * @author José Américo Nabuco Leva Ferreira de Freitas
+ * Exibe um cometario
+ * @author Jose Americo Nabuco Leva Ferreira de Freitas
  *
  */
-public class GUIReview extends JFrame{
+public class GUIComment extends JPanel{
 	private static final long serialVersionUID = 1L;
 
-	private JEditorPane title;
 	private JEditorPane text;
 	private JScrollPane scrollText;
 	private JTextArea user;
@@ -45,21 +46,20 @@ public class GUIReview extends JFrame{
 	private JLabel rating;
 	private JButton rateButton;
 	private JButton edit;
-	private Container contentPane;
+	private JToggleButton visible;
 	
-	private Review review;
+	private Comment comment;
 	
 	/**
 	 * Configura o painel
 	 */
-	public GUIReview(){
+	public GUIComment(){
 		SpringLayout layout = new SpringLayout();
-		contentPane = getContentPane();
-		contentPane.setLayout(layout);
+		setLayout(layout);
 
 		setUser();
-		layout.putConstraint(SpringLayout.WEST, user, 10, SpringLayout.WEST, contentPane);
-		layout.putConstraint(SpringLayout.NORTH, user, 10, SpringLayout.NORTH, contentPane);
+		layout.putConstraint(SpringLayout.WEST, user, 10, SpringLayout.WEST, this);
+		layout.putConstraint(SpringLayout.NORTH, user, 10, SpringLayout.NORTH, this);
 
 		setDate();
 		layout.putConstraint(SpringLayout.WEST, date, 5, SpringLayout.EAST, user);
@@ -70,7 +70,7 @@ public class GUIReview extends JFrame{
 		layout.putConstraint(SpringLayout.VERTICAL_CENTER, avaliacao, 0, SpringLayout.VERTICAL_CENTER, rating);
 
 		setRateButton();
-		layout.putConstraint(SpringLayout.EAST, rateButton, -10, SpringLayout.EAST, contentPane);
+		layout.putConstraint(SpringLayout.EAST, rateButton, -10, SpringLayout.EAST, this);
 		layout.putConstraint(SpringLayout.NORTH, rateButton, 10, SpringLayout.SOUTH, avaliacao);
 		
 		setRateBox();
@@ -82,19 +82,20 @@ public class GUIReview extends JFrame{
 		layout.putConstraint(SpringLayout.EAST, avaliacao, 0, SpringLayout.WEST, rating);
 		
 		setEditButton();
-		layout.putConstraint(SpringLayout.EAST, edit, -10, SpringLayout.EAST, contentPane);
-		layout.putConstraint(SpringLayout.SOUTH, edit, -10, SpringLayout.SOUTH, contentPane);
-
-		setText();
-		layout.putConstraint(SpringLayout.WEST, title, 10, SpringLayout.WEST, contentPane);
-		layout.putConstraint(SpringLayout.SOUTH, title, 60, SpringLayout.SOUTH, rateButton);
-		layout.putConstraint(SpringLayout.EAST, title, -10, SpringLayout.EAST, contentPane);
-		layout.putConstraint(SpringLayout.NORTH, title, -50, SpringLayout.SOUTH, title);		
+		layout.putConstraint(SpringLayout.EAST, edit, -10, SpringLayout.EAST, this);
+		layout.putConstraint(SpringLayout.SOUTH, edit, -10, SpringLayout.SOUTH, this);
 		
-		layout.putConstraint(SpringLayout.WEST, scrollText, 10, SpringLayout.WEST, contentPane);
+		//if(usuario == comment.getUsername()){
+			setVisibleButton();
+			layout.putConstraint(SpringLayout.EAST, visible, -10, SpringLayout.WEST, edit);
+			layout.putConstraint(SpringLayout.SOUTH, visible, -10, SpringLayout.SOUTH, this);		
+		//}
+		setText();
+		layout.putConstraint(SpringLayout.WEST, scrollText, 10, SpringLayout.WEST, this);
 		layout.putConstraint(SpringLayout.SOUTH, scrollText, -10, SpringLayout.NORTH, edit);
-		layout.putConstraint(SpringLayout.EAST, scrollText, -10, SpringLayout.EAST, contentPane);
-		layout.putConstraint(SpringLayout.NORTH, scrollText, 10, SpringLayout.SOUTH, title);
+		layout.putConstraint(SpringLayout.EAST, scrollText, -10, SpringLayout.EAST, this);
+		layout.putConstraint(SpringLayout.NORTH, scrollText, 10, SpringLayout.SOUTH, rateButton);
+		
 		
 		setSize(650, 500);
 	}
@@ -103,29 +104,23 @@ public class GUIReview extends JFrame{
 	 * Configura o painel de acordo com os dados da review.
 	 * @param arg0
 	 */
-	public void setReview(Review arg0) {
-		review=arg0;
+	public void setComment(Comment arg0) {
+		comment=arg0;
 		user.setText("by "+arg0.getUsername());
 		date.setText(arg0.getPublishingDate().toString());
-		title.setText("<h1>"+arg0.getTitle()+"</h1>");
 		text.setText(arg0.getContent());
 		Integer x = new Integer(arg0.getRating());
 		rating.setText(x.toString());
+		visible.setText(arg0.getVisibility()?"Visivel":"Invisivel");
 	}
 	
-	private void setText(){
-		title = new JEditorPane();
-		title.setEditable(false);
-		title.setEditorKit(new HTMLEditorKit());
-		title.setContentType("text/html");
-		contentPane.add(title);
-		
+	private void setText(){		
 		text = new JEditorPane();
 		text.setEditable(false);
 		text.setEditorKit(new HTMLEditorKit());
 		text.setContentType("text/html");
 		scrollText = new JScrollPane(text);
-		contentPane.add(scrollText);
+		add(scrollText);
 	}
 	
 	private void setUser(){
@@ -133,7 +128,7 @@ public class GUIReview extends JFrame{
 		user.setFont(new Font(null, Font.BOLD, 16));
 		user.setBackground(new Color(238,238,238));
 		user.setEditable(false);
-		contentPane.add(user);
+		add(user);
 	}
 	
 	private void setDate(){
@@ -141,17 +136,17 @@ public class GUIReview extends JFrame{
 		date.setFont(new Font(null, Font.ITALIC, 12));
 		date.setBackground(new Color(238,238,238));
 		date.setEditable(false);
-		contentPane.add(date);
+		add(date);
 	}
 	
 	private void setRateLabel(){
 		avaliacao = new JLabel("Avaliacao: ");
-		contentPane.add(avaliacao);
+		add(avaliacao);
 		
 		rating = new JLabel();
 		rating.setBackground(new Color(238, 238, 238));
 		rating.setFont(new Font(null, Font.BOLD, 28));
-		contentPane.add(rating);
+		add(rating);
 	}
 	
 	private void setRateButton(){
@@ -182,8 +177,8 @@ public class GUIReview extends JFrame{
 				 /*Refreshes the rating in the database and in the screen*/
 				try {
 					// TODO  consertar isto => bo.insertRating(review.getID(), toRate.getSelectedItem(), username);
-					review.setRating(bo.selectRatingCalculed(review.getID()));
-					Integer x = review.getRating();
+					comment.setRating(bo.selectRatingCalculed(comment.getID()));
+					Integer x = comment.getRating();
 					rating.setText(x.toString());
 				} catch (InvalidArgumentException e) {
 					e.printStackTrace();
@@ -199,13 +194,13 @@ public class GUIReview extends JFrame{
 			public void mousePressed(MouseEvent arg0) {}
 			public void mouseReleased(MouseEvent arg0) {}});
 		
-		contentPane.add(rateButton);
+		add(rateButton);
 	}
 	
 	private void setRateBox(){
 		toRate = new JComboBox(new javax.swing.DefaultComboBoxModel(new String[] { "1", "2", "3", "4", "5" }));
 		toRate.setSize(20, 10);
-		contentPane.add(toRate);
+		add(toRate);
 	}
 	
 	private void setEditButton(){
@@ -215,7 +210,7 @@ public class GUIReview extends JFrame{
 		edit.addMouseListener(new MouseListener(){
 
 			public void mouseClicked(MouseEvent arg0) {
-				// TODO chamar o review.editor
+				// TODO chamar o comment.editor
 				System.out.println("clicou!");
 			}
 			public void mouseEntered(MouseEvent arg0) {}
@@ -226,11 +221,49 @@ public class GUIReview extends JFrame{
 		});
 	}
 	
+	private void setVisibleButton(){
+		visible = new JToggleButton();
+		visible.setSize(20, 10);
+		add(visible);
+		visible.addMouseListener(new MouseListener(){
+
+			public void mouseClicked(MouseEvent arg0) {
+				if(comment.getVisibility()){
+					comment.setVisibility(false);
+					visible.setText("Invisivel");
+				}
+				else{
+					comment.setVisibility(true);
+					visible.setText("Visivel");
+				}
+			}
+			public void mouseEntered(MouseEvent arg0) {}
+			public void mouseExited(MouseEvent arg0) {}
+			public void mousePressed(MouseEvent arg0) {}
+			public void mouseReleased(MouseEvent arg0) {}
+			
+		});
+	}
+	
+	/**
+	 * Mostra o painel
+	 */
+	public void show(){
+		setVisible(true);
+	}
+	
+	/**
+	 * Oculta o painel
+	 */
+	public void hide(){
+		setVisible(false);
+	}
+	
 	/**
 	 * Main (para testes).
 	 */
 	public static void main(String[] args) {
-		Review rev = new Review();
+		Comment rev = new Comment();
 		
 		rev.setUsername("username");
 		try {
@@ -243,12 +276,17 @@ public class GUIReview extends JFrame{
 		} catch (InvalidArgumentException e) {
 			e.printStackTrace();
 		}
-		rev.setTitle("Quimdou");
-		rev.setContent("<p align=\"LEFT\">Este texto é um <a href=\"gmail.com\">exemplo</a> de livro a ser lido no QuimDou.</p><p align=\"right\">O dispositivo QuimDou revolucionará a maneira como as pessoas lêem livros. A sua interface arrojada, dotada de comandos intuitivos e uma tela de 16 x 2 caracteres tornará a leitura muito mais divertida e desafiante.</p> <p align \"center\"><i>O inteligente modo de exibição automática do QuimDou permite que o usuário leia o livro inteiro sem ter que apertar botões para troca de linhas ou páginas. <u>Além disso, com seu modo automático de leitura reversa, o QuimDou é o dispositivo certo para aqueles que gostam, ou só sabem ler de trás para frente.</u></i></p><img src=\"../Programa/Santanbooks/src/Santanbooks.png\" alt=\"\" />");
+		rev.setVisibility(true);
+		rev.setContent("O Umamão é uma base de perguntas e respostas expandida e melhorada constantemente por acadêmicos e profissionais. Temos orgulho de produzir conteúdo de qualidade.");
 		
-		GUIReview guirev = new GUIReview();
-		guirev.setReview(rev);
-		guirev.setVisible(true);
+		GUIComment guirev = new GUIComment();
+		guirev.setComment(rev);
+		
+		JFrame frame = new JFrame();
+		frame.add(guirev);
+		frame.setVisible(true);
+		frame.setSize(500, 260);
 
-	}	
+	}
+
 }
