@@ -130,6 +130,48 @@ public class GUIReview extends JFrame{
 		rating.setText(x.toString());
 	}
 	
+	public void setReview(Review arg0, Classes.Book l) {
+		if (arg0 == null){
+			review = new Review();
+			review.setUsername(parent.getUser().getName());
+			review.setBookISBN(l.getISBN());
+			review.setBookName(l.getName());
+			review.setPublishingDate(new java.util.Date());
+			
+			IGlobalFactory factory;
+			try {
+				factory = ComponentContextFactory.createGlobalFactory();
+			
+			 factory.registerPrototype(IBusinessObject.class);
+			 IBusinessObject bo = factory.createInstance(
+					 "<http://purl.org/dcc/DataBase.BusinessObject>");
+			 
+			 factory.registerPrototype(ISQLStatements.class);
+			 ISQLStatements sqlst = factory.createInstance(
+					 "<http://purl.org/dcc/JavaDB.SQLStatements>");
+			 
+			 factory.registerPrototype(IDataBase.class);
+			 IDataBase db = factory.createInstance(
+					 "<http://purl.org/dcc/JavaDB.DataBase>");
+			 
+			 ((DataBase)db).connect(sqlst);
+			 ((BusinessObject)bo).connect(db);
+			 
+			 /*Refreshes the database*/
+				bo.insertReview(review);
+				Review[] r = new Review[l.getAllReviews().length+1];
+				r[l.getAllReviews().length] = review;
+				bo.updateBook(l);
+			} catch (ContextException e) {
+				e.printStackTrace();
+			} catch (FactoryException e) {
+				e.printStackTrace();
+			}
+		}
+		else
+			setReview(arg0);
+	}
+	
 	private void setText(){
 		title = new JEditorPane();
 		title.setEditable(false);
