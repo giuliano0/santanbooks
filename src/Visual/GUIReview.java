@@ -49,15 +49,15 @@ public class GUIReview extends JFrame{
 	private JButton back;
 	private Container contentPane;
 	private GUIReview me;
-	//private Santanbooks parent;
+	private Santanbooks parent;
 	
 	private Review review;
 	
 	/**
 	 * Configura o painel
 	 */
-	public GUIReview(/*Santanbooks p*/){
-		//parent = p;
+	public GUIReview(Santanbooks p){
+		parent = p;
 		me = this;
 		SpringLayout layout = new SpringLayout();
 		contentPane = getContentPane();
@@ -116,7 +116,10 @@ public class GUIReview extends JFrame{
 	 * @param arg0
 	 */
 	public void setReview(Review arg0) {
-		if (arg0 == null) return;
+		if (arg0 == null){
+			review = new Review();
+			return;
+		}
 		
 		review=arg0;
 		user.setText("by "+arg0.getUsername());
@@ -195,7 +198,7 @@ public class GUIReview extends JFrame{
 				 
 				 /*Refreshes the rating in the database and in the screen*/
 				try {
-					//bo.insertRating(review.getID(), toRate.getSelectedItem(), parent.getUser());
+					bo.insertRating(review.getID(), toRate.getSelectedItem(), parent.getUser());
 					review.setRating(bo.selectRatingCalculed(review.getID()));
 					Integer x = review.getRating();
 					rating.setText(x.toString());
@@ -236,13 +239,12 @@ public class GUIReview extends JFrame{
 					factory.registerPrototype(GUIReviewEditor.class);
 					IGUIReviewEditor editor = factory.createInstance(
 							 "<http://purl.org/dcc/Visual.GUIReviewEditor>");
-					editor.setReview("test");
+					if(review.getContent() != null)
+						editor.setReview(review.getContent());
+					else
+						editor.setReview(new String(" "));
 					editor.setPai(me);
 					editor.setVisible(true);
-					
-					Review r = new Review();
-					r.setContent("fadsfasd");
-					setReview(r);
 					
 				} catch (ContextException e) {
 					e.printStackTrace();
