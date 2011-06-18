@@ -94,7 +94,7 @@ public class User {
 		name = value;
 	}
 	
-	public void setPassowrd(String value) {
+	public void setPassword(String value) {
 		this.password = value;
 	}
 	
