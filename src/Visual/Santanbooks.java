@@ -119,7 +119,7 @@ public class Santanbooks extends JFrame {
         sessionManager.add(new SessionManagerLoggedIn(this), SESSION_LOGGED);
         sessionManager.add(new SessionManagerLogin(this), SESSION_NOT_LOGGED);
 
-        changePanel(PANEL_HOME);
+        changePanel(PANEL_RESULTS);
         ((CardLayout)sessionManager.getLayout()).show(sessionManager, SESSION_NOT_LOGGED);
     }
     

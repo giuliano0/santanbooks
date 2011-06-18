@@ -18,13 +18,16 @@ import javax.swing.JFileChooser;
  */
 public class Book extends javax.swing.JPanel {
     private Santanbooks parent;
-    /** Creates new form AddBooks */
+    private Classes.Book livroAtual;
+    
     public Book(Santanbooks p) {
         this.parent = p;
         initComponents();
     }
 
-
+    public void setBook(Classes.Book novo) {
+    	this.livroAtual = novo;    	
+    }
     
     /** This method is called from within the constructor to
      * initialize the form.
@@ -266,9 +269,9 @@ public class Book extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {
+    	
+    }
  
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel authors;

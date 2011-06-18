@@ -1,9 +1,10 @@
 package Visual;
 
 import java.awt.event.*;
+
 import javax.swing.*;
 
-public class Results extends javax.swing.JPanel implements ActionListener {
+public class Results extends javax.swing.JPanel implements ActionListener, MouseListener {
     private Santanbooks parent;
     private Classes.Book[] resultados;
 
@@ -57,6 +58,7 @@ public class Results extends javax.swing.JPanel implements ActionListener {
         });
         jList1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jList1.setVisibleRowCount(15);
+        jList1.addMouseListener(this);
         jScrollPane1.setViewportView(jList1);
 
         jPanel1.add(jScrollPane1);
@@ -126,6 +128,37 @@ public class Results extends javax.swing.JPanel implements ActionListener {
 			this.parent.lastPanel();
 		}
 			
+		
+	}
+
+	@Override
+	public void mouseClicked(MouseEvent arg0) {
+		((Book)this.parent.getPanel(Santanbooks.PANEL_BOOK)).setBook(this.resultados[jList1.getSelectedIndex()]);
+		// update form
+		this.parent.changePanel(Santanbooks.PANEL_BOOK);
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseExited(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mousePressed(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent arg0) {
+		// TODO Auto-generated method stub
 		
 	}
 }
