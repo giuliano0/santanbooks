@@ -49,15 +49,13 @@ public class GUIReview extends JFrame{
 	private JButton back;
 	private Container contentPane;
 	private GUIReview me;
-	private Santanbooks parent;
 	
 	private Review review;
 	
 	/**
 	 * Configura o painel
 	 */
-	public GUIReview(Santanbooks p){
-		parent = p;
+	public GUIReview(){
 		me = this;
 		SpringLayout layout = new SpringLayout();
 		contentPane = getContentPane();
@@ -310,7 +308,7 @@ public class GUIReview extends JFrame{
 	/**
 	 * Main (para testes).
 	 */
-	/*public static void main(String[] args) {
+	public static void main(String[] args) {
 		Review rev = new Review();
 		
 		rev.setUsername("username");
@@ -331,5 +329,5 @@ public class GUIReview extends JFrame{
 		guirev.setReview(rev);
 		guirev.setVisible(true);
 
-	}	*/
+	}
 }
