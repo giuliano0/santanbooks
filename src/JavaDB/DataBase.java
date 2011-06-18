@@ -888,7 +888,7 @@ public class DataBase extends ComponentBase implements IDataBase, IRequires<ISQL
 	public Vector<Object> getVectorSetSessionData(SessionData s){
 		Vector<Object> v = new Vector<Object>();
 		v.add("username = '" + s.getUsername() + "'");
-		v.add("status = '" + (s.getStatus() ? 1 : 0) + "'");
+		v.add("status = " + (s.getStatus() ? 1 : 0));
 		v.add("lastLogin = '" + s.getLastLogin() + "'");
 		return v;
 	}	

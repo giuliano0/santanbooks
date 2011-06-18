@@ -2,6 +2,7 @@ package TestApps;
 
 import java.sql.Date;
 
+import Classes.SessionData;
 import Classes.User;
 import Interfaces.IBusinessObject;
 import Interfaces.IDataBase;
@@ -53,7 +54,7 @@ public class AppBusinessObjectExample02 {
 			
 			// Exemplos de utilizacao
 			exemploUsers(businessObjectComponent);
-			//exemploSessions(businessObjectComponent);
+			exemploSessions(businessObjectComponent);
 			db.dropAllTables();
 
 		} catch (ContextException e) {
@@ -123,7 +124,57 @@ public class AppBusinessObjectExample02 {
 	}
 
 	public static void exemploSessions(IBusinessObject businessObjectComponent) {
-		// TODO
+		Date currentDate = new Date(System.currentTimeMillis());
+		SessionData s = new SessionData();
+		
+		s.setStatus(true);
+		s.setUsername("jombler");
+		s.setLastLogin(currentDate);
+		
+		if(businessObjectComponent.insertSession(s))
+			System.out.println("Sessao iniciada! " + s.getUsername() + " esta online! ");
+		else{
+			System.out.println("Erro na inicializacao da sessao! Usuario: " + s.getUsername());
+			if(businessObjectComponent.updateSession(s))
+				System.out.println("Sessao iniciada! " + s.getUsername() + " esta online! ");
+			else
+				System.out.println("Erro na inicializacao da sessao! Usuario: " + s.getUsername());
+		}
+		
+		s.setUsername("john");
+		
+		if(businessObjectComponent.insertSession(s))
+			System.out.println("Sessao iniciada! " + s.getUsername() + " esta online! ");
+		else{
+			System.out.println("Erro na inicializacao da sessao! Usuario: " + s.getUsername());
+			if(businessObjectComponent.updateSession(s))
+				System.out.println("Sessao iniciada! " + s.getUsername() + " esta online! ");
+			else
+				System.out.println("Erro na inicializacao da sessao! Usuario: " + s.getUsername());
+		}
+		
+		s.setStatus(false);
+		
+		if(businessObjectComponent.insertSession(s))
+			System.out.println("Sessao finalizada! " + s.getUsername() + " esta offline! ");
+		else{
+			System.out.println("Erro na finalizacao da sessao! Usuario: " + s.getUsername());
+			if(businessObjectComponent.updateSession(s))
+				System.out.println("Sessao finalizada! " + s.getUsername() + " esta offline! ");
+			else
+				System.out.println("Erro na finalizacao da sessao! Usuario: " + s.getUsername());
+		}
+		
+		if(businessObjectComponent.deleteSession(s))
+			System.out.println("Delecao ok");
+		else
+			System.out.println("problema delecao");
+		
+		if(businessObjectComponent.deleteSession("jombler"))
+			System.out.println("Delecao ok");
+		else
+			System.out.println("problema delecao");
+		
 	}
 
 }
