@@ -1,34 +1,29 @@
 package Classes;
+
 import java.util.Date;
 
-import Interfaces.ILoggable;
-
 /**
- * 
  * @author Giuliano
- *
  */
 public class User {
-	boolean accessLevel;
+	boolean accessLevel;		// Feature não implementada. True indica usuário moderador.
 	Date birthday;
 	String college;
 	String course;
 	String email;
 	boolean gender;
 	String name;
-	String password;
-	String selfDescription;
+	String password;			// É "ignorado", mas faz parte do sistema e qualquer implementação alternativa.
+	String selfDescription;		// Big String, baby.
 	String username;
 	Date ingressYear;
 	
-	// TODO: review access scope, data types and checkings inside these methods.
+	public User() {
+		// vazio
+	}
 	
 	public boolean getAccessLevel() {
 		return accessLevel;
-	}
-	
-	public void setPassword(String password) {
-		this.password = password;
 	}
 
 	public Date getBirthday() {
@@ -100,7 +95,7 @@ public class User {
 	}
 	
 	public void setPassowrd(String value) {
-		password = value;
+		this.password = value;
 	}
 	
 	public void setSelfDescription(String value) {

@@ -19,9 +19,10 @@ public class Book implements ICommentable, IRateable, IReviewable {
 	String publisher;		// "Brooks Cole"
 	Date publishingDate;	// January 1, 2011 (doesn't matter)
 	
+	// Setados a parte da consulta à tabela Users no banco de dados
 	Comment[] comments;
 	Review[] reviews;
-	float rating;			// Retornado direto de consulta à DB
+	float rating;
 	
 	public String getAuthors() {
 		return authors;
@@ -83,6 +84,18 @@ public class Book implements ICommentable, IRateable, IReviewable {
 	 * No ISBN-13, o dígito está entre 0 e 9.
 	 */
 	// Admite que o isbn mandado é do tipo ISBN-10 ou ISBN-13, com ou sem hífens de separação.
+	/**
+	 * <p>De acordo com a Agência Brasileira do ISBN (<i><u>http://www.isbn.bn.br/</u></i>), o ISBN agora terá <br /> 
+	 * <b>sempre</b> 13 dígitos no formato (ex.) <i>978-85-333-0398-X</i>.</p>
+	 * <p>Todo ISBN anterior à norma, de 10 dígitos, receberá o prefixo 978 e manterá os outros 10 <br /> 
+	 * dígitos. Novos ISBNs virão com 13 dígitos, os 3 primeiros <b>sempre</b> diferentes de 978.</p>
+	 * <p>O X no final pode existir nos ISBN-10, mas nunca nos ISBN-13. Ele significa que o dígito 
+	 * de verificação é 10 (no intervalo 0-10).
+	 * No ISBN-13, o dígito está entre 0 e 9.</p>
+	 * @author Giuliano
+	 * @param value o ISBN a ser validado e setado. 
+	 * @remarks Admite que o isbn mandado é do tipo ISBN-10 ou ISBN-13, com ou sem hífens de separação.
+	 */
 	public void setISBN(String value) throws IllegalArgumentException, NumberFormatException {
 		// Tira os espaços recebidos
 		value = value.trim();
@@ -145,6 +158,10 @@ public class Book implements ICommentable, IRateable, IReviewable {
 		return comments;
 	}
 
+	/**
+	 * @author Davi
+	 * @author Giuliano
+	 */
 	public Comment getComment(int commentID) throws InvalidArgumentException, NullPointerException {
 		if (commentID == 0)
 			throw new InvalidArgumentException();

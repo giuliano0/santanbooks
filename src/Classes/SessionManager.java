@@ -45,11 +45,14 @@ public class SessionManager extends ComponentBase implements ISessionManager, IR
 	 * @param username
 	 * @param password
 	 * @return objeto User com as informações do usuário, o qual a interface <br />
-	 * gráfica pode tratar como desejar.
+	 * gráfica pode tratar como desejar. Retorna null caso o par de autenticação seja inválido. 
 	 * @remarks O método implementado no nosso exemplo <b>ignora a senha</b>. Numa aplicação real, <br />
 	 * obviamente, o login retornaria um ID único de usuário baseando-se em um <i>par de autenticação</i>.
 	 */
 	public User loginChallenge(String username, String password) {
+		if (username.equals("") || username == null || password.equals("") || password == null)
+			return null;
+		
 		SessionData sd = bo.selectSession(username);
 		
 		// Se sd não é nulo, o usuário está logado e retornamos uma instância do User referido.
@@ -74,7 +77,7 @@ public class SessionManager extends ComponentBase implements ISessionManager, IR
 	
 	// Faz a consulta em tempo real e retorna o número de usuários logados.
 	public int getOnlineUsers() {
-		return 0;
+		return bo.sessionCountRows();
 	}
 	
 }
