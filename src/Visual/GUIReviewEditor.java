@@ -10,6 +10,10 @@
  */
 package Visual;
 
+import Interfaces.IGUIReviewEditor;
+import anima.annotation.Component;
+import anima.component.view.base.FrameComponentBase;
+
 /**
  *
  * @author Douglas Afonso de Sousa Costa ra 104825
@@ -22,13 +26,20 @@ package Visual;
  * 		setVisible(true); --> visivel na tela
  * 
  */
-public class GUIReviewEditor extends javax.swing.JFrame {
+@Component(id="<http://purl.org/dcc/Visual.GUIReviewEditor>",
+			provides = "<http://purl.org/dcc/Interfaces.IGUIReviewEditor>")
+public class GUIReviewEditor extends FrameComponentBase implements IGUIReviewEditor {
 
     private static final long serialVersionUID = 4265040241121350177L;
+    private GUIReview pai;
     
     public GUIReviewEditor() {
         initComponents();
         setResizable(false);
+    }
+    
+    public void setPai(GUIReview pai){
+    	this.pai = pai;
     }
     
     /**
@@ -330,9 +341,9 @@ public class GUIReviewEditor extends javax.swing.JFrame {
      * Atribui o texto digitado a string review.
      */
     private void sendActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sendActionPerformed
-        if(text.getText()!=null) {
-            review = text.getText();
-            //TODO
+        String x = text.getText();
+    	if(x!=null) {
+            pai.refresh(x);
             dispose();
         }
         

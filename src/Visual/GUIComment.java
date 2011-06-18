@@ -30,8 +30,8 @@ import anima.factory.context.componentContext.ComponentContextFactory;
 import anima.factory.exception.FactoryException;
 
 /**
- * Exibe um cometario
- * @author Jose Americo Nabuco Leva Ferreira de Freitas
+ * Exibe um comentario
+ * @author Jose Americo Nabuco Leva Ferreira de Freitas RA 105153
  *
  */
 public class GUIComment extends JPanel{
@@ -47,6 +47,8 @@ public class GUIComment extends JPanel{
 	private JButton rateButton;
 	private JButton edit;
 	private JToggleButton visible;
+	
+	private JButton cancelar, salvar;
 	
 	private Comment comment;
 	
@@ -96,8 +98,7 @@ public class GUIComment extends JPanel{
 		layout.putConstraint(SpringLayout.EAST, scrollText, -10, SpringLayout.EAST, this);
 		layout.putConstraint(SpringLayout.NORTH, scrollText, 10, SpringLayout.SOUTH, rateButton);
 		
-		
-		setSize(650, 500);
+		setSize(500, 250);
 	}
 
 	/**
@@ -210,8 +211,9 @@ public class GUIComment extends JPanel{
 		edit.addMouseListener(new MouseListener(){
 
 			public void mouseClicked(MouseEvent arg0) {
-				// TODO chamar o comment.editor
-				System.out.println("clicou!");
+				remove(visible);
+				remove(edit);
+				setEditButtons();
 			}
 			public void mouseEntered(MouseEvent arg0) {}
 			public void mouseExited(MouseEvent arg0) {}
@@ -219,6 +221,10 @@ public class GUIComment extends JPanel{
 			public void mouseReleased(MouseEvent arg0) {}
 			
 		});
+	}
+	
+	public void setEditButtons(){
+		
 	}
 	
 	private void setVisibleButton(){
@@ -244,20 +250,7 @@ public class GUIComment extends JPanel{
 			
 		});
 	}
-	
-	/**
-	 * Mostra o painel
-	 */
-	public void show(){
-		setVisible(true);
-	}
-	
-	/**
-	 * Oculta o painel
-	 */
-	public void hide(){
-		setVisible(false);
-	}
+
 	
 	/**
 	 * Main (para testes).
@@ -285,7 +278,7 @@ public class GUIComment extends JPanel{
 		JFrame frame = new JFrame();
 		frame.add(guirev);
 		frame.setVisible(true);
-		frame.setSize(500, 260);
+		frame.setSize(500, 250);
 
 	}
 

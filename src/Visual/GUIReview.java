@@ -29,7 +29,7 @@ import Exceptions.InvalidArgumentException;
 
 /**
  * JPanel que exibe um review (o formato também é bom para comentários).
- * @author José Américo Nabuco Leva Ferreira de Freitas
+ * @author José Américo Nabuco Leva Ferreira de Freitas RA 105153
  *
  */
 public class GUIReview extends JFrame{
@@ -46,6 +46,7 @@ public class GUIReview extends JFrame{
 	private JButton rateButton;
 	private JButton edit;
 	private Container contentPane;
+	private GUIReview me;
 	
 	private Review review;
 	
@@ -53,6 +54,7 @@ public class GUIReview extends JFrame{
 	 * Configura o painel
 	 */
 	public GUIReview(){
+		me = this;
 		SpringLayout layout = new SpringLayout();
 		contentPane = getContentPane();
 		contentPane.setLayout(layout);
@@ -97,6 +99,7 @@ public class GUIReview extends JFrame{
 		layout.putConstraint(SpringLayout.NORTH, scrollText, 10, SpringLayout.SOUTH, title);
 		
 		setSize(650, 500);
+		setResizable(false);
 	}
 
 	/**
@@ -215,8 +218,23 @@ public class GUIReview extends JFrame{
 		edit.addMouseListener(new MouseListener(){
 
 			public void mouseClicked(MouseEvent arg0) {
-				// TODO chamar o review.editor
-				System.out.println("clicou!");
+				IGlobalFactory factory;
+				try {
+					factory = ComponentContextFactory.createGlobalFactory();
+					
+					factory.registerPrototype(GUIReviewEditor.class);
+					IGUIReviewEditor editor = factory.createInstance(
+							 "<http://purl.org/dcc/Visual.GUIReviewEditor>");
+					editor.setReview(review.getContent());
+					editor.setPai(me);
+					editor.setVisible(true);
+					
+				} catch (ContextException e) {
+					e.printStackTrace();
+				} catch (FactoryException e) {
+					e.printStackTrace();
+				}
+				
 			}
 			public void mouseEntered(MouseEvent arg0) {}
 			public void mouseExited(MouseEvent arg0) {}
@@ -226,6 +244,40 @@ public class GUIReview extends JFrame{
 		});
 	}
 	
+	/**
+	 * Refreshes the text (after edition)
+	 */
+	public void refresh(String newContent){
+		text.setText(newContent);
+		review.setContent(newContent);
+		IGlobalFactory factory;
+		try {
+			factory = ComponentContextFactory.createGlobalFactory();
+		
+			 factory.registerPrototype(IBusinessObject.class);
+			 IBusinessObject bo = factory.createInstance(
+					 "<http://purl.org/dcc/DataBase.BusinessObject>");
+			 
+			 factory.registerPrototype(ISQLStatements.class);
+			 ISQLStatements sqlst = factory.createInstance(
+					 "<http://purl.org/dcc/JavaDB.SQLStatements>");
+			 
+			 factory.registerPrototype(IDataBase.class);
+			 IDataBase db = factory.createInstance(
+					 "<http://purl.org/dcc/JavaDB.DataBase>");
+			 
+			 ((DataBase)db).connect(sqlst);
+			 ((BusinessObject)bo).connect(db);
+		
+		  	 bo.insertReview(review);
+			
+		} catch (ContextException e) {
+			e.printStackTrace();
+		} catch (FactoryException e) {
+			e.printStackTrace();
+		}
+		
+	}
 	/**
 	 * Main (para testes).
 	 */
