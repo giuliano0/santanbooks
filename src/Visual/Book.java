@@ -10,6 +10,9 @@ package Visual;
  * Created on 14/06/2011, 16:13:26
  */
 
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+
 import javax.swing.JFileChooser;
 
 /**
@@ -140,6 +143,41 @@ public class Book extends javax.swing.JPanel {
         publisher6.setText("<COMENTARIOS>");
 
         jButton1.setText("Adicionar avaliacao");
+        jButton1.addMouseListener(new MouseListener(){
+
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				GUIReview guiReview = new GUIReview();
+				
+				
+				
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseExited(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mousePressed(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+        	
+        });
 
         jTextField1.setText("Digite seu comentario aqui");
 
