@@ -294,8 +294,7 @@ public class SearchEngine extends ComponentBase implements ISearchEngine, IRecep
 	
 	private ArrayList<String> mergeString(ArrayList<String> s1, ArrayList<String> s2) {
 		ArrayList<String> strings = new ArrayList<String>();
-		for (String s : s1) strings.add(s);
-		for (String s : s2) if (!strings.contains(s)) strings.add(s);
+		for (String s : s1) if (s2.contains(s)) strings.add(s);
 		return strings;
 	}
 
