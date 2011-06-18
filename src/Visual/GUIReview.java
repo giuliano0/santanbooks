@@ -45,6 +45,8 @@ public class GUIReview extends JFrame{
 	private JLabel rating;
 	private JButton rateButton;
 	private JButton edit;
+	int commentIndex;
+	private JButton back;
 	private Container contentPane;
 	private GUIReview me;
 	
@@ -97,6 +99,11 @@ public class GUIReview extends JFrame{
 		layout.putConstraint(SpringLayout.SOUTH, scrollText, -10, SpringLayout.NORTH, edit);
 		layout.putConstraint(SpringLayout.EAST, scrollText, -10, SpringLayout.EAST, contentPane);
 		layout.putConstraint(SpringLayout.NORTH, scrollText, 10, SpringLayout.SOUTH, title);
+		
+		setBack();
+		layout.putConstraint(SpringLayout.WEST, back, 10, SpringLayout.WEST, contentPane);
+		layout.putConstraint(SpringLayout.SOUTH, back, 0, SpringLayout.SOUTH, edit);
+
 		
 		setSize(650, 500);
 		setResizable(false);
@@ -184,7 +191,7 @@ public class GUIReview extends JFrame{
 				 
 				 /*Refreshes the rating in the database and in the screen*/
 				try {
-					// TODO  consertar isto => bo.insertRating(review.getID(), toRate.getSelectedItem(), username);
+					// TODObo.insertRating(review.getID(), toRate.getSelectedItem(), username);
 					review.setRating(bo.selectRatingCalculed(review.getID()));
 					Integer x = review.getRating();
 					rating.setText(x.toString());
@@ -242,6 +249,26 @@ public class GUIReview extends JFrame{
 			public void mouseReleased(MouseEvent arg0) {}
 			
 		});
+	}
+	
+	
+	private void setBack(){
+		back = new JButton("Voltar");
+		back.setSize(20, 10);
+		add(back);
+		back.addMouseListener(new MouseListener(){
+
+			public void mouseClicked(MouseEvent arg0) {
+				dispose();				
+			}
+			public void mouseEntered(MouseEvent arg0) {}
+			public void mouseExited(MouseEvent arg0) {}
+			public void mousePressed(MouseEvent arg0) {}
+			public void mouseReleased(MouseEvent arg0) {}
+			
+		});
+		
+		
 	}
 	
 	/**

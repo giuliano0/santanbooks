@@ -2,7 +2,6 @@ package Visual;
 
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.LayoutManager;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
@@ -181,7 +180,7 @@ public class GUIComment extends JPanel{
 				 
 				 /*Refreshes the rating in the database and in the screen*/
 				try {
-					// TODO  consertar isto => bo.insertRating(review.getID(), toRate.getSelectedItem(), username);
+					// TODO bo.insertRating(review.getID(), toRate.getSelectedItem(), username);
 					comment.setRating(bo.selectRatingCalculed(comment.getID()));
 					Integer x = comment.getRating();
 					rating.setText(x.toString());
@@ -219,12 +218,14 @@ public class GUIComment extends JPanel{
 				me.setVisible(false);
 				setEditionButtons();
 
-				layout.putConstraint(SpringLayout.EAST, cancelar, -10, SpringLayout.WEST, visible);
+				layout.putConstraint(SpringLayout.WEST, cancelar, 10, SpringLayout.WEST, me);
 				layout.putConstraint(SpringLayout.SOUTH, cancelar, 0, SpringLayout.SOUTH, visible);
 		
-				layout.putConstraint(SpringLayout.EAST, salvar, -10, SpringLayout.WEST, cancelar);
+				layout.putConstraint(SpringLayout.WEST, salvar, 10, SpringLayout.EAST, cancelar);
 				layout.putConstraint(SpringLayout.SOUTH, salvar, 0, SpringLayout.SOUTH, visible);
 				
+				visible.setVisible(false);
+				edit.setVisible(false);
 				me.setVisible(true);
 			}
 			public void mouseEntered(MouseEvent arg0) {}
@@ -271,6 +272,10 @@ public class GUIComment extends JPanel{
 					e.printStackTrace();
 				}
 				me.setVisible(false);
+				
+				visible.setVisible(true);
+				edit.setVisible(true);
+				
 				remove(salvar);
 				remove(cancelar);
 				me.setVisible(true);			
@@ -293,6 +298,10 @@ public class GUIComment extends JPanel{
 				me.setVisible(false);
 				remove(salvar);
 				remove(cancelar);
+
+				visible.setVisible(true);
+				edit.setVisible(true);
+				
 				me.setVisible(true);
 			}
 			public void mouseEntered(MouseEvent arg0) {}
