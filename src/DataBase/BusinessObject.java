@@ -339,19 +339,23 @@ public class BusinessObject extends ComponentBase implements IBusinessObject, IR
      */
 	public boolean insertBook(Book book) {
 		Comment[] comments = book.getAllComments();
-		if (comments != null) {
+		
+		if (comments != null && comments.length > 0) {
 			for (Comment comment:comments) {
 				insertComment(comment);
 			}
 		}
 				
 		Review[] reviews = book.getAllReviews();
-		if (reviews != null) {
+		
+		if (reviews != null && reviews.length > 0) {
 			for (Review review:reviews) {
 				insertReview(review);
 			}
 		}
+		
 		boolean success = db.insertData(book);
+		
 		if(se != null) {
 			se.update();
 		}
@@ -451,7 +455,7 @@ public class BusinessObject extends ComponentBase implements IBusinessObject, IR
 	public Book selectBook(String isbn) {
 		Book[] books = selectBooks("isbn", isbn, "isbn");
 
-		if (books != null) {
+		if (books != null && books.length > 0) {
 			return books[0];
 		}
 
@@ -532,7 +536,7 @@ public class BusinessObject extends ComponentBase implements IBusinessObject, IR
 	public Comment selectComment(int commentID) {
 		Comment[] comments = selectComments("id", commentID, "id");
 
-		if (comments != null) {
+		if (comments != null && comments.length > 0) {
 			return comments[0];
 		}
 
@@ -625,7 +629,7 @@ public class BusinessObject extends ComponentBase implements IBusinessObject, IR
 	public Rating selectRating(int ratingID) {
 		Rating[] ratings = selectRatings("id", ratingID, "id", null);
 
-		if (ratings != null) {
+		if (ratings != null && ratings.length > 0) {
 			return ratings[0];
 		}
 
@@ -663,7 +667,7 @@ public class BusinessObject extends ComponentBase implements IBusinessObject, IR
 			// realizando a consulta
 			Rating[] result = db.queryRating(select, where, order);
 
-			if (result != null) {
+			if (result != null && result.length > 0) {
 				return result[0].getValue();
 			}
 		}
@@ -703,7 +707,7 @@ public class BusinessObject extends ComponentBase implements IBusinessObject, IR
 			// realizando a consulta
 			Rating[] result = db.queryRating(select, where, order);
 
-			if (result != null) {
+			if (result != null && result.length > 0) {
 				return result[0].getValue();
 			}
 		}
@@ -954,7 +958,7 @@ public class BusinessObject extends ComponentBase implements IBusinessObject, IR
 	public User selectUser(String username) {
 		User[] users = selectUsers("username", username, "username");
 
-		if (users != null) {
+		if (users != null && users.length > 0) {
 			return users[0];
 		}
 
@@ -1028,6 +1032,7 @@ public class BusinessObject extends ComponentBase implements IBusinessObject, IR
 		where.add("isbn = '" + book.getISBN() + "'");
 		
 		boolean success = db.updateData(book, where);
+		
 		if(se != null) {
 			se.update();
 		}
@@ -1186,7 +1191,7 @@ public class BusinessObject extends ComponentBase implements IBusinessObject, IR
 		// realizando a consulta
 		SessionData[] result = db.querySessionData(select, where, order);
 
-		if (result != null) {
+		if (result != null && result.length > 0) {
 			return result.length;
 		}
 				
