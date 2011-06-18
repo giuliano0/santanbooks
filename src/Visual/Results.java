@@ -93,7 +93,7 @@ public class Results extends javax.swing.JPanel implements ActionListener, Mouse
     public void updateForm() {
     	jList1.setModel(new javax.swing.AbstractListModel() {
     		public int getSize() { return resultados.length; }
-            public Object getElementAt(int i) { return resultados[i].getName(); }
+            public Object getElementAt(int i) { return resultados[i].getName() + " - " + resultados[i].getAuthors(); }
         });
     }
 
