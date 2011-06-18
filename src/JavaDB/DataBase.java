@@ -1,6 +1,5 @@
 package JavaDB;
 
-import java.io.FileNotFoundException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -12,7 +11,7 @@ import Classes.Book;
 import Classes.Comment;
 import Classes.Rating;
 import Classes.Review;
-import Classes.Session;
+import Classes.SessionData;
 import Classes.User;
 import Interfaces.IDataBase;
 import Interfaces.ISQLStatements;
@@ -110,9 +109,9 @@ public class DataBase extends ComponentBase implements IDataBase, IRequires<ISQL
 					/*"FOREIGN KEY(username, isbn, review))"*/
 			);
 			
-			/* Creates table session */
+			/* Creates table SessionData */
 			stt.executeStatement(
-					"CREATE TABLE session " +
+					"CREATE TABLE SessionData " +
 					"(username VARCHAR(100) NOT NULL, " +
 					"status INT NOT NULL, " +
 					"lastLogin DATE NOT NULL, PRIMARY KEY(username))"
@@ -125,9 +124,6 @@ public class DataBase extends ComponentBase implements IDataBase, IRequires<ISQL
 	}
 	
 	/* Método temporário. Até pq não é vantagem poder sair excluindo tudo */
-	/* (non-Javadoc)
-	 * @see JavaDB.Agfgdfgf#dropAllTables()
-	 */
 	public void dropAllTables(){
 		try{
 			stt.executeStatement("DROP TABLE users");
@@ -135,7 +131,7 @@ public class DataBase extends ComponentBase implements IDataBase, IRequires<ISQL
 			stt.executeStatement("DROP TABLE comment");
 			stt.executeStatement("DROP TABLE review");
 			stt.executeStatement("DROP TABLE rating");
-			stt.executeStatement("DROP TABLE session");
+			stt.executeStatement("DROP TABLE SessionData");
 		}
 		catch(SQLException erro){
 			System.out.println(erro.getMessage());
@@ -147,17 +143,10 @@ public class DataBase extends ComponentBase implements IDataBase, IRequires<ISQL
 	 * Operações com User
 	 */
 	////////////////////////////////////////////////////////////////////
-	
-	/* (non-Javadoc)
-	 * @see JavaDB.SDdasdasdasd#insertData(Classes.User)
-	 */
-	/* (non-Javadoc)
-	 * @see JavaDB.Agfgdfgf#insertData(Classes.User)
-	 */
-	@SuppressWarnings("unchecked")
+
 	public boolean insertData(User data) {
 		boolean sucesso = true;
-		Vector v = getVectorUser(data);
+		Vector<Object> v = getVectorUser(data);
 		String values = stt.mountValuesStatement(v);
 		try {
 			stt.insert("users", values);
@@ -234,10 +223,9 @@ public class DataBase extends ComponentBase implements IDataBase, IRequires<ISQL
 		}
 	}
 
-	@SuppressWarnings("unchecked")
 	public boolean updateData(User data, Vector<String> where) {
 		boolean sucesso = true;
-		Vector v = getVectorSetUser(data);
+		Vector<Object> v = getVectorSetUser(data);
 		String set = stt.mountSetStatement(v);
 		String w = stt.mountWhereStatement(where);		
 		try {
@@ -259,9 +247,8 @@ public class DataBase extends ComponentBase implements IDataBase, IRequires<ISQL
 		return sucesso;
 	}
 
-	@SuppressWarnings("unchecked")
-	public Vector getVectorUser(User u){
-		Vector v = new Vector();
+	public Vector<Object> getVectorUser(User u){
+		Vector<Object> v = new Vector<Object>();
 		v.add(u.getUsername());
 		v.add((u.getAccessLevel() ? 1 : 0)); //como o banco não suporta boolean, deve ser 0 ou 1
 		v.add(u.getBirthday());
@@ -275,10 +262,9 @@ public class DataBase extends ComponentBase implements IDataBase, IRequires<ISQL
 		v.add(u.getIngressYear());
 		return v;
 	}
-
-	@SuppressWarnings("unchecked")
-	public Vector getVectorSetUser(User u){
-		Vector v = new Vector();
+	
+	public Vector<Object> getVectorSetUser(User u){
+		Vector<Object> v = new Vector<Object>();
 		v.add("username = '" + u.getUsername() + "'");
 		v.add("accessLevel = '" + (u.getAccessLevel() ? 1 : 0) + "'"); //como o banco não suporta boolean, deve ser 0 ou 1
 		v.add("birthday = '" + u.getBirthday() + "'");
@@ -299,10 +285,9 @@ public class DataBase extends ComponentBase implements IDataBase, IRequires<ISQL
 	 */
 	////////////////////////////////////////////////////////////////////
 	
-	@SuppressWarnings("unchecked")
 	public boolean insertData(Book data) {
 		boolean sucesso = true;
-		Vector v = getVectorBook(data);
+		Vector<Object> v = getVectorBook(data);
 		String values = stt.mountValuesStatement(v);
 		try {
 			stt.insert("book", values);
@@ -353,8 +338,7 @@ public class DataBase extends ComponentBase implements IDataBase, IRequires<ISQL
 					if(select.get(i).equalsIgnoreCase("imagePath"))
 						try {
 							temp.setImagePath(result.getString("imagePath"));
-						} catch (FileNotFoundException e1) {
-							// TODO Auto-generated catch block
+						} catch (Exception e1) {
 							e1.printStackTrace();
 						}
 					if(select.get(i).equalsIgnoreCase("publisher"))
@@ -382,10 +366,9 @@ public class DataBase extends ComponentBase implements IDataBase, IRequires<ISQL
 		}
 	}
 
-	@SuppressWarnings("unchecked")
 	public boolean updateData(Book data, Vector<String> where) {
 		boolean sucesso = true;
-		Vector v = getVectorSetBook(data);
+		Vector<Object> v = getVectorSetBook(data);
 		String set = stt.mountSetStatement(v);
 		String w = stt.mountWhereStatement(where);		
 		try {
@@ -408,9 +391,8 @@ public class DataBase extends ComponentBase implements IDataBase, IRequires<ISQL
 		return sucesso;
 	}
 	
-	@SuppressWarnings("unchecked")
-	public Vector getVectorBook(Book b){
-		Vector v = new Vector();
+	public Vector<Object> getVectorBook(Book b){
+		Vector<Object> v = new Vector<Object>();
 		v.add(b.getISBN());
 		v.add(b.getName());
 		v.add(b.getAuthors());
@@ -421,10 +403,9 @@ public class DataBase extends ComponentBase implements IDataBase, IRequires<ISQL
 		v.add(b.getPublishingDate());
 		return v;
 	}
-
-	@SuppressWarnings("unchecked")
-	public Vector getVectorSetBook(Book b){
-		Vector v = new Vector();
+	
+	public Vector<Object> getVectorSetBook(Book b){
+		Vector<Object> v = new Vector<Object>();
 		v.add("isbn = '" + b.getISBN() + "'");
 		v.add("name = '" + b.getName() + "'");
 		v.add("authors = '" + b.getAuthors() + "'");
@@ -442,10 +423,9 @@ public class DataBase extends ComponentBase implements IDataBase, IRequires<ISQL
 	 */
 	////////////////////////////////////////////////////////////////////
 	
-	@SuppressWarnings("unchecked")
 	public boolean insertData(Comment data) {
 		boolean sucesso = true;
-		Vector v = getVectorComment(data);
+		Vector<Object> v = getVectorComment(data);
 		String values = stt.mountValuesStatement(v);
 		try {
 			stt.insert("comment", values);
@@ -514,10 +494,9 @@ public class DataBase extends ComponentBase implements IDataBase, IRequires<ISQL
 		}
 	}
 
-	@SuppressWarnings("unchecked")
 	public boolean updateData(Comment data, Vector<String> where) {
 		boolean sucesso = true;
-		Vector v = getVectorSetComment(data);
+		Vector<Object> v = getVectorSetComment(data);
 		String set = stt.mountSetStatement(v);
 		String w = stt.mountWhereStatement(where);		
 		try {
@@ -539,9 +518,8 @@ public class DataBase extends ComponentBase implements IDataBase, IRequires<ISQL
 		return sucesso;
 	}
 	
-	@SuppressWarnings("unchecked")
-	public Vector getVectorComment(Comment c){
-		Vector v = new Vector();
+	public Vector<Object> getVectorComment(Comment c){
+		Vector<Object> v = new Vector<Object>();
 		v.add(c.getID());
 		v.add(c.getUsername());
 		v.add(c.getBookISBN());  
@@ -550,9 +528,8 @@ public class DataBase extends ComponentBase implements IDataBase, IRequires<ISQL
 		return v;
 	}
 
-	@SuppressWarnings("unchecked")
-	public Vector getVectorSetComment(Comment c){
-		Vector v = new Vector();
+	public Vector<Object> getVectorSetComment(Comment c){
+		Vector<Object> v = new Vector<Object>();
 		v.add("id = '" + c.getID() + "'");
 		v.add("username = '" + c.getUsername() + "'");
 		v.add("bookISBN = '" + c.getBookISBN() + "'"); 
@@ -567,10 +544,9 @@ public class DataBase extends ComponentBase implements IDataBase, IRequires<ISQL
 	 */
 	////////////////////////////////////////////////////////////////////
 	
-	@SuppressWarnings("unchecked")
 	public boolean insertData(Review data) {
 		boolean sucesso = true;
-		Vector v = getVectorReview(data);
+		Vector<Object> v = getVectorReview(data);
 		String values = stt.mountValuesStatement(v);
 		try {
 			stt.insert("comment", values);
@@ -643,11 +619,10 @@ public class DataBase extends ComponentBase implements IDataBase, IRequires<ISQL
 			return null;
 		}
 	}
-
-	@SuppressWarnings("unchecked")
+	
 	public boolean updateData(Review data, Vector<String> where) {
 		boolean sucesso = true;
-		Vector v = getVectorSetReview(data);
+		Vector<Object> v = getVectorSetReview(data);
 		String set = stt.mountSetStatement(v);
 		String w = stt.mountWhereStatement(where);		
 		try {
@@ -669,9 +644,8 @@ public class DataBase extends ComponentBase implements IDataBase, IRequires<ISQL
 		return sucesso;
 	}
 	
-	@SuppressWarnings("unchecked")
-	public Vector getVectorReview(Review r){
-		Vector v = new Vector();
+	public Vector<Object> getVectorReview(Review r){
+		Vector<Object> v = new Vector<Object>();
 		v.add(r.getID());
 		v.add(r.getUsername());
 		v.add(r.getBookISBN());
@@ -682,9 +656,8 @@ public class DataBase extends ComponentBase implements IDataBase, IRequires<ISQL
 		return v;
 	}
 
-	@SuppressWarnings("unchecked")
-	public Vector getVectorSetReview(Review r){
-		Vector v = new Vector();
+	public Vector<Object> getVectorSetReview(Review r){
+		Vector<Object> v = new Vector<Object>();
 		v.add("id = '" + r.getID() + "'");
 		v.add("username = '" + r.getUsername() + "'");
 		v.add("bookISBN = '" + r.getBookISBN() + "'");
@@ -701,10 +674,9 @@ public class DataBase extends ComponentBase implements IDataBase, IRequires<ISQL
 	 */
 	////////////////////////////////////////////////////////////////////
 
-	@SuppressWarnings("unchecked")
 	public boolean insertData(Rating data) {
 		boolean sucesso = true;
-		Vector v = getVectorRating(data);
+		Vector<Object> v = getVectorRating(data);
 		String values = stt.mountValuesStatement(v);
 		try {
 			stt.insert("rating", values);
@@ -769,11 +741,10 @@ public class DataBase extends ComponentBase implements IDataBase, IRequires<ISQL
 			return null;
 		}
 	}
-
-	@SuppressWarnings("unchecked")
+	
 	public boolean updateData(Rating data, Vector<String> where) {
 		boolean sucesso = true;
-		Vector v = getVectorSetRating(data);
+		Vector<Object> v = getVectorSetRating(data);
 		String set = stt.mountSetStatement(v);
 		String w = stt.mountWhereStatement(where);		
 		try {
@@ -794,10 +765,9 @@ public class DataBase extends ComponentBase implements IDataBase, IRequires<ISQL
 		}
 		return sucesso;
 	}
-	
-	@SuppressWarnings("unchecked")
-	public Vector getVectorRating(Rating r){
-		Vector v = new Vector();
+
+	public Vector<Object> getVectorRating(Rating r){
+		Vector<Object> v = new Vector<Object>();
 		v.add(r.getID() + "'");
 		v.add(r.getUsername());
 		v.add(r.getBookISBN());
@@ -807,9 +777,8 @@ public class DataBase extends ComponentBase implements IDataBase, IRequires<ISQL
 		return v;
 	}
 
-	@SuppressWarnings("unchecked")
-	public Vector getVectorSetRating(Rating r){
-		Vector v = new Vector();
+	public Vector<Object> getVectorSetRating(Rating r){
+		Vector<Object> v = new Vector<Object>();
 		v.add("id = '" + r.getID() + "'");
 		v.add("username = '" + r.getUsername() + "'");
 		v.add("bookISBN = '" + r.getBookISBN() + "'");
@@ -821,24 +790,23 @@ public class DataBase extends ComponentBase implements IDataBase, IRequires<ISQL
 	
 	///////////////////////////////////////////////////////////////////
 	/*
-	 * Operações com Session
+	 * Operações com SessionData
 	 */
 	////////////////////////////////////////////////////////////////////
-	
-	@SuppressWarnings("unchecked")
-	public boolean insertData(Session data) {
+
+	public boolean insertData(SessionData data) {
 		boolean sucesso = true;
-		Vector v = getVectorSession(data);
+		Vector<Object> v = getVectorSessionData(data);
 		String values = stt.mountValuesStatement(v);
 		try {
-			stt.insert("session", values);
+			stt.insert("SessionData", values);
 		} catch (SQLException erro) {
 			sucesso = false;
 		}
 		return sucesso;
 	}
 
-	public Session[] querySession(Vector<String> select,
+	public SessionData[] querySessionData(Vector<String> select,
 			Vector<String> where, Vector<String> order) {	
 		try {
 			Class.forName(driver);
@@ -851,19 +819,19 @@ public class DataBase extends ComponentBase implements IDataBase, IRequires<ISQL
 			String w = stt.mountWhereStatement(where);
 			String o = stt.mountOrderStatement(order);
 
-			ResultSet r = command.executeQuery(s + " FROM session " + w + o);
+			ResultSet r = command.executeQuery(s + " FROM SessionData " + w + o);
 
 			int numbRows = 0, cont = 0;
 			while(r.next()){
 				numbRows++;
 			}
 
-			Session[] sn = new Session[numbRows];
-			ResultSet result = command.executeQuery(s + " FROM session " + w + o);
+			SessionData[] sn = new SessionData[numbRows];
+			ResultSet result = command.executeQuery(s + " FROM SessionData " + w + o);
 
 			while (result.next())
 			{
-				Session temp = new Session();
+				SessionData temp = new SessionData();
 				
 				for(int i = 0; i < select.size(); i++){
 					if(select.get(i).equalsIgnoreCase("username")) 
@@ -884,48 +852,45 @@ public class DataBase extends ComponentBase implements IDataBase, IRequires<ISQL
 			System.out.println(erro.getMessage());
 			return null;
 		} catch (SQLException erro) {
-			System.out.println("Erro na consulta Session: " + erro.getMessage());
+			System.out.println("Erro na consulta SessionData: " + erro.getMessage());
 			return null;
 		}
 	}
 
-	@SuppressWarnings("unchecked")
-	public boolean updateData(Session data, Vector<String> where) {
+	public boolean updateData(SessionData data, Vector<String> where) {
 		boolean sucesso = true;
-		Vector v = getVectorSetSession(data);
+		Vector<Object> v = getVectorSetSessionData(data);
 		String set = stt.mountSetStatement(v);
 		String w = stt.mountWhereStatement(where);		
 		try {
-			stt.update("session", set, w);
+			stt.update("SessionData", set, w);
 		} catch (SQLException erro) {
 			sucesso = false;
 		}
 		return sucesso;
 	}
 
-	public boolean deleteDataSession(Vector<String> where){
+	public boolean deleteDataSessionData(Vector<String> where){
 		boolean sucesso = true;
 		String w = stt.mountWhereStatement(where);
 		try {
-			stt.delete("session", w);
+			stt.delete("SessionData", w);
 		} catch (SQLException erro) {
 			sucesso = false;
 		}
 		return sucesso;
 	}
 	
-	@SuppressWarnings("unchecked")
-	public Vector getVectorSession(Session s){
-		Vector v = new Vector();
+	public Vector<Object> getVectorSessionData(SessionData s){
+		Vector<Object> v = new Vector<Object>();
 		v.add(s.getUsername());
 		v.add((s.getStatus() ? 1 : 0));
 		v.add(s.getLastLogin());
 		return v;
 	}
 
-	@SuppressWarnings("unchecked")
-	public Vector getVectorSetSession(Session s){
-		Vector v = new Vector();
+	public Vector<Object> getVectorSetSessionData(SessionData s){
+		Vector<Object> v = new Vector<Object>();
 		v.add("username = '" + s.getUsername() + "'");
 		v.add("status = '" + (s.getStatus() ? 1 : 0) + "'");
 		v.add("lastLogin = '" + s.getLastLogin() + "'");
