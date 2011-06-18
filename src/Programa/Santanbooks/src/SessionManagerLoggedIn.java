@@ -45,11 +45,13 @@ public class SessionManagerLoggedIn extends javax.swing.JPanel {
 
         editProfileLabel.setForeground(new java.awt.Color(0, 0, 255));
         editProfileLabel.setText("Edite seu perfil");
+        editProfileLabel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         add(editProfileLabel);
         editProfileLabel.setBounds(620, 30, 80, 14);
 
         addBookLabel.setForeground(new java.awt.Color(0, 0, 255));
         addBookLabel.setText("Adicionar livro");
+        addBookLabel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         add(addBookLabel);
         addBookLabel.setBounds(720, 30, 70, 14);
     }// </editor-fold>//GEN-END:initComponents

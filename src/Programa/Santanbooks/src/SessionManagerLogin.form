@@ -150,6 +150,9 @@
           <Color blue="ff" green="0" red="0" type="rgb"/>
         </Property>
         <Property name="text" type="java.lang.String" value="Cadastre-se aqui"/>
+        <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+          <Color id="Cursor em forma de m&#xe3;o"/>
+        </Property>
       </Properties>
     </Component>
   </SubComponents>

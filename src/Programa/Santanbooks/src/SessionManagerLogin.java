@@ -43,10 +43,10 @@ public class SessionManagerLogin extends javax.swing.JPanel {
         setMinimumSize(new java.awt.Dimension(800, 50));
         setPreferredSize(new java.awt.Dimension(800, 50));
 
-        loginTitle.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
+        loginTitle.setFont(new java.awt.Font("Tahoma", 1, 16));
         loginTitle.setText("Login");
 
-        userLabel.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
+        userLabel.setFont(new java.awt.Font("Tahoma", 0, 10));
         userLabel.setText("Usuário");
 
         userText.addActionListener(new java.awt.event.ActionListener() {
@@ -61,7 +61,7 @@ public class SessionManagerLogin extends javax.swing.JPanel {
             }
         });
 
-        pwordLabel.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
+        pwordLabel.setFont(new java.awt.Font("Tahoma", 0, 10));
         pwordLabel.setText("Password");
 
         noAccountLabel.setText("Não possui uma conta?");
@@ -78,6 +78,7 @@ public class SessionManagerLogin extends javax.swing.JPanel {
 
         registerLabel.setForeground(new java.awt.Color(0, 0, 255));
         registerLabel.setText("Cadastre-se aqui");
+        registerLabel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);

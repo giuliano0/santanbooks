@@ -64,6 +64,8 @@ public class RegUser extends javax.swing.JPanel {
 
         setMaximumSize(new java.awt.Dimension(800, 600));
         setMinimumSize(new java.awt.Dimension(800, 600));
+        setPreferredSize(new java.awt.Dimension(800, 600));
+        setRequestFocusEnabled(false);
 
         bdayLabel1.setText("Nascimento");
 
@@ -150,11 +152,11 @@ public class RegUser extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGap(282, 282, 282)
                 .addComponent(title1)
-                .addContainerGap(297, Short.MAX_VALUE))
+                .addContainerGap(304, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addGap(197, 197, 197)
                 .addComponent(personalTitle1)
-                .addContainerGap(466, Short.MAX_VALUE))
+                .addContainerGap(463, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addGap(188, 188, 188)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -168,7 +170,7 @@ public class RegUser extends javax.swing.JPanel {
                             .addContainerGap())
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 416, Short.MAX_VALUE)
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 405, Short.MAX_VALUE)
                                 .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                     .addGap(28, 28, 28)
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -179,8 +181,8 @@ public class RegUser extends javax.swing.JPanel {
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                             .addComponent(repeatpwordText1, javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(userText1, javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(pwordText1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 199, Short.MAX_VALUE))
+                                            .addComponent(pwordText1, javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(userText1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE))
                                         .addGroup(layout.createSequentialGroup()
                                             .addComponent(clearButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -196,8 +198,8 @@ public class RegUser extends javax.swing.JPanel {
                                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                             .addComponent(yearLabel1)
                                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                            .addComponent(yearText1, javax.swing.GroupLayout.DEFAULT_SIZE, 76, Short.MAX_VALUE))
-                                        .addComponent(collegeText1, javax.swing.GroupLayout.DEFAULT_SIZE, 317, Short.MAX_VALUE)))
+                                            .addComponent(yearText1, javax.swing.GroupLayout.DEFAULT_SIZE, 102, Short.MAX_VALUE))
+                                        .addComponent(collegeText1, javax.swing.GroupLayout.DEFAULT_SIZE, 325, Short.MAX_VALUE)))
                                 .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                         .addComponent(genderLabel1)
@@ -206,24 +208,24 @@ public class RegUser extends javax.swing.JPanel {
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addGroup(layout.createSequentialGroup()
                                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                            .addComponent(emailText1, javax.swing.GroupLayout.DEFAULT_SIZE, 364, Short.MAX_VALUE))
+                                            .addComponent(emailText1, javax.swing.GroupLayout.DEFAULT_SIZE, 373, Short.MAX_VALUE))
                                         .addGroup(layout.createSequentialGroup()
                                             .addGap(10, 10, 10)
                                             .addComponent(femaleButton1)
                                             .addGap(12, 12, 12)
                                             .addComponent(maleButton1)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 84, Short.MAX_VALUE)
                                             .addComponent(bdayLabel1)
                                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                             .addComponent(bdayText1, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
                                         .addGroup(layout.createSequentialGroup()
                                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                            .addComponent(nameText1, javax.swing.GroupLayout.DEFAULT_SIZE, 364, Short.MAX_VALUE)))))
+                                            .addComponent(nameText1, javax.swing.GroupLayout.DEFAULT_SIZE, 373, Short.MAX_VALUE)))))
                             .addGap(207, 207, 207)))))
             .addGroup(layout.createSequentialGroup()
                 .addGap(199, 199, 199)
                 .addComponent(loginTitle1)
-                .addContainerGap(463, Short.MAX_VALUE))
+                .addContainerGap(459, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -250,7 +252,7 @@ public class RegUser extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(descriptionLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 67, Short.MAX_VALUE)
+                .addComponent(jScrollPane2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(academicTitle1)
                 .addGap(12, 12, 12)
@@ -281,7 +283,7 @@ public class RegUser extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(clearButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(saveButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(15, 15, 15))
+                .addGap(80, 80, 80))
         );
     }// </editor-fold>//GEN-END:initComponents
 
