@@ -6,58 +6,61 @@ import java.util.Comparator;
 import java.util.Vector;
 
 import Classes.Book;
+import Interfaces.IBusinessObject;
 import Interfaces.IDataBase;
 import Interfaces.ISearchEngine;
-import Interfaces.IBusinessObject;
 import anima.annotation.Component;
-import anima.component.IRequires;
-import anima.component.ISupports;
-import anima.component.InterfaceType;
+import anima.component.base.ComponentBase;
 
 /**
  * Componente de motor de buscas.
- * @author Giuliano
- * @remarks Pessoal, lembrem-se de colocar um comentário como este, de Javadoc <br />
- * no código que vocês escreverem, e salvem numa planilha o que vcs fizeram, precisaremos <br />
- * dessa informação mais tarde! Thanks ;)
+ * @author Giuliano, Lucas, Oscar, Wesley
  */
 @Component(id="<http://purl.org/dcc/SearchEngine.SearchEngine>",
         provides={"<http://purl.org/dcc/Interfaces.ISearchEngine>"}, 
         requires= { "<http://purl.org/dcc/Interfaces.IBusinessObject>" })
-public class SearchEngine implements ISearchEngine, IReceptacleDataBase, IReceptacleBussinessObject { // TODO: colocar o IRequires<IDataBase>, ajuda aqui please =)
+public class SearchEngine extends ComponentBase implements ISearchEngine, IReceptacleDataBase, IReceptacleBussinessObject {
 
-	// Preposições, artigos, conjunções, e tudo mais (pontuação, sinais gráficos). 42!
-	// Bithces, ajudem a popular o array abaixo, kkthxbye ;)
+	// Preposições, artigos, conjunções, e tudo mais (pontuação, sinais gráficos)
 	private static String[] notTags = {"a", "as", "o", "os", "e", "de", "do", "dos", "da", "das", 
 						"para", "como", "com", "em", "no", "nos", "na", "nas", "uns", "umas", 
 						"um", "algum", "alguem", "nenhum", "ninguem", "todo", "todos", "toda", "todas", "tudo"};
 
-	// Verificar documentação do java para expressões regulares a respeito dos caracteres comentados abaixo.
-	// Eles são usados no Regex, e na verdade esse array inteiro pode ser substituído por um Regex Pattern...
-	// Metacaracteres do Regex: ([{\^-$|]})?*+.
 	private static final String[] punctuation = {",", "\\.", ":", "\\-", ";", "\\?", "!", "\\(", "\\)", "\\n"};
 	
 	private IDataBase dataBase;
 	private IBusinessObject bO;
 	private String[] tags;
 	
-	// TODO: Declarar a database e a factory, e instanciá-la no construtor.
-
 	public SearchEngine() {
 		Arrays.sort(notTags);
 	}
 
+	/**
+	 * Função principal de busca. Busca os livros seguindo a seguinte prioridade (maior para menor):
+	 * Name, Authors, Description, Publisher, ISBN.
+	 * @author Lucas, Oscar, Wesley
+	 * @param String key - expressão digitada que será procurada.
+	 * @return Retorna um vetor de Books (sem repetição) ordenado por relevância de várias colunas do Book.
+	 */
 	@Override
 	public Book[] search(String key) {
 		Book[] booksByName = searchByParameter(key, "name");
-		Book[] booksByISBN = searchByParameter(key, "isbn");
 		Book[] booksByAuthors = searchByParameter(key, "authors");
 		Book[] booksByDescription = searchByParameter(key, "description");
 		Book[] booksByPublisher = searchByParameter(key, "publisher");
-		Book[] resultadoFinal = mergeByBooks(booksByName, mergeByBooks(booksByISBN, mergeByBooks(booksByAuthors, mergeByBooks(booksByDescription, booksByPublisher))));
+		Book[] booksByISBN = searchByParameter(key, "isbn");
+		Book[] resultadoFinal = mergeByBooks(booksByName, mergeByBooks(booksByAuthors, mergeByBooks(booksByDescription, mergeByBooks(booksByPublisher, booksByISBN))));
 		return resultadoFinal;
 	}
 
+	/**
+	 * Junta vetores de Books, eliminando os repetidos.
+	 * @author Lucas, Oscar, Wesley
+	 * @param Book[] b1 - Vetor de Books 1 a ser mergeado.
+	 * @param Book[] b2 - Vetor de Books 2 a ser mergeado.
+	 * @return Retorna um vetor de Books (sem repetição).
+	 */
 	private Book[] mergeByBooks(Book[] b1, Book[] b2) {
 		ArrayList<Book> books = new ArrayList<Book>();
 		for (Book b : b1) 
@@ -76,6 +79,13 @@ public class SearchEngine implements ISearchEngine, IReceptacleDataBase, IRecept
 		return books.toArray(new Book[books.size()]);
 	}
 
+	/**
+	 * Junta vetores de String, eliminando os repetidos.
+	 * @author Lucas, Oscar, Wesley
+	 * @param String[] s1 - Vetor de Strings 1 a ser mergeado.
+	 * @param String[] s2 - Vetor de Strings 2 a ser mergeado.
+	 * @return Retorna um vetor de Strings (sem repetição).
+	 */
 	private String[] mergeByString(String[] s1, String[] s2) {
 		ArrayList<String> tags = new ArrayList<String>();
 		for (String s : s1) tags.add(s);
@@ -83,7 +93,14 @@ public class SearchEngine implements ISearchEngine, IReceptacleDataBase, IRecept
 		return tags.toArray(new String[tags.size()]);
 	}
 
-	public Book[] searchByParameter(String key, String campo) {
+	/**
+	 * Faz a busca dos livros ordenando pelas chances de ser o livro procurado
+	 * @author Lucas, Oscar, Wesley
+	 * @param String key - expressão digitada que será procurada.
+	 * @param String campo - coluna do banco de dados usada na pesquisa.
+	 * @return Retorna um vetor de Books (sem repetição) ordenado por relevância.
+	 */
+	private Book[] searchByParameter(String key, String campo) {
 		Vector<String> select = new Vector<String>();
 		Vector<String> where = new Vector<String>();
 		select = returnSelect();
@@ -166,6 +183,11 @@ public class SearchEngine implements ISearchEngine, IReceptacleDataBase, IRecept
 		return myBooks;
 	}
 
+	/**
+	 * Coloca todos os campos do livro para busca
+	 * @author Lucas, Oscar, Wesley
+	 * @return Retorna um Vector "select" com todos os campos do livro.
+	 */
 	private Vector<String> returnSelect() {
 		Vector<String> select = new Vector<String>();
 		select.add("name"); // Falta ver um jeito de selecionar todos os campo
@@ -179,8 +201,6 @@ public class SearchEngine implements ISearchEngine, IReceptacleDataBase, IRecept
 		return select;
 	}
 
-	// Métodos auxiliares
-	
 	/**
 	 * <p>Normaliza a chave de pesquisa, retirando acentos e sinais, <br />
 	 * deixando a  string em minúsculas e tirando os espaços.<br /></p>
@@ -251,43 +271,6 @@ public class SearchEngine implements ISearchEngine, IReceptacleDataBase, IRecept
 		this.dataBase = arg0;	
 	}
 
-	@Override
-	public int addRef() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public String getInstanceId() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public <T extends ISupports> T queryInterface(String arg0) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public <T extends ISupports> T queryInterface(String arg0,
-			InterfaceType arg1) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public <T extends ISupports> IRequires<T> queryReceptacle(String arg0) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public int release() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-	
 	public String[] autoComplete(String arg) {
 		ArrayList<String> cands = new ArrayList<String>();
 		for (String s : extractTags(arg)) {
